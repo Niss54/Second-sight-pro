@@ -3,6 +3,7 @@ import "./App.css";
 import { AnalysisPanel } from "./components/AnalysisPanel";
 import { CaseFormPanel } from "./components/CaseFormPanel";
 import { CaseHistoryPanel } from "./components/CaseHistoryPanel";
+import { VoiceAssistantPanel } from "./components/VoiceAssistantPanel";
 import { StatusBanner } from "./components/StatusBanner";
 import { createBlankCase, demoCase } from "./constants/caseTemplates";
 import {
@@ -223,17 +224,17 @@ function App() {
       <div className="ambient-bg" aria-hidden="true" />
 
       <header className="hero">
-        <p className="eyebrow">Second Medical Opinion Intelligence</p>
+        <p className="eyebrow">Medical Voice Assistant</p>
         <h1>SecondSight Pro</h1>
         <p>
-          AI-assisted clinical conflict navigator for patients handling contradictory diagnosis,
-          treatment plans, and prescriptions.
+          A premium voice-first medical assistant that explains conflicting second opinions with calm,
+          evidence-grounded guidance.
         </p>
         <div className="hero-badges">
-          <span>React Frontend</span>
-          <span>Rule + ML Scoring</span>
-          <span>LLM Insight Ready</span>
-          <span>Case Memory</span>
+          <span>Voice Controls</span>
+          <span>Audio Visualizer</span>
+          <span>Realtime Interaction</span>
+          <span>Medically Responsible</span>
         </div>
       </header>
 
@@ -267,6 +268,11 @@ function App() {
         />
 
         <div className="right-stack">
+          <VoiceAssistantPanel
+            caseData={caseData}
+            analysis={analysis}
+            onStatusChange={notify}
+          />
           <AnalysisPanel analysis={analysis} onCopySummary={handleCopySummary} />
           <CaseHistoryPanel
             cases={caseList}
@@ -282,8 +288,8 @@ function App() {
 
       <footer className="footnote">
         <p>
-          Safety disclaimer: This platform is for structured decision support only and does not replace
-          licensed medical diagnosis, emergency triage, or prescription authority.
+          This platform supports understanding conflicting medical opinions and does not replace
+          licensed medical care. If symptoms are urgent or worsening, seek emergency help immediately.
         </p>
       </footer>
     </div>

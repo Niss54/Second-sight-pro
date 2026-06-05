@@ -93,3 +93,24 @@ export interface CaseSummary {
   finalScore: number;
   finalRiskTier: RiskTier;
 }
+
+export interface EvidenceCitation {
+  id: string;
+  source: string;
+  title: string;
+  snippet: string;
+  reference?: string;
+  confidence: number;
+  metadata: Record<string, unknown>;
+}
+
+export interface VoiceAssistantResponse {
+  text: string;
+  ssml: string;
+  style: "calm" | "empathetic" | "medical";
+  interruptible: boolean;
+  segmentBreaks: string[];
+  followUpPhrases: string[];
+  safetyNotice: string;
+  citations: EvidenceCitation[];
+}

@@ -1,5 +1,11 @@
 ﻿import axios from "axios";
-import type { CaseSummary, FullAnalysisResponse, PatientCaseInput, StoredCase } from "../types";
+import type {
+  CaseSummary,
+  FullAnalysisResponse,
+  PatientCaseInput,
+  StoredCase,
+  VoiceAssistantResponse
+} from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
@@ -43,5 +49,31 @@ export async function deleteCase(id: string): Promise<void> {
 export async function reanalyzeCase(id: string): Promise<StoredCase> {
   const response = await http.post<{ ok: boolean; case: StoredCase }>(`/cases/${id}/reanalyze`);
   return response.data.case;
+}
+
+export async function speakMedicalSummary(
+  caseData: PatientCaseInput,
+  analysis?: FullAnalysisResponse
+): Promise<VoiceAssistantResponse> {
+  const response = await http.post<{ ok: boolean; result: VoiceAssistantResponse }>("/voice/summary", {
+    caseData,
+    analysis
+  });
+
+  return response.data.result;
+}
+
+export async function askFollowupQuestion(
+  caseData: PatientCaseInput,
+  question: string,
+  analysis?: FullAnalysisResponse
+): Promise<VoiceAssistantResponse> {
+  const response = await http.post<{ ok: boolean; result: VoiceAssistantResponse }>("/voice/followup", {
+    caseData,
+    analysis,
+    question
+  });
+
+  return response.data.result;
 }
 
