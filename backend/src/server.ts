@@ -8,6 +8,7 @@ import { analysisRouter } from "./routes/analysisRoutes";
 import { casesRouter } from "./routes/caseRoutes";
 import { evidenceRouter } from "./routes/evidenceRoutes";
 import { healthRouter } from "./routes/healthRoutes";
+import { ocrRouter } from "./routes/ocrRoutes";
 import { reportsRouter } from "./routes/reportRoutes";
 
 const app = express();
@@ -43,6 +44,7 @@ app.use("/api/health", healthRouter);
 app.use("/api/analyze", analysisRouter);
 app.use("/api/cases", casesRouter);
 app.use("/api/evidence", evidenceRouter);
+app.use("/api/ocr", ocrRouter);
 app.use("/api/reports", reportsRouter);
 
 app.use(notFoundHandler);
