@@ -6,6 +6,7 @@ import { env } from "./config/env";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 import { analysisRouter } from "./routes/analysisRoutes";
 import { casesRouter } from "./routes/caseRoutes";
+import { evidenceRouter } from "./routes/evidenceRoutes";
 import { healthRouter } from "./routes/healthRoutes";
 import { reportsRouter } from "./routes/reportRoutes";
 
@@ -41,6 +42,7 @@ app.get("/", (_req, res) => {
 app.use("/api/health", healthRouter);
 app.use("/api/analyze", analysisRouter);
 app.use("/api/cases", casesRouter);
+app.use("/api/evidence", evidenceRouter);
 app.use("/api/reports", reportsRouter);
 
 app.use(notFoundHandler);

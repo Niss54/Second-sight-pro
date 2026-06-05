@@ -10,6 +10,10 @@ const envSchema = z.object({
   OPENAI_API_KEY: z.string().optional(),
   OPENAI_MODEL: z.string().default("gpt-4.1-mini"),
   OPENAI_BASE_URL: z.string().optional(),
+  SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+  MEDICAL_EVIDENCE_TABLE: z.string().default("medical_evidence"),
+  MEDICAL_EVIDENCE_MATCH_FUNCTION: z.string().default("search_medical_evidence"),
   ENABLE_LLM: z
     .string()
     .optional()
