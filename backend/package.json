@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "SecondSight backend API",
+  "description": "Guideline retrieval backend API with evidence-backed medical citations",
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
@@ -11,9 +11,9 @@
   },
   "keywords": [
     "medical",
-    "analysis",
-    "ai",
-    "llm"
+    "guideline",
+    "evidence",
+    "citation"
   ],
   "author": "",
   "license": "ISC",

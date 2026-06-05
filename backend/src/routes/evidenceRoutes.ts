@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { asyncHandler } from "../middleware/asyncHandler";
-import { createMedicalEvidenceEngine } from "../modules/medical-evidence-engine";
+import { fetchEvidence, fetchGuidelines } from "../services/guidelineRetrieval";
 
 const urgencySchema = z.enum(["routine", "soon", "urgent", "emergency"]);
 
@@ -14,8 +14,6 @@ const evidenceRequestSchema = z.object({
   condition: z.string().optional(),
   sources: z.array(z.string()).optional()
 });
-
-const engine = createMedicalEvidenceEngine();
 
 export const evidenceRouter = Router();
 
@@ -33,7 +31,7 @@ evidenceRouter.post(
       return;
     }
 
-    const bundle = await engine.getMedicalEvidence(parsed.data);
+    const bundle = await fetchEvidence(parsed.data);
 
     res.json({
       ok: true,
@@ -56,13 +54,36 @@ evidenceRouter.post(
       return;
     }
 
-    const citations = await engine.getCitations(parsed.data);
+    const bundle = await fetchEvidence(parsed.data);
 
     res.json({
       ok: true,
       query: parsed.data.query,
-      citations,
-      generatedAt: new Date().toISOString()
+      citations: bundle.citations,
+      generatedAt: bundle.generatedAt
+    });
+  })
+);
+
+evidenceRouter.post(
+  "/guidelines",
+  asyncHandler(async (req, res) => {
+    const parsed = evidenceRequestSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      res.status(400).json({
+        ok: false,
+        error: "Invalid request payload",
+        details: parsed.error.flatten().fieldErrors
+      });
+      return;
+    }
+
+    const guidance = await fetchGuidelines(parsed.data);
+
+    res.json({
+      ok: true,
+      ...guidance
     });
   })
 );
