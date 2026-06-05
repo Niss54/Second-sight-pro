@@ -1,0 +1,23 @@
+{
+  "name": "secondsight-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-assisted second medical opinion conflict analysis platform",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n API,WEB -c cyan,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "dev:api": "npm run dev -w backend",
+    "dev:web": "npm run dev -w frontend",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "build:api": "npm run build -w backend",
+    "build:web": "npm run build -w frontend",
+    "start": "npm run start -w backend",
+    "lint": "npm run lint -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "SecondSight backend API",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "medical",
+    "analysis",
+    "ai",
+    "llm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@langchain/core": "^1.1.48",
+    "@langchain/openai": "^1.4.7",
+    "@supabase/supabase-js": "^2.106.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "langchain": "^1.4.2",
+    "livekit-server-sdk": "^2.15.3",
+    "morgan": "^1.10.1",
+    "multer": "^2.1.1",
+    "openai": "^6.39.0",
+    "pdf-parse": "^2.4.5",
+    "tesseract.js": "^7.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}
