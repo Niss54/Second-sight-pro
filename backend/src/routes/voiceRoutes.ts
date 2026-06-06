@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { z } from "zod";
 import { asyncHandler } from "../middleware/asyncHandler";
-import { runFullAnalysis } from "../services/analysisPipeline";
+import { AccessToken } from "livekit-server-sdk";
+import { env } from "../config/env";
+import { reconcileOpinions } from "../services/opinionReconciliationEngine";
 import { speakMedicalSummary, askFollowupQuestion } from "../modules/medical-voice-assistant";
 import type { PatientCaseInput } from "../types/domain";
 
@@ -28,7 +30,7 @@ voiceRouter.post(
     }
 
     const caseData = parsed.data.caseData as PatientCaseInput;
-    const analysis = parsed.data.analysis ?? (await runFullAnalysis(caseData));
+    const analysis = parsed.data.analysis ?? (await reconcileOpinions(caseData));
     const result = await speakMedicalSummary({ caseData, analysis });
 
     res.json({
@@ -53,7 +55,7 @@ voiceRouter.post(
     }
 
     const caseData = parsed.data.caseData as PatientCaseInput;
-    const analysis = parsed.data.analysis ?? (await runFullAnalysis(caseData));
+    const analysis = parsed.data.analysis ?? (await reconcileOpinions(caseData));
     const result = await askFollowupQuestion({
       caseData,
       analysis,
@@ -64,6 +66,26 @@ voiceRouter.post(
       ok: true,
       result
     });
+  })
+);
+
+voiceRouter.get(
+  "/token",
+  asyncHandler(async (req, res) => {
+    const roomName = req.query.room as string || "medical-room";
+    const participantName = req.query.participant as string || "user";
+
+    if (!env.LIVEKIT_API_KEY || !env.LIVEKIT_API_SECRET) {
+      res.status(500).json({ error: "LiveKit credentials not configured" });
+      return;
+    }
+
+    const at = new AccessToken(env.LIVEKIT_API_KEY, env.LIVEKIT_API_SECRET, {
+      identity: participantName,
+    });
+    at.addGrant({ roomJoin: true, room: roomName, canPublish: true, canSubscribe: true });
+
+    res.json({ token: await at.toJwt() });
   })
 );
 

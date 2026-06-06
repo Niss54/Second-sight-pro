@@ -1,4 +1,4 @@
-﻿import dotenv from "dotenv";
+import dotenv from "dotenv";
 import { z } from "zod";
 
 dotenv.config();
@@ -17,7 +17,10 @@ const envSchema = z.object({
   ENABLE_LLM: z
     .string()
     .optional()
-    .transform((value) => value !== "false")
+    .transform((value) => value !== "false"),
+  SARVAM_API_KEY: z.string().optional(),
+  LIVEKIT_API_KEY: z.string().optional(),
+  LIVEKIT_API_SECRET: z.string().optional()
 });
 
 const parsed = envSchema.safeParse(process.env);

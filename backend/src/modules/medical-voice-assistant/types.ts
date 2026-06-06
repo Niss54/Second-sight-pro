@@ -1,8 +1,8 @@
-import type { EvidenceCitation, FullAnalysisResponse, PatientCaseInput } from "../../types/domain";
+import type { EvidenceCitation, ReconciliationOutput, PatientCaseInput } from "../../types/domain";
 
 export interface VoiceAssistantContext {
   caseData: PatientCaseInput;
-  analysis?: FullAnalysisResponse;
+  analysis?: ReconciliationOutput;
   userQuestion?: string;
 }
 
@@ -15,5 +15,6 @@ export interface VoiceAssistantOutput {
   followUpPhrases: string[];
   safetyNotice: string;
   citations: EvidenceCitation[];
+  audioBase64?: string;
 }
 

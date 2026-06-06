@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Mic, PauseCircle, Send, Sparkles, Volume2, VolumeX } from "lucide-react";
 import type { ReconciliationOutput, PatientCaseInput, VoiceAssistantResponse } from "../types";
 import { askFollowupQuestion, speakMedicalSummary } from "../services/api";
+import { LiveKitRoom, RoomAudioRenderer, useVoiceAssistant, BarVisualizer } from "@livekit/components-react";
+import "@livekit/components-styles";
 
 type TranscriptRole = "assistant" | "user" | "system";
 
@@ -108,6 +110,35 @@ function useSpeechRecognition() {
 }
 
 export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: VoiceAssistantPanelProps) {
+  const [liveKitToken, setLiveKitToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch LiveKit token on mount
+    fetch("/api/voice/token?room=medical-reconciliation&participant=patient")
+      .then(res => res.json())
+      .then(data => {
+        if (data.token) setLiveKitToken(data.token);
+      })
+      .catch(console.error);
+  }, []);
+
+  if (!liveKitToken) {
+    return <div className="glass-panel p-4">Connecting to Voice Server...</div>;
+  }
+
+  return (
+    <LiveKitRoom
+      serverUrl="wss://secondlight-20ai17bj.livekit.cloud"
+      token={liveKitToken}
+      connect={true}
+    >
+      <VoiceAssistantPanelInner caseData={caseData} analysis={analysis} onStatusChange={onStatusChange} />
+      <RoomAudioRenderer />
+    </LiveKitRoom>
+  );
+}
+
+function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceAssistantPanelProps) {
   const [question, setQuestion] = useState("");
   const [transcript, setTranscript] = useState<TranscriptItem[]>([
     {
@@ -123,7 +154,9 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
   const [voiceResponse, setVoiceResponse] = useState<VoiceAssistantResponse | null>(null);
   const [liveText, setLiveText] = useState("");
 
+  const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const recognition = useSpeechRecognition();
+  const livekitVoice = useVoiceAssistant();
 
   const medicalModeLabel = useMemo(() => {
     if (!analysis) {
@@ -137,7 +170,27 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
     setTranscript((current) => [...current, { id: uid(role), role, text }]);
   }, []);
 
-  const speakChunks = useCallback(async (text: string) => {
+  const speakChunks = useCallback(async (text: string, audioBase64?: string) => {
+    if (audioEl) {
+      audioEl.pause();
+    }
+
+    if (audioBase64) {
+      setIsSpeaking(true);
+      const audio = new Audio(`data:audio/wav;base64,${audioBase64}`);
+      setAudioEl(audio);
+      audio.onended = () => setIsSpeaking(false);
+      audio.onerror = () => setIsSpeaking(false);
+      try {
+        await audio.play();
+      } catch (e) {
+        setIsSpeaking(false);
+        console.error("Playback failed", e);
+      }
+      return;
+    }
+
+    // Fallback to browser TTS
     if (typeof window === "undefined" || !window.speechSynthesis) {
       return;
     }
@@ -159,9 +212,12 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
     }
 
     setIsSpeaking(false);
-  }, []);
+  }, [audioEl]);
 
   const interruptSpeech = useCallback(() => {
+    if (audioEl) {
+      audioEl.pause();
+    }
     if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -169,16 +225,17 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
     setIsSpeaking(false);
     setIsListening(false);
     onStatusChange?.("Voice output interrupted.", "info");
-  }, [onStatusChange, recognition]);
+  }, [audioEl, onStatusChange, recognition]);
 
   useEffect(() => {
     return () => {
+      if (audioEl) audioEl.pause();
       if (typeof window !== "undefined" && window.speechSynthesis) {
         window.speechSynthesis.cancel();
       }
       recognition.stop();
     };
-  }, [recognition]);
+  }, [audioEl, recognition]);
 
   const handleSpeakSummary = useCallback(async () => {
     if (!analysis) {
@@ -192,7 +249,7 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
       setVoiceResponse(result);
       appendTranscript("assistant", result.text);
       onStatusChange?.("Spoken summary ready.", "success");
-      await speakChunks(result.text);
+      await speakChunks(result.text, (result as any).audioBase64);
     } catch {
       onStatusChange?.("Could not generate the spoken summary.", "error");
     } finally {
@@ -215,7 +272,7 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
       appendTranscript("assistant", result.text);
       setQuestion("");
       onStatusChange?.("Follow-up answered.", "success");
-      await speakChunks(result.text);
+      await speakChunks(result.text, (result as any).audioBase64);
     } catch {
       onStatusChange?.("Could not answer the follow-up question.", "error");
     } finally {
@@ -296,7 +353,9 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
             {voiceResponse ? <Sparkles size={22} /> : <Mic size={22} />}
           </div>
           <div className="audio-visualizer" aria-hidden="true">
-            {visualizerBars.map((index) => (
+            {livekitVoice.state === "speaking" ? (
+              <BarVisualizer state={livekitVoice.state} barCount={7} trackRef={livekitVoice.audioTrack} className="livekit-visualizer" />
+            ) : visualizerBars.map((index) => (
               <span
                 key={index}
                 style={{

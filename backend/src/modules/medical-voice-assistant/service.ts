@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 import { env } from "../../config/env";
-import type { EvidenceCitation, FullAnalysisResponse, PatientCaseInput } from "../../types/domain";
+import type { EvidenceCitation, ReconciliationOutput, PatientCaseInput } from "../../types/domain";
 import { createMedicalEvidenceEngine } from "../medical-evidence-engine";
 import { buildSsml, buildFollowUpPhrases, segmentText } from "./style";
 import { buildFollowUpPrompt, buildSummaryPrompt } from "./prompts";
+import { generateSarvamSpeech } from "./sarvam";
 import type { VoiceAssistantContext, VoiceAssistantOutput } from "./types";
 
 const openaiClient = env.OPENAI_API_KEY
@@ -24,9 +25,9 @@ function safeSummaryFallback(context: VoiceAssistantContext, citations: Evidence
   }
 
   const lead =
-    analysis.finalRiskTier === "high"
+    analysis.conflict_score === "High"
       ? "The opinions disagree in an important way, so a specialist review is a good next step."
-      : analysis.finalRiskTier === "moderate"
+      : analysis.conflict_score === "Medium"
         ? "The opinions differ enough that clarification would be helpful before moving ahead."
         : "The opinions are somewhat aligned, but a few details still deserve a careful review.";
 
@@ -53,7 +54,7 @@ function safeFollowUpFallback(context: VoiceAssistantContext, citations: Evidenc
     return "If breathing, chest pain, sudden weakness, confusion, or severe worsening is happening, seek emergency care now.";
   }
 
-  if (analysis?.finalRiskTier === "high") {
+  if (analysis?.conflict_score === "High") {
     return "Because the opinions differ strongly, I would suggest a specialist review and a clear question list before any irreversible step.";
   }
 
@@ -91,7 +92,7 @@ async function generateVoiceText(prompt: string, fallback: string): Promise<stri
   }
 }
 
-function toVoiceOutput(text: string, citations: EvidenceCitation[], style: VoiceAssistantOutput["style"]): VoiceAssistantOutput {
+function toVoiceOutput(text: string, citations: EvidenceCitation[], style: VoiceAssistantOutput["style"], audioBase64?: string): VoiceAssistantOutput {
   return {
     text,
     ssml: buildSsml(text),
@@ -100,7 +101,8 @@ function toVoiceOutput(text: string, citations: EvidenceCitation[], style: Voice
     segmentBreaks: segmentText(text),
     followUpPhrases: buildFollowUpPhrases(),
     safetyNotice: "This assistant supports understanding conflicting medical opinions and does not replace licensed medical care.",
-    citations
+    citations,
+    audioBase64
   };
 }
 
@@ -108,8 +110,8 @@ export async function speakMedicalSummary(context: VoiceAssistantContext): Promi
   const citations = await fetchRelevantCitations(
     [
       context.caseData.primaryCondition,
-      context.analysis?.ruleAnalysis.findings.join(" "),
-      context.analysis?.ruleAnalysis.recommendedActions.join(" ")
+      context.analysis?.comparison_table.diagnosis.notes.join(" "),
+      context.analysis?.comparison_table.treatment.notes.join(" ")
     ]
       .filter(Boolean)
       .join(" ")
@@ -118,8 +120,9 @@ export async function speakMedicalSummary(context: VoiceAssistantContext): Promi
   const prompt = buildSummaryPrompt(context);
   const fallback = safeSummaryFallback(context, citations);
   const text = await generateVoiceText(prompt, fallback);
+  const audioBase64 = await generateSarvamSpeech(text, "en-IN") ?? undefined;
 
-  return toVoiceOutput(text, citations, "calm");
+  return toVoiceOutput(text, citations, "calm", audioBase64);
 }
 
 export async function askFollowupQuestion(context: VoiceAssistantContext): Promise<VoiceAssistantOutput> {
@@ -127,7 +130,7 @@ export async function askFollowupQuestion(context: VoiceAssistantContext): Promi
     [
       context.caseData.primaryCondition,
       context.userQuestion,
-      context.analysis?.ruleAnalysis.findings.join(" ")
+      context.analysis?.comparison_table.diagnosis.notes.join(" ")
     ]
       .filter(Boolean)
       .join(" ")
@@ -136,7 +139,8 @@ export async function askFollowupQuestion(context: VoiceAssistantContext): Promi
   const prompt = buildFollowUpPrompt(context);
   const fallback = safeFollowUpFallback(context, citations);
   const text = await generateVoiceText(prompt, fallback);
+  const audioBase64 = await generateSarvamSpeech(text, "en-IN") ?? undefined;
 
-  return toVoiceOutput(text, citations, "empathetic");
+  return toVoiceOutput(text, citations, "empathetic", audioBase64);
 }
 

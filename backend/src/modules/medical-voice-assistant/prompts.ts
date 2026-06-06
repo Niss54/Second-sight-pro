@@ -25,11 +25,11 @@ export function buildSummaryPrompt(context: VoiceAssistantContext): string {
     `Language: ${caseData.language ?? "en"}`,
     analysis
       ? [
-          `Final score: ${analysis.finalScore}`,
-          `Final risk tier: ${analysis.finalRiskTier}`,
-          `Conflict findings: ${analysis.ruleAnalysis.findings.join(" | ")}`,
-          `Recommended actions: ${analysis.ruleAnalysis.recommendedActions.join(" | ")}`,
-          `Specialist questions: ${analysis.ruleAnalysis.specialistQuestions.join(" | ")}`
+          `Conflict score: ${analysis.conflict_score}`,
+          `Agreement score: ${analysis.agreement_score}`,
+          `Summary: ${analysis.summary}`,
+          `Disagreements: ${analysis.disagreement_reason.join(" | ")}`,
+          `Specialist questions: ${analysis.specialist_questions.join(" | ")}`
         ].join("\n")
       : "",
     `Doctor opinions:\n${opinions}`,
@@ -52,10 +52,10 @@ export function buildFollowUpPrompt(context: VoiceAssistantContext): string {
     `Language: ${caseData.language ?? "en"}`,
     analysis
       ? [
-          `Final score: ${analysis.finalScore}`,
-          `Final risk tier: ${analysis.finalRiskTier}`,
-          `Conflict findings: ${analysis.ruleAnalysis.findings.join(" | ")}`,
-          `Recommended actions: ${analysis.ruleAnalysis.recommendedActions.join(" | ")}`
+          `Conflict score: ${analysis.conflict_score}`,
+          `Agreement score: ${analysis.agreement_score}`,
+          `Summary: ${analysis.summary}`,
+          `Disagreements: ${analysis.disagreement_reason.join(" | ")}`
         ].join("\n")
       : "",
     "If the question is unsafe or asks for diagnosis/prescription, redirect to a clinician and explain why.",
