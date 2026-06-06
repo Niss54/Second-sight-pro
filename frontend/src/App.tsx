@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { ReconciliationPanel } from "./components/ReconciliationPanel";
 import { CaseFormPanel } from "./components/CaseFormPanel";
-import { CaseHistoryPanel } from "./components/CaseHistoryPanel";
+import { CaseHistoryDashboard } from "./components/CaseHistoryDashboard";
 import { VoiceAssistantPanel } from "./components/VoiceAssistantPanel";
 import { StatusBanner } from "./components/StatusBanner";
 import { AuthPanel } from "./components/AuthPanel";
@@ -26,6 +26,8 @@ function App() {
   const [analysis, setAnalysis] = useState<ReconciliationOutput | null>(null);
   const [caseList, setCaseList] = useState<CaseSummary[]>([]);
   const [activeCaseId, setActiveCaseId] = useState<string | null>(null);
+
+  const [currentView, setCurrentView] = useState<"intake" | "history">("intake");
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -157,6 +159,7 @@ function App() {
       setActiveCaseId(selected.id);
       setCaseData(selected.input);
       setAnalysis(selected.analysis);
+      setCurrentView("intake");
       notify("Case loaded.", "success");
     } catch {
       notify("Could not open selected case.", "error");
@@ -261,51 +264,71 @@ function App() {
 
       <StatusBanner message={statusMessage} tone={statusTone} />
 
-      <section className="top-meta">
-        <article>
-          <p>Active Case</p>
-          <strong>{caseData.caseLabel || "Unsaved case"}</strong>
-        </article>
-        <article>
-          <p>Case ID</p>
-          <strong>{activeCaseId || "Not saved"}</strong>
-        </article>
-        <article>
-          <p>Risk Snapshot</p>
-          <strong>{topRisk}</strong>
-        </article>
-      </section>
+      <nav className="top-nav">
+        <button
+          className={`nav-tab ${currentView === "intake" ? "active" : ""}`}
+          onClick={() => setCurrentView("intake")}
+        >
+          Active Case
+        </button>
+        <button
+          className={`nav-tab ${currentView === "history" ? "active" : ""}`}
+          onClick={() => setCurrentView("history")}
+        >
+          Case History
+        </button>
+      </nav>
 
-      <main className="content-grid">
-        <CaseFormPanel
-          caseData={caseData}
-          onChange={setCaseData}
-          onAnalyze={handleAnalyze}
-          onSave={handleSave}
-          onReset={handleReset}
-          onLoadDemo={handleLoadDemo}
-          isAnalyzing={isAnalyzing}
-          isSaving={isSaving}
+      {currentView === "intake" ? (
+        <>
+          <section className="top-meta">
+            <article>
+              <p>Active Case</p>
+              <strong>{caseData.caseLabel || "Unsaved case"}</strong>
+            </article>
+            <article>
+              <p>Case ID</p>
+              <strong>{activeCaseId || "Not saved"}</strong>
+            </article>
+            <article>
+              <p>Risk Snapshot</p>
+              <strong>{topRisk}</strong>
+            </article>
+          </section>
+
+          <main className="content-grid">
+            <CaseFormPanel
+              caseData={caseData}
+              onChange={setCaseData}
+              onAnalyze={handleAnalyze}
+              onSave={handleSave}
+              onReset={handleReset}
+              onLoadDemo={handleLoadDemo}
+              isAnalyzing={isAnalyzing}
+              isSaving={isSaving}
+            />
+
+            <div className="right-stack">
+              <VoiceAssistantPanel
+                caseData={caseData}
+                analysis={analysis}
+                onStatusChange={notify}
+              />
+              <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
+            </div>
+          </main>
+        </>
+      ) : (
+        <CaseHistoryDashboard
+          cases={caseList}
+          activeCaseId={activeCaseId}
+          isLoading={isHistoryLoading}
+          onRefresh={refreshCases}
+          onOpen={handleOpenCase}
+          onDelete={handleDeleteCase}
+          onReanalyze={handleReanalyzeCase}
         />
-
-        <div className="right-stack">
-          <VoiceAssistantPanel
-            caseData={caseData}
-            analysis={analysis}
-            onStatusChange={notify}
-          />
-          <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
-          <CaseHistoryPanel
-            cases={caseList}
-            activeCaseId={activeCaseId}
-            isLoading={isHistoryLoading}
-            onRefresh={refreshCases}
-            onOpen={handleOpenCase}
-            onDelete={handleDeleteCase}
-            onReanalyze={handleReanalyzeCase}
-          />
-        </div>
-      </main>
+      )}
 
       <footer className="footnote">
         <p>
