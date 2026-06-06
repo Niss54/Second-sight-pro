@@ -12,3 +12,7 @@ frontend/dist/
 *.log
 coverage/
 .DS_Store
+
+# Ignore nested repositories
+Healthcare-Assistant/
+medical-guideline-rag/
