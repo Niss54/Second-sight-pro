@@ -4,7 +4,7 @@ import { ReconciliationPanel } from "./components/ReconciliationPanel";
 import { CaseFormPanel } from "./components/CaseFormPanel";
 import { CaseHistoryDashboard } from "./components/CaseHistoryDashboard";
 import { VoiceAssistantPanel } from "./components/VoiceAssistantPanel";
-import { StatusBanner } from "./components/StatusBanner";
+import { ToastContainer, type ToastType } from "./components/ToastContainer";
 import { AuthPanel } from "./components/AuthPanel";
 import { useAuth } from "./contexts/AuthContext";
 import { LogOut } from "lucide-react";
@@ -33,8 +33,7 @@ function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
 
-  const [statusMessage, setStatusMessage] = useState<string>("");
-  const [statusTone, setStatusTone] = useState<"info" | "success" | "error">("info");
+  const [toasts, setToasts] = useState<ToastType[]>([]);
 
   const topRisk = useMemo(() => {
     if (!analysis) {
@@ -45,8 +44,15 @@ function App() {
   }, [analysis]);
 
   const notify = useCallback((message: string, tone: "info" | "success" | "error" = "info") => {
-    setStatusMessage(message);
-    setStatusTone(tone);
+    const id = Math.random().toString(36).substring(2, 9);
+    setToasts((prev) => [...prev, { id, message, tone }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  }, []);
+
+  const removeToast = useCallback((id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
   const refreshCases = useCallback(async () => {
@@ -262,7 +268,7 @@ function App() {
         </button>
       </header>
 
-      <StatusBanner message={statusMessage} tone={statusTone} />
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
 
       <nav className="top-nav">
         <button
