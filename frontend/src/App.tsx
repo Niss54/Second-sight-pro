@@ -1,6 +1,6 @@
-﻿import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css";
-import { AnalysisPanel } from "./components/AnalysisPanel";
+import { ReconciliationPanel } from "./components/ReconciliationPanel";
 import { CaseFormPanel } from "./components/CaseFormPanel";
 import { CaseHistoryPanel } from "./components/CaseHistoryPanel";
 import { VoiceAssistantPanel } from "./components/VoiceAssistantPanel";
@@ -15,11 +15,11 @@ import {
   reanalyzeCase,
   updateCase
 } from "./services/api";
-import type { CaseSummary, FullAnalysisResponse, PatientCaseInput } from "./types";
+import type { CaseSummary, ReconciliationOutput, PatientCaseInput } from "./types";
 
 function App() {
   const [caseData, setCaseData] = useState<PatientCaseInput>(() => createBlankCase());
-  const [analysis, setAnalysis] = useState<FullAnalysisResponse | null>(null);
+  const [analysis, setAnalysis] = useState<ReconciliationOutput | null>(null);
   const [caseList, setCaseList] = useState<CaseSummary[]>([]);
   const [activeCaseId, setActiveCaseId] = useState<string | null>(null);
 
@@ -35,7 +35,7 @@ function App() {
       return "No active analysis";
     }
 
-    return `${analysis.finalRiskTier.toUpperCase()} (${analysis.finalScore}/100)`;
+    return `${analysis.conflict_score}`;
   }, [analysis]);
 
   const notify = useCallback((message: string, tone: "info" | "success" | "error" = "info") => {
@@ -196,19 +196,16 @@ function App() {
       `SecondSight Executive Summary`,
       `Case: ${caseData.caseLabel || "Untitled case"}`,
       `Condition: ${caseData.primaryCondition}`,
-      `Final Risk: ${analysis.finalRiskTier} (${analysis.finalScore}/100)`,
-      `Rule Score: ${analysis.ruleAnalysis.conflictScore}/100`,
-      `ML Score: ${analysis.riskModel.modelScore}/100`,
+      `Final Conflict Score: ${analysis.conflict_score}`,
+      `Agreement Score: ${analysis.agreement_score}`,
       ``,
-      `Executive: ${analysis.aiInsight.executiveSummary}`,
-      `Patient Summary: ${analysis.aiInsight.patientSummary}`,
-      `Triage: ${analysis.aiInsight.triageAdvice}`,
+      `Summary: ${analysis.summary}`,
       ``,
-      `Recommended Actions:`,
-      ...analysis.ruleAnalysis.recommendedActions.map((item, index) => `${index + 1}. ${item}`),
+      `Disagreement Reasons:`,
+      ...analysis.disagreement_reason.map((item, index) => `${index + 1}. ${item}`),
       ``,
       `Specialist Questions:`,
-      ...analysis.ruleAnalysis.specialistQuestions.map((item, index) => `${index + 1}. ${item}`)
+      ...analysis.specialist_questions.map((item, index) => `${index + 1}. ${item}`)
     ];
 
     try {
@@ -273,7 +270,7 @@ function App() {
             analysis={analysis}
             onStatusChange={notify}
           />
-          <AnalysisPanel analysis={analysis} onCopySummary={handleCopySummary} />
+          <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
           <CaseHistoryPanel
             cases={caseList}
             activeCaseId={activeCaseId}

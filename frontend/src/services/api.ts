@@ -1,7 +1,7 @@
-﻿import axios from "axios";
+import axios from "axios";
 import type {
   CaseSummary,
-  FullAnalysisResponse,
+  ReconciliationOutput,
   PatientCaseInput,
   StoredCase,
   VoiceAssistantResponse
@@ -14,8 +14,8 @@ const http = axios.create({
   timeout: 30000
 });
 
-export async function analyzeCase(caseData: PatientCaseInput): Promise<FullAnalysisResponse> {
-  const response = await http.post<{ ok: boolean; analysis: FullAnalysisResponse }>("/analyze", {
+export async function analyzeCase(caseData: PatientCaseInput): Promise<ReconciliationOutput> {
+  const response = await http.post<{ ok: boolean; analysis: ReconciliationOutput }>("/reconciliation/compare", {
     caseData
   });
 
@@ -53,7 +53,7 @@ export async function reanalyzeCase(id: string): Promise<StoredCase> {
 
 export async function speakMedicalSummary(
   caseData: PatientCaseInput,
-  analysis?: FullAnalysisResponse
+  analysis?: ReconciliationOutput
 ): Promise<VoiceAssistantResponse> {
   const response = await http.post<{ ok: boolean; result: VoiceAssistantResponse }>("/voice/summary", {
     caseData,
@@ -66,7 +66,7 @@ export async function speakMedicalSummary(
 export async function askFollowupQuestion(
   caseData: PatientCaseInput,
   question: string,
-  analysis?: FullAnalysisResponse
+  analysis?: ReconciliationOutput
 ): Promise<VoiceAssistantResponse> {
   const response = await http.post<{ ok: boolean; result: VoiceAssistantResponse }>("/voice/followup", {
     caseData,
@@ -76,4 +76,3 @@ export async function askFollowupQuestion(
 
   return response.data.result;
 }
-

@@ -1,4 +1,4 @@
-﻿import { Router } from "express";
+import { Router } from "express";
 import { asyncHandler } from "../middleware/asyncHandler";
 import { createCase, deleteCase, findCaseById, listCases, updateCase } from "../store/caseStore";
 import {
@@ -6,7 +6,7 @@ import {
   createCaseRequestSchema,
   updateCaseRequestSchema
 } from "../utils/validation";
-import { runFullAnalysis } from "../services/analysisPipeline";
+import { reconcileOpinions } from "../services/opinionReconciliationEngine";
 
 export const casesRouter = Router();
 
@@ -22,8 +22,8 @@ casesRouter.get(
       caseLabel: entry.input.caseLabel || "Untitled case",
       primaryCondition: entry.input.primaryCondition,
       opinionsCount: entry.input.opinions.length,
-      finalScore: entry.analysis.finalScore,
-      finalRiskTier: entry.analysis.finalRiskTier
+      finalScore: entry.analysis.conflict_score,
+      finalRiskTier: "moderate" // Simplified for now or mapped properly
     }));
 
     res.json({
@@ -47,7 +47,7 @@ casesRouter.post(
       return;
     }
 
-    const analysis = await runFullAnalysis(parsed.data.caseData);
+    const analysis = reconcileOpinions(parsed.data.caseData);
     const created = await createCase(parsed.data.caseData, analysis);
 
     res.status(201).json({
@@ -105,7 +105,7 @@ casesRouter.put(
       return;
     }
 
-    const analysis = await runFullAnalysis(body.data.caseData);
+    const analysis = reconcileOpinions(body.data.caseData);
     const updated = await updateCase(params.data.id, body.data.caseData, analysis);
 
     if (!updated) {
@@ -142,7 +142,7 @@ casesRouter.post(
       return;
     }
 
-    const analysis = await runFullAnalysis(existing.input);
+    const analysis = reconcileOpinions(existing.input);
     const updated = await updateCase(existing.id, existing.input, analysis);
 
     res.json({

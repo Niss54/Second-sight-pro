@@ -1,5 +1,5 @@
-﻿import type { CaseSummary } from "../types";
-import { formatDate, riskTierLabel } from "../utils/format";
+import type { CaseSummary } from "../types";
+import { formatDate } from "../utils/format";
 
 interface CaseHistoryPanelProps {
   cases: CaseSummary[];
@@ -46,7 +46,7 @@ export function CaseHistoryPanel({
                 <h4>{item.caseLabel}</h4>
                 <p>{item.primaryCondition}</p>
                 <small>
-                  {riskTierLabel(item.finalRiskTier)} ({item.finalScore}/100) | {item.opinionsCount} opinions
+                  Conflict Score: {item.finalScore} | {item.opinionsCount} opinions
                 </small>
                 <small>Updated: {formatDate(item.updatedAt)}</small>
               </div>

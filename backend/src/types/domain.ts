@@ -1,4 +1,4 @@
-﻿export type UrgencyLevel = "routine" | "soon" | "urgent" | "emergency";
+export type UrgencyLevel = "routine" | "soon" | "urgent" | "emergency";
 
 export type RiskTier = "low" | "moderate" | "high";
 
@@ -31,6 +31,20 @@ export interface AlignmentMetrics {
   testAlignment: number;
   medicationConsistency: number;
   urgencyAgreement: number;
+}
+
+export interface StructuredDoctorOpinion {
+  doctor_id: string;
+  diagnosis: string[];
+  medications: string[];
+  tests_recommended: string[];
+  treatment_plan: string[];
+  urgency_level: UrgencyLevel;
+  specialist_type: string;
+  clinical_reasoning: string[];
+  precautions: string[];
+  followup_recommendation: string;
+  uncertainty_signals: string[];
 }
 
 export interface MedicationConflict {
@@ -78,13 +92,52 @@ export interface FullAnalysisResponse {
   aiInsight: AiInsight;
 }
 
+export interface CategoryComparison {
+  status: "agreement" | "partial_agreement" | "direct_contradiction" | "insufficient_data";
+  notes: string[];
+  agreement: number;
+}
+
+export interface ComparisonTable {
+  diagnosis: CategoryComparison;
+  treatment: CategoryComparison;
+  medicine: CategoryComparison;
+  tests: CategoryComparison;
+  urgency: CategoryComparison;
+}
+
+export interface UiBlock {
+  title: string;
+  color: "green" | "yellow" | "red";
+  items: string[];
+}
+
+export interface ReconciliationOutput {
+  summary: string;
+  conflict_score: string;
+  agreement_score: string;
+  disagreement_reason: string[];
+  comparison_table: ComparisonTable;
+  specialist_questions: string[];
+  evidence_needed: string[];
+  confidence_level: "low" | "medium" | "high";
+  manual_correction_required: boolean;
+  safety_disclaimer: string;
+  visual_explanation_blocks: UiBlock[];
+  multilingual_output: {
+    english: string;
+    hindi: string;
+    hinglish: string;
+  };
+}
+
 export interface StoredCase {
   id: string;
   ownerId?: string;
   createdAt: string;
   updatedAt: string;
   input: PatientCaseInput;
-  analysis: FullAnalysisResponse;
+  analysis: ReconciliationOutput;
 }
 
 export interface AuthenticatedUser {
@@ -161,6 +214,32 @@ export interface GroundedAnalysis extends FullAnalysisResponse {
   explainability: ExplainabilityBreakdown[];
   safetyWarnings: string[];
   multilingualSummaries: Record<SupportedLanguage, string>;
+}
+
+export interface ReconciliationComparison {
+  agreement_score: number;
+  conflict_score: number;
+  disagreement_categories: string[];
+  missing_information: string[];
+  key_conflicts: string[];
+  confidence_level: string;
+}
+
+export interface ReconciliationResponse {
+  summary: string;
+  conflict_score: string;
+  agreement_score: string;
+  disagreement_reason: string[];
+  comparison_table: Record<string, unknown>;
+  specialist_questions: string[];
+  evidence_needed: string[];
+  confidence_level: string;
+  multilingual_output: Record<SupportedLanguage, string>;
+  structured_opinions: StructuredDoctorOpinion[];
+  comparison: ReconciliationComparison;
+  safety_disclaimer: string;
+  explainability: ExplainabilityBreakdown[];
+  safetyWarnings: string[];
 }
 
 export interface VoiceSessionResponse {

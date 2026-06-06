@@ -4,8 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { env } from "./config/env";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
-import { evidenceRouter } from "./routes/evidenceRoutes";
 import { healthRouter } from "./routes/healthRoutes";
+import { reconciliationRouter } from "./routes/reconciliationRoutes";
 
 const app = express();
 
@@ -37,7 +37,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/health", healthRouter);
-app.use("/api/evidence", evidenceRouter);
+app.use("/api/reconciliation", reconciliationRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

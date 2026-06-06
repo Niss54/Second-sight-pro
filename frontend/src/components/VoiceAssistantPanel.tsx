@@ -1,6 +1,6 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Mic, PauseCircle, Send, Sparkles, Volume2, VolumeX } from "lucide-react";
-import type { FullAnalysisResponse, PatientCaseInput, VoiceAssistantResponse } from "../types";
+import type { ReconciliationOutput, PatientCaseInput, VoiceAssistantResponse } from "../types";
 import { askFollowupQuestion, speakMedicalSummary } from "../services/api";
 
 type TranscriptRole = "assistant" | "user" | "system";
@@ -28,7 +28,7 @@ interface TranscriptItem {
 
 interface VoiceAssistantPanelProps {
   caseData: PatientCaseInput;
-  analysis: FullAnalysisResponse | null;
+  analysis: ReconciliationOutput | null;
   onStatusChange?: (message: string, tone?: "info" | "success" | "error") => void;
 }
 
@@ -130,7 +130,7 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
       return "No analysis yet";
     }
 
-    return `Risk ${analysis.finalRiskTier.toUpperCase()} · ${analysis.finalScore}/100`;
+    return `Conflict Score · ${analysis.conflict_score}`;
   }, [analysis]);
 
   const appendTranscript = useCallback((role: TranscriptRole, text: string) => {
@@ -264,10 +264,10 @@ export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: Voic
     }
 
     return [
-      { label: "Diagnosis", value: Math.round(analysis.ruleAnalysis.metrics.diagnosisAlignment * 100) },
-      { label: "Treatment", value: Math.round(analysis.ruleAnalysis.metrics.treatmentAlignment * 100) },
-      { label: "Medication", value: Math.round(analysis.ruleAnalysis.metrics.medicationConsistency * 100) },
-      { label: "Urgency", value: Math.round(analysis.ruleAnalysis.metrics.urgencyAgreement * 100) }
+      { label: "Diagnosis", value: analysis.comparison_table.diagnosis.agreement },
+      { label: "Treatment", value: analysis.comparison_table.treatment.agreement },
+      { label: "Medication", value: analysis.comparison_table.medicine.agreement },
+      { label: "Urgency", value: analysis.comparison_table.urgency.agreement }
     ];
   }, [analysis]);
 

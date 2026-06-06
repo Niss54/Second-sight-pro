@@ -1,4 +1,4 @@
-﻿export type UrgencyLevel = "routine" | "soon" | "urgent" | "emergency";
+export type UrgencyLevel = "routine" | "soon" | "urgent" | "emergency";
 
 export type RiskTier = "low" | "moderate" | "high";
 
@@ -66,6 +66,45 @@ export interface AiInsight {
   conversationScript: string[];
 }
 
+export interface CategoryComparison {
+  status: "agreement" | "partial_agreement" | "direct_contradiction" | "insufficient_data";
+  notes: string[];
+  agreement: number;
+}
+
+export interface ComparisonTable {
+  diagnosis: CategoryComparison;
+  treatment: CategoryComparison;
+  medicine: CategoryComparison;
+  tests: CategoryComparison;
+  urgency: CategoryComparison;
+}
+
+export interface UiBlock {
+  title: string;
+  color: "green" | "yellow" | "red";
+  items: string[];
+}
+
+export interface ReconciliationOutput {
+  summary: string;
+  conflict_score: string;
+  agreement_score: string;
+  disagreement_reason: string[];
+  comparison_table: ComparisonTable;
+  specialist_questions: string[];
+  evidence_needed: string[];
+  confidence_level: "low" | "medium" | "high";
+  manual_correction_required: boolean;
+  safety_disclaimer: string;
+  visual_explanation_blocks: UiBlock[];
+  multilingual_output: {
+    english: string;
+    hindi: string;
+    hinglish: string;
+  };
+}
+
 export interface FullAnalysisResponse {
   generatedAt: string;
   ruleAnalysis: RuleAnalysis;
@@ -80,7 +119,7 @@ export interface StoredCase {
   createdAt: string;
   updatedAt: string;
   input: PatientCaseInput;
-  analysis: FullAnalysisResponse;
+  analysis: ReconciliationOutput;
 }
 
 export interface CaseSummary {
@@ -90,8 +129,7 @@ export interface CaseSummary {
   caseLabel: string;
   primaryCondition: string;
   opinionsCount: number;
-  finalScore: number;
-  finalRiskTier: RiskTier;
+  finalScore: string;
 }
 
 export interface EvidenceCitation {

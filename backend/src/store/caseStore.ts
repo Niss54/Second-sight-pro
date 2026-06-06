@@ -1,7 +1,7 @@
-﻿import { promises as fs } from "node:fs";
+import { promises as fs } from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import { FullAnalysisResponse, PatientCaseInput, StoredCase } from "../types/domain";
+import { ReconciliationOutput, PatientCaseInput, StoredCase } from "../types/domain";
 
 interface DbShape {
   cases: StoredCase[];
@@ -52,7 +52,7 @@ export async function findCaseById(id: string): Promise<StoredCase | undefined> 
 
 export async function createCase(
   input: PatientCaseInput,
-  analysis: FullAnalysisResponse
+  analysis: ReconciliationOutput
 ): Promise<StoredCase> {
   const db = await readDb();
   const now = new Date().toISOString();
@@ -73,7 +73,7 @@ export async function createCase(
 export async function updateCase(
   id: string,
   input: PatientCaseInput,
-  analysis: FullAnalysisResponse
+  analysis: ReconciliationOutput
 ): Promise<StoredCase | null> {
   const db = await readDb();
   const index = db.cases.findIndex((entry) => entry.id === id);

@@ -15,19 +15,17 @@ function buildCaseSummary(id: string, entry: Awaited<ReturnType<typeof findCaseB
     `Case ID: ${id}`,
     `Case Label: ${entry.input.caseLabel || "Untitled case"}`,
     `Condition: ${entry.input.primaryCondition}`,
-    `Final Score: ${entry.analysis.finalScore}/100`,
-    `Final Risk Tier: ${entry.analysis.finalRiskTier}`,
-    `Rule Score: ${entry.analysis.ruleAnalysis.conflictScore}/100`,
-    `ML Score: ${entry.analysis.riskModel.modelScore}/100`,
+    `Final Conflict Score: ${entry.analysis.conflict_score}`,
+    `Agreement Score: ${entry.analysis.agreement_score}`,
     ``,
-    `Executive Summary:`,
-    entry.analysis.aiInsight.executiveSummary,
+    `Summary:`,
+    entry.analysis.summary,
     ``,
-    `Recommended Actions:`,
-    ...entry.analysis.ruleAnalysis.recommendedActions.map((item, index) => `${index + 1}. ${item}`),
+    `Disagreement Reasons:`,
+    ...entry.analysis.disagreement_reason.map((item, index) => `${index + 1}. ${item}`),
     ``,
     `Specialist Questions:`,
-    ...entry.analysis.ruleAnalysis.specialistQuestions.map((item, index) => `${index + 1}. ${item}`)
+    ...entry.analysis.specialist_questions.map((item, index) => `${index + 1}. ${item}`)
   ];
 
   return lines.join("\n");
