@@ -8,6 +8,7 @@ import { healthRouter } from "./routes/healthRoutes";
 import { reconciliationRouter } from "./routes/reconciliationRoutes";
 import { casesRouter } from "./routes/caseRoutes";
 import { reportsRouter } from "./routes/reportRoutes";
+import { ocrRouter } from "./routes/ocrRoutes";
 import { voiceRouter } from "./routes/voiceRoutes";
 import { analysisRouter } from "./routes/analysisRoutes";
 
@@ -44,6 +45,7 @@ app.use("/api/health", healthRouter);
 app.use("/api/reconciliation", reconciliationRouter);
 app.use("/api/cases", casesRouter);
 app.use("/api/reports", reportsRouter);
+app.use("/api/ocr", ocrRouter);
 app.use("/api/voice", voiceRouter);
 app.use("/api/analyze", analysisRouter);
 

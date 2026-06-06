@@ -1,6 +1,7 @@
-﻿import type { PatientCaseInput } from "../types";
+import type { PatientCaseInput } from "../types";
 import { toLines } from "../utils/format";
 import { OpinionCard } from "./OpinionCard";
+import { DocumentUploadPanel } from "./DocumentUploadPanel";
 
 const MIN_OPINIONS = 2;
 const MAX_OPINIONS = 5;
@@ -71,8 +72,45 @@ export function CaseFormPanel({
     });
   };
 
+  const handleExtractionComplete = (type: "ocr" | "report", data: any) => {
+    if (type === "ocr") {
+      const newOpinion = {
+        doctorName: "Extracted Prescription",
+        specialty: "General",
+        urgency: "routine" as any,
+        diagnosis: "",
+        treatment: "",
+        prescriptions: data.medicines || [],
+        tests: data.tests || [],
+        notes: [
+          ...(data.doctor_notes || []),
+          data.dosage?.length ? "Dosage Info: " + data.dosage.join(", ") : ""
+        ].filter(Boolean).join("\n")
+      };
+      
+      if (caseData.opinions.length < MAX_OPINIONS) {
+        onChange({
+          ...caseData,
+          opinions: [...caseData.opinions, newOpinion]
+        });
+      } else {
+        // If max reached, replace the last one
+        updateOpinion(caseData.opinions.length - 1, newOpinion);
+      }
+    } else if (type === "report") {
+      onChange({
+        ...caseData,
+        primaryCondition: data.primaryCondition || caseData.primaryCondition,
+        patientAge: data.patientInfo?.age || caseData.patientAge,
+        comorbidities: Array.from(new Set([...caseData.comorbidities, ...(data.background ? [data.background] : [])])),
+        symptoms: Array.from(new Set([...caseData.symptoms, ...(data.keyFindings || [])]))
+      });
+    }
+  };
+
   return (
     <section className="panel input-panel">
+      <DocumentUploadPanel onExtractionComplete={handleExtractionComplete} />
       <div className="section-title-row">
         <h2>Case Intake</h2>
         <p>Capture 2-5 clinical opinions for conflict analysis</p>

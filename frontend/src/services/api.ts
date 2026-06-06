@@ -76,3 +76,36 @@ export async function askFollowupQuestion(
 
   return response.data.result;
 }
+
+export async function uploadPrescriptionImage(file: File): Promise<{
+  medicines: string[];
+  dosage: string[];
+  tests: string[];
+  doctor_notes: string[];
+}> {
+  const formData = new FormData();
+  formData.append("image", file);
+  const response = await http.post("/ocr/prescription", formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return response.data.result;
+}
+
+export async function uploadMedicalReportPdf(file: File): Promise<{
+  patientInfo: {
+    age?: number;
+    gender?: string;
+  };
+  primaryCondition: string;
+  background: string;
+  currentMedications: string[];
+  allergies: string[];
+  keyFindings: string[];
+}> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await http.post("/reports/extract", formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return response.data.result;
+}
