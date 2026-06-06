@@ -1,4 +1,4 @@
-﻿import cors from "cors";
+import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -6,6 +6,10 @@ import { env } from "./config/env";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 import { healthRouter } from "./routes/healthRoutes";
 import { reconciliationRouter } from "./routes/reconciliationRoutes";
+import { casesRouter } from "./routes/caseRoutes";
+import { reportsRouter } from "./routes/reportRoutes";
+import { voiceRouter } from "./routes/voiceRoutes";
+import { analysisRouter } from "./routes/analysisRoutes";
 
 const app = express();
 
@@ -38,6 +42,10 @@ app.get("/", (_req, res) => {
 
 app.use("/api/health", healthRouter);
 app.use("/api/reconciliation", reconciliationRouter);
+app.use("/api/cases", casesRouter);
+app.use("/api/reports", reportsRouter);
+app.use("/api/voice", voiceRouter);
+app.use("/api/analyze", analysisRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
