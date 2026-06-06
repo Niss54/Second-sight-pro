@@ -1,5 +1,6 @@
-import type { PatientCaseInput, SupportedLanguage, UrgencyLevel } from "../types/domain";
+import type { PatientCaseInput, SupportedLanguage, UrgencyLevel, EvidenceCitation } from "../types/domain";
 import { clamp01, normalizeText } from "../utils/text";
+import { createMedicalEvidenceEngine } from "../modules/medical-evidence-engine";
 
 type SourceType = "ocr" | "pdf" | "manual";
 type ConflictLevel = "Low conflict" | "Moderate conflict" | "High conflict";
@@ -92,6 +93,7 @@ export interface ReconciliationOutput {
     hindi: string;
     hinglish: string;
   };
+  citations?: EvidenceCitation[];
 }
 
 const safetyDisclaimer =
@@ -545,7 +547,7 @@ export function generatePatientSummary(
   };
 }
 
-export function reconcileOpinions(caseData: PatientCaseInput, language: SupportedLanguage = "en"): ReconciliationOutput {
+export async function reconcileOpinions(caseData: PatientCaseInput, language: SupportedLanguage = "en"): Promise<ReconciliationOutput> {
   const sources: OpinionSource[] = caseData.opinions.map((item, index) => ({
     sourceType: "manual",
     doctorId: item.doctorName || `doctor-${index + 1}`,
@@ -566,6 +568,15 @@ export function reconcileOpinions(caseData: PatientCaseInput, language: Supporte
   const reasons = explainDisagreement(structured, comparison);
   const questions = generateQuestions(comparison, reasons);
   const output = generatePatientSummary(comparison, reasons, questions, hasSevereSymptom(caseData));
+
+  // Retrieve evidence citations (RAG module)
+  const evidenceEngine = createMedicalEvidenceEngine();
+  const searchTerms = [
+    caseData.primaryCondition,
+    ...comparison.key_conflicts
+  ].filter(Boolean).join(" ");
+  
+  output.citations = await evidenceEngine.getCitations(searchTerms);
 
   if (language === "hi") {
     output.summary = output.multilingual_output.hindi;

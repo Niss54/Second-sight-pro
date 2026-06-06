@@ -72,6 +72,25 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
         <p><strong>Hinglish:</strong> {analysis.multilingual_output.hinglish}</p>
       </div>
 
+      {analysis.citations && analysis.citations.length > 0 && (
+        <div className="citations-section">
+          <h3>Medical Evidence Citations (RAG)</h3>
+          <div className="citations-list">
+            {analysis.citations.map((citation, idx) => (
+              <div key={`citation-${idx}`} className="citation-card">
+                <h4>{citation.title || citation.source}</h4>
+                <p>"{citation.snippet}"</p>
+                {citation.reference && (
+                  <a href={citation.reference} target="_blank" rel="noopener noreferrer" className="citation-link">
+                    Read Source
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="result-footer">
         <button type="button" className="button ghost" onClick={onCopySummary}>
           Copy Executive Summary
@@ -149,6 +168,49 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
           color: #ef4444;
           font-weight: bold;
           margin-top: 8px;
+        }
+        .citations-section {
+          margin-bottom: 24px;
+          background: #ffffff;
+          padding: 16px;
+          border-radius: 8px;
+          border: 1px solid #e2e8f0;
+        }
+        .citations-section h3 {
+          margin-top: 0;
+          color: #1e293b;
+          font-size: 1.1rem;
+        }
+        .citations-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .citation-card {
+          background: #f8fafc;
+          border-left: 3px solid #3b82f6;
+          padding: 12px;
+          border-radius: 4px;
+        }
+        .citation-card h4 {
+          margin: 0 0 8px 0;
+          color: #3b82f6;
+          font-size: 0.95rem;
+        }
+        .citation-card p {
+          margin: 0 0 8px 0;
+          font-size: 0.9rem;
+          color: #475569;
+          font-style: italic;
+        }
+        .citation-link {
+          font-size: 0.85rem;
+          color: #2563eb;
+          text-decoration: none;
+          font-weight: 500;
+        }
+        .citation-link:hover {
+          text-decoration: underline;
         }
       `}</style>
     </section>

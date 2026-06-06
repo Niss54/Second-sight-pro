@@ -47,7 +47,7 @@ casesRouter.post(
       return;
     }
 
-    const analysis = reconcileOpinions(parsed.data.caseData);
+    const analysis = await reconcileOpinions(parsed.data.caseData);
     const created = await createCase(parsed.data.caseData, analysis);
 
     res.status(201).json({
@@ -105,7 +105,7 @@ casesRouter.put(
       return;
     }
 
-    const analysis = reconcileOpinions(body.data.caseData);
+    const analysis = await reconcileOpinions(body.data.caseData);
     const updated = await updateCase(params.data.id, body.data.caseData, analysis);
 
     if (!updated) {
@@ -142,7 +142,7 @@ casesRouter.post(
       return;
     }
 
-    const analysis = reconcileOpinions(existing.input);
+    const analysis = await reconcileOpinions(existing.input);
     const updated = await updateCase(existing.id, existing.input, analysis);
 
     res.json({

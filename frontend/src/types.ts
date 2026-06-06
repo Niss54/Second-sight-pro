@@ -103,6 +103,7 @@ export interface ReconciliationOutput {
     hindi: string;
     hinglish: string;
   };
+  citations?: EvidenceCitation[];
 }
 
 export interface FullAnalysisResponse {
