@@ -1,4 +1,7 @@
+import { useState, useRef } from "react";
 import type { ReconciliationOutput, UiBlock } from "../types";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 interface ReconciliationPanelProps {
   analysis: ReconciliationOutput | null;
@@ -6,6 +9,34 @@ interface ReconciliationPanelProps {
 }
 
 export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationPanelProps) {
+  const [isExporting, setIsExporting] = useState(false);
+  const panelRef = useRef<HTMLElement>(null);
+
+  const handleExportPDF = async () => {
+    if (!panelRef.current) return;
+    setIsExporting(true);
+    try {
+      // Temporarily add a class to hide buttons during export
+      panelRef.current.classList.add("pdf-export-mode");
+      
+      const canvas = await html2canvas(panelRef.current, { scale: 2, useCORS: true });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("Medical_Reconciliation_Report.pdf");
+      
+      panelRef.current.classList.remove("pdf-export-mode");
+    } catch (error) {
+      console.error("PDF Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   if (!analysis) {
     return (
       <section className="panel result-panel">
@@ -34,7 +65,7 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
   };
 
   return (
-    <section className="panel result-panel">
+    <section className="panel result-panel" ref={panelRef}>
       <div className="section-title-row">
         <h2>Reconciliation Engine Output</h2>
         <p>Premium medical conflict analysis and explainability</p>
@@ -91,10 +122,15 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
         </div>
       )}
 
-      <div className="result-footer">
-        <button type="button" className="button ghost" onClick={onCopySummary}>
-          Copy Executive Summary
-        </button>
+      <div className="result-footer no-print">
+        <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
+          <button type="button" className="button ghost" onClick={onCopySummary}>
+            Copy Executive Summary
+          </button>
+          <button type="button" className="button primary" onClick={handleExportPDF} disabled={isExporting}>
+            {isExporting ? "Generating PDF..." : "Export to PDF"}
+          </button>
+        </div>
         <p>
           Safety notice: {analysis.safety_disclaimer}
         </p>
@@ -211,6 +247,9 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
         }
         .citation-link:hover {
           text-decoration: underline;
+        }
+        .pdf-export-mode .no-print {
+          display: none !important;
         }
       `}</style>
     </section>
