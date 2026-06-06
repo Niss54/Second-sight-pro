@@ -1,4 +1,5 @@
 import axios from "axios";
+import { supabase } from "./supabase";
 import type {
   CaseSummary,
   ReconciliationOutput,
@@ -12,6 +13,14 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080
 const http = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30000
+});
+
+http.interceptors.request.use(async (config) => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.access_token) {
+    config.headers.Authorization = `Bearer ${session.access_token}`;
+  }
+  return config;
 });
 
 export async function analyzeCase(caseData: PatientCaseInput): Promise<ReconciliationOutput> {

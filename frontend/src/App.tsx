@@ -5,6 +5,9 @@ import { CaseFormPanel } from "./components/CaseFormPanel";
 import { CaseHistoryPanel } from "./components/CaseHistoryPanel";
 import { VoiceAssistantPanel } from "./components/VoiceAssistantPanel";
 import { StatusBanner } from "./components/StatusBanner";
+import { AuthPanel } from "./components/AuthPanel";
+import { useAuth } from "./contexts/AuthContext";
+import { LogOut } from "lucide-react";
 import { createBlankCase, demoCase } from "./constants/caseTemplates";
 import {
   analyzeCase,
@@ -18,6 +21,7 @@ import {
 import type { CaseSummary, ReconciliationOutput, PatientCaseInput } from "./types";
 
 function App() {
+  const { user, isLoading: authLoading, signOut } = useAuth();
   const [caseData, setCaseData] = useState<PatientCaseInput>(() => createBlankCase());
   const [analysis, setAnalysis] = useState<ReconciliationOutput | null>(null);
   const [caseList, setCaseList] = useState<CaseSummary[]>([]);
@@ -56,14 +60,16 @@ function App() {
   }, [notify]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      void refreshCases();
-    }, 0);
+    if (user) {
+      const timer = window.setTimeout(() => {
+        void refreshCases();
+      }, 0);
 
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [refreshCases]);
+      return () => {
+        window.clearTimeout(timer);
+      };
+    }
+  }, [refreshCases, user]);
 
   const validateCaseData = (): boolean => {
     if (!caseData.primaryCondition.trim()) {
@@ -216,23 +222,41 @@ function App() {
     }
   };
 
+  if (authLoading) {
+    return <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>Loading...</div>;
+  }
+
+  if (!user) {
+    return (
+      <div className="app-shell">
+        <div className="ambient-bg" aria-hidden="true" />
+        <AuthPanel />
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell">
       <div className="ambient-bg" aria-hidden="true" />
 
-      <header className="hero">
-        <p className="eyebrow">Medical Voice Assistant</p>
-        <h1>SecondSight Pro</h1>
-        <p>
-          A premium voice-first medical assistant that explains conflicting second opinions with calm,
-          evidence-grounded guidance.
-        </p>
-        <div className="hero-badges">
-          <span>Voice Controls</span>
-          <span>Audio Visualizer</span>
-          <span>Realtime Interaction</span>
-          <span>Medically Responsible</span>
+      <header className="hero" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div>
+          <p className="eyebrow">Medical Voice Assistant</p>
+          <h1>SecondSight Pro</h1>
+          <p>
+            A premium voice-first medical assistant that explains conflicting second opinions with calm,
+            evidence-grounded guidance.
+          </p>
+          <div className="hero-badges">
+            <span>Voice Controls</span>
+            <span>Audio Visualizer</span>
+            <span>Realtime Interaction</span>
+            <span>Medically Responsible</span>
+          </div>
         </div>
+        <button onClick={signOut} className="button ghost" style={{ padding: "8px 12px", fontSize: "0.85rem" }}>
+          <LogOut size={16} /> Sign Out
+        </button>
       </header>
 
       <StatusBanner message={statusMessage} tone={statusTone} />

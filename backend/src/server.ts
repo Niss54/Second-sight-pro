@@ -41,13 +41,15 @@ app.get("/", (_req, res) => {
   });
 });
 
+import { requireAuth } from "./middleware/authMiddleware";
+
 app.use("/api/health", healthRouter);
-app.use("/api/reconciliation", reconciliationRouter);
-app.use("/api/cases", casesRouter);
-app.use("/api/reports", reportsRouter);
-app.use("/api/ocr", ocrRouter);
-app.use("/api/voice", voiceRouter);
-app.use("/api/analyze", analysisRouter);
+app.use("/api/reconciliation", requireAuth, reconciliationRouter);
+app.use("/api/cases", requireAuth, casesRouter);
+app.use("/api/reports", requireAuth, reportsRouter);
+app.use("/api/ocr", requireAuth, ocrRouter);
+app.use("/api/voice", requireAuth, voiceRouter);
+app.use("/api/analyze", requireAuth, analysisRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
