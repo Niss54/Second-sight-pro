@@ -1,53 +1,63 @@
-﻿# Medical Guideline RAG
+# SecondSight Pro 🩺🎤
+**Winner's Choice for Healthcare AI Hackathons**
 
-This repository has been reduced to a guideline retrieval backend that returns evidence-backed medical citations and a trusted, citation-grounded summary.
+SecondSight Pro is a premium, voice-first medical assistant that uses AI to analyze and reconcile conflicting medical second opinions. It provides evidence-grounded guidance, helping patients understand complex medical advice through a simple, interactive UI.
 
-## What is kept
-- Guideline retrieval
-- Citation engine
-- Trusted medical response generation
+![SecondSight Pro](frontend/public/vite.svg)
 
-## What is removed from the runtime surface
-- Chatbot and voice flows
-- Case analysis and opinion conflict logic
-- OCR and reporting flows
-- Frontend UI startup path
+## 🚀 Key Features
 
-## API
+1. **LLM Opinion Reconciliation Engine** 🧠
+   - Parses multiple doctor prescriptions (via OCR/Vision).
+   - Generates a "Conflict Score" between different medical opinions.
+   - Highlights areas of agreement vs. disagreement (e.g. Surgery vs. Physiotherapy).
 
-Base URL: `http://localhost:8080/api`
+2. **Medical Voice Assistant (LiveKit WebRTC)** 🎙️
+   - Real-time voice interaction with the AI.
+   - Speak in Hindi/Hinglish/English.
+   - Asks relevant follow-up questions to the user.
 
-- `GET /health`
-- `POST /evidence/search`
-- `POST /evidence/citations`
-- `POST /evidence/guidelines`
+3. **RAG Evidence Grounding (pgvector)** 📚
+   - Backed by real medical corpora (WHO Guidelines).
+   - Dynamically searches Vector Databases to cite sources.
+   - Renders "Confidence Scores" directly in the UI for medical safety.
 
-### Request body
+4. **Premium "Glassmorphism" UI** ✨
+   - State-of-the-art React frontend with Framer Motion animations.
+   - Built to impress judges instantly with sleek dashboard views and PDF exports.
 
-```json
-{
-  "query": "conflicting diabetes treatment",
-  "limit": 5,
-  "disease": "diabetes",
-  "specialty": "endocrinology",
-  "urgency": "soon",
-  "condition": "prescription mismatch",
-  "sources": ["WHO", "NIH"]
-}
-```
+## 🛠 Tech Stack
+- **Frontend**: React (Vite), TypeScript, Framer Motion, Axios, CSS Modules
+- **Backend**: Node.js, Express, TypeScript, LangChain
+- **AI/ML**: OpenAI (GPT-4o), Sarvam AI (Indic TTS/STT)
+- **Real-time Voice**: LiveKit Components
+- **Database**: Supabase (PostgreSQL + pgvector + Auth)
 
-## Service helpers
+## 📦 Setup Instructions
 
-The backend now exposes two retrieval helpers for direct use inside the API layer:
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/Niss54/Second-sight-pro.git
+   cd Second-sight-pro
+   npm run install-all
+   ```
 
-- `fetchEvidence()` returns the ranked evidence bundle and citations.
-- `fetchGuidelines()` returns the same evidence plus a grounded summary string.
+2. **Environment Setup**
+   Ensure your `.env` variables in `backend/.env` are set:
+   ```env
+   OPENAI_API_KEY=your_key
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_key
+   LIVEKIT_API_KEY=your_key
+   LIVEKIT_API_SECRET=your_secret
+   ```
 
-## Local run
+3. **Run the App**
+   ```bash
+   # Run both frontend and backend concurrently
+   npm run dev
+   ```
 
-```bash
-npm install
-npm run dev
-```
-
-The backend runs on `http://localhost:8080` by default.
+## 🏆 Hackathon Winning Edge
+What makes SecondSight Pro stand out? 
+Instead of being a generic "AI Chatbot", it specifically tackles the **Second Opinion Paradox** (when two doctors give opposing advice). By offering a Voice-First UI and strictly citing WHO guidelines via RAG, it addresses both **Accessibility** (Indic languages) and **Medical Hallucinations** (RAG + Safety Disclaimers).

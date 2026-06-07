@@ -8,6 +8,7 @@ import { ToastContainer, type ToastType } from "./components/ToastContainer";
 import { AuthPanel } from "./components/AuthPanel";
 import { useAuth } from "./contexts/AuthContext";
 import { LogOut } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { createBlankCase, demoCase } from "./constants/caseTemplates";
 import {
   analyzeCase,
@@ -285,56 +286,76 @@ function App() {
         </button>
       </nav>
 
-      {currentView === "intake" ? (
-        <>
-          <section className="top-meta">
-            <article>
-              <p>Active Case</p>
-              <strong>{caseData.caseLabel || "Unsaved case"}</strong>
-            </article>
-            <article>
-              <p>Case ID</p>
-              <strong>{activeCaseId || "Not saved"}</strong>
-            </article>
-            <article>
-              <p>Risk Snapshot</p>
-              <strong>{topRisk}</strong>
-            </article>
-          </section>
+      <main className="content-grid" style={{ position: "relative" }}>
+        <AnimatePresence mode="wait">
+          {currentView === "intake" ? (
+            <motion.div
+              key="intake"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+              style={{ display: "contents" }}
+            >
+              <>
+                <section className="top-meta" style={{ gridColumn: "1 / -1", marginBottom: "16px" }}>
+                  <article>
+                    <p>Active Case</p>
+                    <strong>{caseData.caseLabel || "Unsaved case"}</strong>
+                  </article>
+                  <article>
+                    <p>Case ID</p>
+                    <strong>{activeCaseId || "Not saved"}</strong>
+                  </article>
+                  <article>
+                    <p>Risk Snapshot</p>
+                    <strong>{topRisk}</strong>
+                  </article>
+                </section>
 
-          <main className="content-grid">
-            <CaseFormPanel
-              caseData={caseData}
-              onChange={setCaseData}
-              onAnalyze={handleAnalyze}
-              onSave={handleSave}
-              onReset={handleReset}
-              onLoadDemo={handleLoadDemo}
-              isAnalyzing={isAnalyzing}
-              isSaving={isSaving}
-            />
+                <CaseFormPanel
+                  caseData={caseData}
+                  onChange={setCaseData}
+                  onAnalyze={handleAnalyze}
+                  onSave={handleSave}
+                  onReset={handleReset}
+                  onLoadDemo={handleLoadDemo}
+                  isAnalyzing={isAnalyzing}
+                  isSaving={isSaving}
+                />
 
-            <div className="right-stack">
-              <VoiceAssistantPanel
-                caseData={caseData}
-                analysis={analysis}
-                onStatusChange={notify}
+                <div className="right-stack">
+                  <VoiceAssistantPanel
+                    caseData={caseData}
+                    analysis={analysis}
+                    onStatusChange={notify}
+                  />
+                  <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
+                </div>
+              </>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="history"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+              style={{ gridColumn: "1 / -1" }}
+            >
+              <CaseHistoryDashboard
+                cases={caseList}
+                activeCaseId={activeCaseId}
+                isLoading={isHistoryLoading}
+                onRefresh={refreshCases}
+                onOpen={handleOpenCase}
+                onDelete={handleDeleteCase}
+                onReanalyze={handleReanalyzeCase}
               />
-              <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
-            </div>
-          </main>
-        </>
-      ) : (
-        <CaseHistoryDashboard
-          cases={caseList}
-          activeCaseId={activeCaseId}
-          isLoading={isHistoryLoading}
-          onRefresh={refreshCases}
-          onOpen={handleOpenCase}
-          onDelete={handleDeleteCase}
-          onReanalyze={handleReanalyzeCase}
-        />
-      )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
 
       <footer className="footnote">
         <p>
