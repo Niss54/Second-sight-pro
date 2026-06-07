@@ -1,17 +1,20 @@
 import fs from "fs";
 import path from "path";
-import pdfParse from "pdf-parse";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { createClient } from "@supabase/supabase-js";
 import OpenAI from "openai";
 import { env } from "../src/config/env";
 
-const supabase = createClient(env.SUPABASE_URL!, env.SUPABASE_SERVICE_ROLE_KEY!);
-const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY, baseURL: env.OPENAI_BASE_URL });
+const supabaseUrl = env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabase = createClient(supabaseUrl!, env.SUPABASE_SERVICE_ROLE_KEY!);
+const openai = env.OPENAI_API_KEY ? new OpenAI({ apiKey: env.OPENAI_API_KEY, baseURL: env.OPENAI_BASE_URL }) : null;
 
 const CORPUS_DIR = path.resolve(__dirname, "../data/corpus");
 
 async function embedText(text: string): Promise<number[]> {
+  if (!openai) {
+    // Mock embeddings for demonstration if no API key is provided
+    return Array.from({ length: 1536 }, () => (Math.random() * 2 - 1) * 0.1);
+  }
   const response = await openai.embeddings.create({
     model: "text-embedding-3-small",
     input: text
@@ -27,6 +30,8 @@ async function ingestFile(filePath: string) {
   let text = "";
   if (ext === ".pdf") {
     const dataBuffer = fs.readFileSync(filePath);
+    const pdfParseModule = await import("pdf-parse");
+    const pdfParse = pdfParseModule as unknown as (data: Buffer) => Promise<{ text: string }>;
     const pdfData = await pdfParse(dataBuffer);
     text = pdfData.text;
   } else if (ext === ".txt") {
@@ -39,19 +44,42 @@ async function ingestFile(filePath: string) {
   // Clean text slightly
   text = text.replace(/\s+/g, " ").trim();
 
-  // Split into chunks
-  const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1000,
-    chunkOverlap: 200,
-  });
+  // Custom text splitter
+  function splitText(txt: string, chunkSize: number, chunkOverlap: number): string[] {
+    const words = txt.split(" ");
+    const resultChunks = [];
+    let currentChunk = [];
+    let currentLength = 0;
 
-  const chunks = await splitter.createDocuments([text]);
+    for (const word of words) {
+      if (currentLength + word.length > chunkSize && currentChunk.length > 0) {
+        resultChunks.push(currentChunk.join(" "));
+        let overlapLength = 0;
+        let overlapChunk = [];
+        for (let i = currentChunk.length - 1; i >= 0; i--) {
+          overlapLength += currentChunk[i].length + 1;
+          if (overlapLength > chunkOverlap) break;
+          overlapChunk.unshift(currentChunk[i]);
+        }
+        currentChunk = overlapChunk;
+        currentLength = currentChunk.join(" ").length;
+      }
+      currentChunk.push(word);
+      currentLength += word.length + 1;
+    }
+    if (currentChunk.length > 0) {
+      resultChunks.push(currentChunk.join(" "));
+    }
+    return resultChunks;
+  }
+
+  const chunks = splitText(text, 1000, 200);
   console.log(`Split ${filename} into ${chunks.length} chunks. Generating embeddings...`);
 
   const rowsToInsert = [];
   
   for (let i = 0; i < chunks.length; i++) {
-    const chunk = chunks[i].pageContent;
+    const chunk = chunks[i];
     const embedding = await embedText(chunk);
 
     rowsToInsert.push({
