@@ -1,26 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Mic, PauseCircle, Send, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { AlertTriangle, Mic, PauseCircle, Send, Sparkles, Volume2 } from "lucide-react";
 import type { ReconciliationOutput, PatientCaseInput, VoiceAssistantResponse } from "../types";
 import { askFollowupQuestion, speakMedicalSummary } from "../services/api";
-import { LiveKitRoom, RoomAudioRenderer, useVoiceAssistant, BarVisualizer } from "@livekit/components-react";
+import { LiveKitRoom, RoomAudioRenderer, useVoiceAssistant, BarVisualizer, VoiceAssistantControlBar } from "@livekit/components-react";
 import "@livekit/components-styles";
 
 type TranscriptRole = "assistant" | "user" | "system";
 
-type SpeechRecognitionLike = {
-  lang: string;
-  interimResults: boolean;
-  continuous: boolean;
-  start: () => void;
-  stop: () => void;
-  onresult: ((event: {
-    results: ArrayLike<{
-      0: { transcript: string };
-      isFinal: boolean;
-    }>;
-  }) => void) | null;
-  onend: (() => void) | null;
-};
+
 
 interface TranscriptItem {
   id: string;
@@ -43,70 +30,6 @@ function splitIntoChunks(text: string): string[] {
     .split(/(?<=[.!?])\s+/)
     .map((part) => part.trim())
     .filter(Boolean);
-}
-
-function useSpeechRecognition() {
-  const [supported] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-
-    const browserWindow = window as Window & {
-      webkitSpeechRecognition?: new () => SpeechRecognitionLike;
-      SpeechRecognition?: new () => SpeechRecognitionLike;
-    };
-
-    return Boolean(browserWindow.SpeechRecognition || browserWindow.webkitSpeechRecognition);
-  });
-
-  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
-
-  const stop = useCallback(() => {
-    recognitionRef.current?.stop();
-    recognitionRef.current = null;
-  }, []);
-
-  const start = useCallback(
-    (onResult: (text: string, interim: boolean) => void, onEnd?: () => void) => {
-      const SpeechRecognitionCtor =
-        (window as Window & {
-          webkitSpeechRecognition?: new () => SpeechRecognitionLike;
-          SpeechRecognition?: new () => SpeechRecognitionLike;
-        }).SpeechRecognition ??
-        (window as Window & {
-          webkitSpeechRecognition?: new () => SpeechRecognitionLike;
-          SpeechRecognition?: new () => SpeechRecognitionLike;
-        }).webkitSpeechRecognition;
-
-      if (!SpeechRecognitionCtor) {
-        return false;
-      }
-
-      const recognition = new SpeechRecognitionCtor();
-      recognition.lang = "en-US";
-      recognition.interimResults = true;
-      recognition.continuous = false;
-
-      recognition.onresult = (event) => {
-        const results = Array.from(event.results);
-        const transcript = results.map((result) => result[0]?.transcript ?? "").join(" ").trim();
-        const isFinal = event.results[event.results.length - 1]?.isFinal ?? false;
-        onResult(transcript, !isFinal);
-      };
-
-      recognition.onend = () => {
-        recognitionRef.current = null;
-        onEnd?.();
-      };
-
-      recognition.start();
-      recognitionRef.current = recognition;
-      return true;
-    },
-    []
-  );
-
-  return { supported, start, stop };
 }
 
 export function VoiceAssistantPanel({ caseData, analysis, onStatusChange }: VoiceAssistantPanelProps) {
@@ -149,14 +72,14 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
   ]);
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [isLoadingFollowup, setIsLoadingFollowup] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isListening, setIsListening] = useState(false);
+  const [isRestSpeaking, setIsRestSpeaking] = useState(false);
   const [voiceResponse, setVoiceResponse] = useState<VoiceAssistantResponse | null>(null);
-  const [liveText, setLiveText] = useState("");
 
   const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
-  const recognition = useSpeechRecognition();
   const livekitVoice = useVoiceAssistant();
+  
+  const isSpeaking = isRestSpeaking || livekitVoice.state === "speaking";
+  const isListening = livekitVoice.state === "listening";
 
   const medicalModeLabel = useMemo(() => {
     if (!analysis) {
@@ -176,15 +99,15 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
     }
 
     if (audioBase64) {
-      setIsSpeaking(true);
+      setIsRestSpeaking(true);
       const audio = new Audio(`data:audio/wav;base64,${audioBase64}`);
       setAudioEl(audio);
-      audio.onended = () => setIsSpeaking(false);
-      audio.onerror = () => setIsSpeaking(false);
+      audio.onended = () => setIsRestSpeaking(false);
+      audio.onerror = () => setIsRestSpeaking(false);
       try {
         await audio.play();
       } catch (e) {
-        setIsSpeaking(false);
+        setIsRestSpeaking(false);
         console.error("Playback failed", e);
       }
       return;
@@ -196,7 +119,7 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
     }
 
     window.speechSynthesis.cancel();
-    setIsSpeaking(true);
+    setIsRestSpeaking(true);
 
     const chunks = splitIntoChunks(text);
     for (const chunk of chunks) {
@@ -211,7 +134,7 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
       });
     }
 
-    setIsSpeaking(false);
+    setIsRestSpeaking(false);
   }, [audioEl]);
 
   const interruptSpeech = useCallback(() => {
@@ -221,11 +144,9 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
     if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
-    recognition.stop();
-    setIsSpeaking(false);
-    setIsListening(false);
+    setIsRestSpeaking(false);
     onStatusChange?.("Voice output interrupted.", "info");
-  }, [audioEl, onStatusChange, recognition]);
+  }, [audioEl, onStatusChange]);
 
   useEffect(() => {
     return () => {
@@ -233,9 +154,8 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
       if (typeof window !== "undefined" && window.speechSynthesis) {
         window.speechSynthesis.cancel();
       }
-      recognition.stop();
     };
-  }, [audioEl, recognition]);
+  }, [audioEl]);
 
   const handleSpeakSummary = useCallback(async () => {
     if (!analysis) {
@@ -280,35 +200,7 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
     }
   }, [analysis, appendTranscript, caseData, onStatusChange, question, speakChunks]);
 
-  const toggleListening = useCallback(() => {
-    if (isListening) {
-      recognition.stop();
-      setIsListening(false);
-      onStatusChange?.("Listening stopped.", "info");
-      return;
-    }
 
-    const started = recognition.start(
-      (text, interim) => {
-        setLiveText(text);
-        if (!interim) {
-          setQuestion(text);
-        }
-      },
-      () => {
-        setIsListening(false);
-      }
-    );
-
-    if (!started) {
-      onStatusChange?.("Speech recognition is not supported in this browser.", "error");
-      return;
-    }
-
-    setLiveText("");
-    setIsListening(true);
-    onStatusChange?.("Listening for your question...", "info");
-  }, [isListening, onStatusChange, recognition]);
 
   const metricRows = useMemo(() => {
     if (!analysis) {
@@ -343,7 +235,7 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
         </div>
         <div className="voice-status">
           <span>{medicalModeLabel}</span>
-          <span>{isSpeaking ? "Speaking" : isListening ? "Listening" : "Standby"}</span>
+          <span>{livekitVoice.state === "disconnected" ? "Standby" : livekitVoice.state}</span>
         </div>
       </div>
 
@@ -384,18 +276,12 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
             >
               {isLoadingSummary ? "Generating..." : "Speak Summary"}
             </button>
-            <button
-              type="button"
-              className="button ghost"
-              onClick={toggleListening}
-              disabled={isLoadingFollowup || !recognition.supported}
-            >
-              {isListening ? <VolumeX size={16} /> : <Mic size={16} />}
-              {isListening ? "Stop Listening" : "Start Listening"}
-            </button>
+            <div className="livekit-control-bar-wrapper">
+              <VoiceAssistantControlBar controls={{ leave: false }} />
+            </div>
             <button type="button" className="button ghost" onClick={interruptSpeech}>
               <PauseCircle size={16} />
-              Interrupt
+              Interrupt Text Speech
             </button>
           </div>
         </div>
@@ -419,7 +305,6 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
             placeholder="Example: Why are the doctors disagreeing about surgery?"
             rows={4}
           />
-          {liveText ? <p className="live-caption">Heard: {liveText}</p> : null}
 
           <div className="voice-actions compact">
             <button type="button" className="button primary" onClick={handleAskFollowup} disabled={isLoadingFollowup}>

@@ -1054,6 +1054,33 @@ textarea:focus {
   animation: spin 1s linear infinite;
 }
 
+.livekit-control-bar-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* livekit component overrides */
+.livekit-control-bar-wrapper .lk-control-bar {
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.livekit-control-bar-wrapper .lk-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+}
+
+.livekit-control-bar-wrapper .lk-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 /* --- Toast Notifications --- */
 
 .toast-container {
