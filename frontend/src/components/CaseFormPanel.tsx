@@ -100,10 +100,10 @@ export function CaseFormPanel({
     } else if (type === "report") {
       onChange({
         ...caseData,
-        primaryCondition: data.primaryCondition || caseData.primaryCondition,
+        primaryCondition: data.diagnosis || data.primaryCondition || caseData.primaryCondition,
         patientAge: data.patientInfo?.age || caseData.patientAge,
-        comorbidities: Array.from(new Set([...caseData.comorbidities, ...(data.background ? [data.background] : [])])),
-        symptoms: Array.from(new Set([...caseData.symptoms, ...(data.keyFindings || [])]))
+        comorbidities: Array.from(new Set([...caseData.comorbidities, ...(data.report_type ? [data.report_type] : []), ...(data.background ? [data.background] : [])])),
+        symptoms: Array.from(new Set([...caseData.symptoms, ...(data.observations || []), ...(data.keyFindings || [])]))
       });
     }
   };
