@@ -109,7 +109,12 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
           <div className="citations-list">
             {analysis.citations.map((citation, idx) => (
               <div key={`citation-${idx}`} className="citation-card">
-                <h4>{citation.title || citation.source}</h4>
+                <div className="citation-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <h4 style={{ margin: 0 }}>{citation.title || citation.source}</h4>
+                  <span className="confidence-badge" style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: '12px', background: citation.confidence > 0.8 ? '#dcfce7' : citation.confidence > 0.5 ? '#fef08a' : '#fee2e2', color: citation.confidence > 0.8 ? '#166534' : citation.confidence > 0.5 ? '#854d0e' : '#991b1b', fontWeight: 600 }}>
+                    Confidence: {Math.round(citation.confidence * 100)}%
+                  </span>
+                </div>
                 <p>"{citation.snippet}"</p>
                 {citation.reference && (
                   <a href={citation.reference} target="_blank" rel="noopener noreferrer" className="citation-link">
