@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import type { CaseSummary } from "../types";
 import { formatDate } from "../utils/format";
 import { Search, FolderOpen, RefreshCw, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface CaseHistoryDashboardProps {
   cases: CaseSummary[];
@@ -81,14 +82,20 @@ export const CaseHistoryDashboard: React.FC<CaseHistoryDashboardProps> = ({
               </tr>
             </thead>
             <tbody>
-              {filteredCases.map((item) => {
+              {filteredCases.map((item, index) => {
                 const scoreNum = item.finalScore ? parseFloat(item.finalScore) : NaN;
                 const scoreClass = !isNaN(scoreNum) 
                   ? (scoreNum >= 0.7 ? "high" : scoreNum >= 0.4 ? "moderate" : "low") 
                   : "low";
                 
                 return (
-                  <tr key={item.id} className={activeCaseId === item.id ? "active-row" : ""}>
+                  <motion.tr 
+                    key={item.id} 
+                    className={activeCaseId === item.id ? "active-row" : ""}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                  >
                     <td>
                       <strong>{item.caseLabel || "Untitled"}</strong>
                       {activeCaseId === item.id && <span className="active-badge">Active</span>}
@@ -112,7 +119,7 @@ export const CaseHistoryDashboard: React.FC<CaseHistoryDashboardProps> = ({
                       <Trash2 size={16} />
                     </button>
                   </td>
-                </tr>
+                </motion.tr>
                 );
               })}
             </tbody>
