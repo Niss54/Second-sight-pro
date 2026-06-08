@@ -22,9 +22,14 @@ SecondSight Pro is a premium, voice-first medical assistant that uses AI to anal
    - Dynamically searches Vector Databases to cite sources.
    - Renders "Confidence Scores" directly in the UI for medical safety.
 
-4. **Premium "Glassmorphism" UI** ✨
-   - State-of-the-art React frontend with Framer Motion animations.
-   - Built to impress judges instantly with sleek dashboard views and PDF exports.
+4. **One-Click WhatsApp Share** 📱
+   - Doctors can instantly share the "Executive Summary" directly to a patient's WhatsApp.
+   - Generates a beautifully formatted text report with Conflict Scores, Summaries, and actionable questions.
+   - Zero-friction communication without requiring backend API setups.
+
+5. **Premium "Glassmorphism" UI** ✨
+   - State-of-the-art React frontend with staggered Framer Motion micro-animations.
+   - Built to impress judges instantly with sleek dashboard views, smooth page transitions, and PDF exports.
 
 ## 🛠 Tech Stack
 - **Frontend**: React (Vite), TypeScript, Framer Motion, Axios, CSS Modules
