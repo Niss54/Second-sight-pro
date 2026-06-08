@@ -37,6 +37,23 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
     }
   };
 
+  const handleShareWhatsApp = () => {
+    if (!analysis) return;
+    
+    const text = `*SecondSight Pro - Executive Summary*\n\n` +
+      `*Risk Snapshot:* ${analysis.conflict_score}\n` +
+      `*Agreement:* ${analysis.agreement_score}\n\n` +
+      `*Summary:*\n${analysis.summary}\n\n` +
+      `*Why disagreement may exist:*\n` +
+      analysis.disagreement_reason.map((r, i) => `${i + 1}. ${r}`).join('\n') + `\n\n` +
+      `*Questions to ask specialist:*\n` +
+      analysis.specialist_questions.map((q) => `• ${q}`).join('\n') + `\n\n` +
+      `_Note: ${analysis.safety_disclaimer}_`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   if (!analysis) {
     return (
       <section className="panel result-panel">
@@ -128,12 +145,15 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
       )}
 
       <div className="result-footer no-print">
-        <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
+        <div style={{ display: "flex", gap: "12px", marginBottom: "12px", flexWrap: "wrap" }}>
           <button type="button" className="button ghost" onClick={onCopySummary}>
-            Copy Executive Summary
+            Copy Summary
           </button>
           <button type="button" className="button primary" onClick={handleExportPDF} disabled={isExporting}>
             {isExporting ? "Generating PDF..." : "Export to PDF"}
+          </button>
+          <button type="button" className="button" style={{ backgroundColor: "#25D366", color: "white", borderColor: "#25D366" }} onClick={handleShareWhatsApp}>
+            Share via WhatsApp
           </button>
         </div>
         <p>
