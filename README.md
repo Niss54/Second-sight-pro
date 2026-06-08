@@ -1,68 +1,154 @@
-# SecondSight Pro 🩺🎤
-**Winner's Choice for Healthcare AI Hackathons**
+<div align="center">
 
-SecondSight Pro is a premium, voice-first medical assistant that uses AI to analyze and reconcile conflicting medical second opinions. It provides evidence-grounded guidance, helping patients understand complex medical advice through a simple, interactive UI.
+# 🩺🎤 SecondSight Pro
 
-![SecondSight Pro](frontend/public/vite.svg)
+**Intelligent Medical Second Opinion Reconciliation & RAG-Powered Voice Assistant**
 
-## 🚀 Key Features
+*Built for Next-Gen Healthcare AI Hackathons*
+
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](#)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](#)
+[![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)](#)
+[![LiveKit](https://img.shields.io/badge/LiveKit-FF3366?style=for-the-badge&logo=livekit&logoColor=white)](#)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](#)
+
+*SecondSight Pro is a unified platform combining real-time voice interaction, medical OCR, LLM-based opinion conflict resolution, and evidence grounding via pgvector — all in a single, scalable deployment.*
+
+</div>
+
+<hr/>
+
+## 🎯 The Vision & Problem Statement
+
+Patients seeking a **Second Medical Opinion** face an impossible dilemma today: How do they navigate conflicting advice from two different specialists without possessing a medical degree?
+
+* **The Paradox of Choice:** Doctor A suggests immediate surgery. Doctor B suggests 6 months of physiotherapy. The patient is left confused, anxious, and paralyzed.
+* **Medical Hallucinations:** Using generic AI chatbots (like ChatGPT) for medical advice is extremely dangerous due to hallucinations and lack of evidence grounding.
+* **Accessibility Barriers:** Complex medical jargon is hard to read. Patients often need someone to *explain* it to them simply, in their native language.
+
+## 💡 Solution Overview
+
+**SecondSight Pro** acts as an unbiased, intelligent mediator:
+1. **Intakes Multiple Opinions:** Reads prescriptions via OCR and extracts Doctor A vs Doctor B's diagnoses.
+2. **Generates a Conflict Score:** Objectively measures how different the two opinions actually are.
+3. **Evidence Grounding (RAG):** Cross-references the conflict against **WHO Medical Guidelines** using Supabase `pgvector`.
+4. **Voice-First Empathy:** Explains the situation to the patient over a real-time WebRTC Voice call (using LiveKit), answering follow-up questions in native languages.
+
+---
+
+## ⚔️ Why We Are Different (USP & Comparison)
+
+| Feature / Platform | Generic LLMs (ChatGPT) | Traditional Telemed Apps | **SecondSight Pro** 🚀 |
+| :--- | :---: | :---: | :---: |
+| **Conflict Resolution** | ❌ Gets confused/agrees with prompt | ❌ Only connects to doctors | ✅ Explicitly reconciles opposing opinions |
+| **Medical Evidence (RAG)** | ❌ Hallucinates treatments | ❌ Manual checking | ✅ Grounded in WHO Clinical Guidelines |
+| **Real-time WebRTC Voice** | 🟡 Native app only | ✅ Doctor calls | ✅ Low-latency AI Voice Assistant |
+| **Actionable Next Steps** | 🟡 Generic advice | ❌ Dependent on doctor | ✅ Generates "Questions to ask your specialist" |
+| **Instant WhatsApp Share** | ❌ Copy-paste | 🟡 App-dependent | ✅ One-click deep-link WhatsApp sharing |
+
+---
+
+## ⚙️ System Architecture & Workflow
+
+```mermaid
+graph TD
+  subgraph Client [Frontend UI - React/Vite]
+    Intake[Patient Intake & OCR Upload]
+    VoiceUI[LiveKit Voice Interface]
+    Dash[Glassmorphism Dashboard]
+  end
+
+  subgraph AI_Engine [Backend - Express/Node]
+    Router[Express Router]
+    Recon[LLM Reconciliation Engine]
+    DocExtract[Medical Data Extractor]
+  end
+
+  subgraph Database [Vector Store & Auth]
+    Auth[Supabase Auth]
+    PGVector[(pgvector - WHO Guidelines)]
+  end
+
+  Intake -->|Prescription Image| Router
+  Router --> DocExtract
+  DocExtract -->|Structured Data| Recon
+  Recon -->|Cosine Similarity Search| PGVector
+  PGVector -->|Grounded Evidence| Recon
+  Recon -->|Conflict Score & Summary| Dash
+  
+  VoiceUI <-->|WebRTC| LiveKitCloud[LiveKit Cloud]
+  LiveKitCloud <-->|Audio Stream| VoiceWorker[Voice AI Worker]
+  VoiceWorker --> Recon
+```
+
+---
+
+## ✨ Key Features
 
 1. **LLM Opinion Reconciliation Engine** 🧠
-   - Parses multiple doctor prescriptions (via OCR/Vision).
-   - Generates a "Conflict Score" between different medical opinions.
-   - Highlights areas of agreement vs. disagreement (e.g. Surgery vs. Physiotherapy).
-
+   - Evaluates "Agreement vs Disagreement" computationally.
 2. **Medical Voice Assistant (LiveKit WebRTC)** 🎙️
-   - Real-time voice interaction with the AI.
-   - Speak in Hindi/Hinglish/English.
-   - Asks relevant follow-up questions to the user.
-
+   - Interruptible, real-time voice interaction with the AI.
 3. **RAG Evidence Grounding (pgvector)** 📚
-   - Backed by real medical corpora (WHO Guidelines).
-   - Dynamically searches Vector Databases to cite sources.
-   - Renders "Confidence Scores" directly in the UI for medical safety.
-
+   - Backed by real medical corpora (WHO Guidelines). Renders "Confidence Scores" dynamically.
 4. **One-Click WhatsApp Share** 📱
-   - Doctors can instantly share the "Executive Summary" directly to a patient's WhatsApp.
-   - Generates a beautifully formatted text report with Conflict Scores, Summaries, and actionable questions.
-   - Zero-friction communication without requiring backend API setups.
-
+   - Doctors/Patients can instantly share the "Executive Summary" directly via WhatsApp deep-links.
 5. **Premium "Glassmorphism" UI** ✨
    - State-of-the-art React frontend with staggered Framer Motion micro-animations.
-   - Built to impress judges instantly with sleek dashboard views, smooth page transitions, and PDF exports.
+
+---
 
 ## 🛠 Tech Stack
-- **Frontend**: React (Vite), TypeScript, Framer Motion, Axios, CSS Modules
-- **Backend**: Node.js, Express, TypeScript, LangChain
-- **AI/ML**: OpenAI (GPT-4o), Sarvam AI (Indic TTS/STT)
-- **Real-time Voice**: LiveKit Components
-- **Database**: Supabase (PostgreSQL + pgvector + Auth)
 
-## 📦 Setup Instructions
+| Component | Technology |
+| :--- | :--- |
+| **Frontend** | React, TypeScript, Vite, Framer Motion, CSS Modules |
+| **Backend API** | Node.js, Express, TypeScript |
+| **Primary AI Logic** | OpenAI GPT-4o, LangChain |
+| **Voice Infrastructure** | LiveKit WebRTC, @livekit/components-react |
+| **Voice STT/TTS** | Sarvam AI (Indic language fallback support) |
+| **Vector DB / Auth** | Supabase (PostgreSQL + pgvector) |
+| **Deployment** | Vercel (Frontend), Railway/Docker (Backend) |
 
-1. **Clone & Install**
-   ```bash
-   git clone https://github.com/Niss54/Second-sight-pro.git
-   cd Second-sight-pro
-   npm run install-all
-   ```
+---
 
-2. **Environment Setup**
-   Ensure your `.env` variables in `backend/.env` are set:
-   ```env
-   OPENAI_API_KEY=your_key
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_key
-   LIVEKIT_API_KEY=your_key
-   LIVEKIT_API_SECRET=your_secret
-   ```
+## 🚀 Setup & Run Instructions
 
-3. **Run the App**
-   ```bash
-   # Run both frontend and backend concurrently
-   npm run dev
-   ```
+### 1. Database Setup (Supabase)
+Run the provided SQL migration in your Supabase SQL Editor:
+`backend/src/db/migrations/01_rag_setup.sql`
 
-## 🏆 Hackathon Winning Edge
-What makes SecondSight Pro stand out? 
-Instead of being a generic "AI Chatbot", it specifically tackles the **Second Opinion Paradox** (when two doctors give opposing advice). By offering a Voice-First UI and strictly citing WHO guidelines via RAG, it addresses both **Accessibility** (Indic languages) and **Medical Hallucinations** (RAG + Safety Disclaimers).
+### 2. Backend Environment (`backend/.env`)
+```env
+OPENAI_API_KEY=sk-yourkey
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-key
+LIVEKIT_API_KEY=your_key
+LIVEKIT_API_SECRET=your_secret
+```
+
+### 3. Install & Start
+```bash
+# Clone the repository
+git clone https://github.com/Niss54/Second-sight-pro.git
+cd Second-sight-pro
+
+# Install dependencies for both frontend and backend
+npm run install-all
+
+# Run the full stack concurrently
+npm run dev
+```
+
+### 4. Ingest Medical Data (Optional)
+To test the RAG engine locally:
+```bash
+cd backend
+npm run ingest
+```
+
+<div align="center">
+  <br/>
+  <i>"5,000 conflicting opinions given every day. SecondSight Pro ensures patients are never lost in the confusion."</i>
+</div>
