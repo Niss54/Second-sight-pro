@@ -26,6 +26,30 @@
   --radius-sm: 12px;
 }
 
+html.dark {
+  --bg-0: #0a1114;
+  --bg-1: #0f1a1d;
+  --bg-2: #142226;
+  --card: rgba(18, 30, 34, 0.72);
+  --card-strong: rgba(24, 40, 46, 0.88);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --ink-900: #f0f6f8;
+  --ink-700: #c1d2d8;
+  --ink-500: #93aeb8;
+  --ink-300: #597a85;
+  --teal: #1cb5a8;
+  --teal-deep: #2fe3d4;
+  --sky: #5e8cf2;
+  --sky-soft: #1d2a45;
+  --mint: #15332c;
+  --amber: #d9913c;
+  --danger: #d95e52;
+  --shadow-lg: 0 25px 70px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
 * {
   box-sizing: border-box;
 }
