@@ -103,6 +103,144 @@ a {
   z-index: -1;
 }
 
+html.dark .ambient-bg {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(28, 181, 168, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(94, 140, 242, 0.12), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(217, 145, 60, 0.08), transparent 40%);
+}
+
+.nav-pill {
+  width: fit-content;
+  margin: 16px auto 32px;
+  border-radius: 999px;
+  padding: 8px 16px;
+  background: var(--card);
+  backdrop-filter: blur(24px) saturate(150%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+  transition: all 0.3s ease;
+}
+
+html.dark .nav-pill {
+  background: rgba(10, 17, 20, 0.6);
+  border: 1px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: 
+    linear-gradient(to right, rgba(10, 17, 20, 0.6), rgba(10, 17, 20, 0.6)),
+    linear-gradient(90deg, #1cb5a8, #5e8cf2, #d9913c, #1cb5a8);
+  box-shadow: 0 4px 30px rgba(28, 181, 168, 0.15);
+}
+
+.home-section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.home-section:last-child {
+  border-bottom: none;
+}
+
+.home-section-title {
+  font-family: ui-serif, Georgia, serif;
+  font-size: 2.5rem;
+  margin-bottom: 32px;
+  text-align: center;
+  letter-spacing: -0.03em;
+}
+
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: var(--card);
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 18px 24px;
+  background: transparent;
+  color: var(--ink-900);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-answer {
+  padding: 0 24px 24px;
+  color: var(--ink-700);
+  line-height: 1.6;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin: 16px 0 12px;
+}
+
+.feature-card p {
+  color: var(--ink-700);
+  line-height: 1.6;
+}
+
+.comparison-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.comparison-table th {
+  background: rgba(13, 124, 115, 0.05);
+  font-weight: 700;
+}
+
+html.dark .comparison-table th {
+  background: rgba(28, 181, 168, 0.05);
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
 .hero {
   display: grid;
   gap: 10px;
