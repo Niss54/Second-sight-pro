@@ -132,6 +132,12 @@ export const IntakePage: React.FC = () => {
           isSaving={isSaving}
         />
         <div className="right-stack">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h3 style={{ margin: 0, fontSize: "1.1rem" }}>Patient Interactions</h3>
+            <Link to="/chat" className="button primary" style={{ textDecoration: "none", display: "inline-flex", gap: "8px", alignItems: "center" }}>
+              Open Patient Chat UI 💬
+            </Link>
+          </div>
           <VoiceAssistantPanel caseData={caseData} analysis={analysis} onStatusChange={notify} />
           <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
         </div>
