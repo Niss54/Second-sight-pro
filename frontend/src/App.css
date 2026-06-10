@@ -241,6 +241,126 @@ html.dark .comparison-table th {
   border-bottom: none;
 }
 
+.footer-container {
+  padding: 60px 24px 24px;
+  background: var(--bg-1);
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-col h4 {
+  color: var(--ink-900);
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col a {
+  text-decoration: none;
+  color: var(--ink-500);
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--teal);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-500);
+  transition: all 0.2s;
+}
+
+.footer-social-icon:hover {
+  color: var(--teal);
+  border-color: var(--teal);
+  background: rgba(13, 124, 115, 0.1);
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom-legal {
+  color: var(--ink-500);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.footer-bottom-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--ink-500);
+}
+
+.footer-bottom-links div {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-bottom-links a {
+  text-decoration: none;
+  color: var(--ink-500);
+  transition: color 0.2s;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--teal);
+}
+
 .hero {
   display: grid;
   gap: 10px;
