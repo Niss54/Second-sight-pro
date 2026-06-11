@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Mic, PauseCircle, Send, Sparkles, Volume2 } from "lucide-react";
 import type { ReconciliationOutput, PatientCaseInput, VoiceAssistantResponse } from "../types";
 import { askFollowupQuestion, speakMedicalSummary } from "../services/api";
@@ -75,8 +75,100 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
   const [isRestSpeaking, setIsRestSpeaking] = useState(false);
   const [voiceResponse, setVoiceResponse] = useState<VoiceAssistantResponse | null>(null);
 
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+
   const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const livekitVoice = useVoiceAssistant();
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+
+  const transcribeAudio = useCallback(async (audioBlob: Blob) => {
+    setIsTranscribing(true);
+    try {
+      // Convert blob to base64
+      const arrayBuffer = await audioBlob.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      let binary = "";
+      uint8Array.forEach((byte) => { binary += String.fromCharCode(byte); });
+      const base64Audio = btoa(binary);
+
+      const response = await fetch(`${API_BASE_URL}/voice/transcribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          audioBase64: base64Audio,
+          languageCode: "hi-IN"
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.ok && data.transcript) {
+        // Put the transcribed text into the question input
+        setQuestion((prev) => prev ? prev + " " + data.transcript : data.transcript);
+      } else {
+        console.error("Transcription failed:", data.error);
+        onStatusChange?.("Transcription failed. Please type your question instead.", "error");
+      }
+    } catch (err) {
+      console.error("Transcription error:", err);
+      onStatusChange?.("Could not connect to transcription service.", "error");
+    } finally {
+      setIsTranscribing(false);
+    }
+  }, [API_BASE_URL, onStatusChange]);
+
+  const toggleRecording = useCallback(async () => {
+    if (isRecording) {
+      // Stop recording
+      mediaRecorderRef.current?.stop();
+      setIsRecording(false);
+    } else {
+      // Start recording
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunksRef.current = [];
+
+        const mediaRecorder = new MediaRecorder(stream, {
+          mimeType: MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "audio/ogg"
+        });
+        mediaRecorderRef.current = mediaRecorder;
+
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+          // Stop all tracks to release the microphone
+          stream.getTracks().forEach((track) => track.stop());
+          // Transcribe the recorded audio
+          await transcribeAudio(audioBlob);
+        };
+
+        // Auto-stop after 30 seconds to prevent very long recordings
+        mediaRecorder.start();
+        setIsRecording(true);
+
+        setTimeout(() => {
+          if (mediaRecorderRef.current?.state === "recording") {
+            mediaRecorderRef.current.stop();
+            setIsRecording(false);
+          }
+        }, 30000);
+
+      } catch (err) {
+        console.error("Microphone access error:", err);
+        onStatusChange?.("Cannot access microphone. Please allow microphone permission.", "error");
+      }
+    }
+  }, [isRecording, transcribeAudio, onStatusChange]);
+
   
   const isSpeaking = isRestSpeaking || livekitVoice.state === "speaking";
   const isListening = livekitVoice.state === "listening";
@@ -223,7 +315,14 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
   const visualizerBars = useMemo(() => Array.from({ length: 12 }, (_, index) => index), []);
 
   return (
-    <section className="voice-panel glass-panel">
+    <>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(181, 67, 56, 0.4); }
+          50% { box-shadow: 0 0 0 8px rgba(181, 67, 56, 0); }
+        }
+      `}</style>
+      <section className="voice-panel glass-panel">
       <div className="voice-header">
         <div>
           <p className="eyebrow">Medical Voice Assistant</p>
@@ -307,14 +406,71 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
           />
 
           <div className="voice-actions compact">
-            <button type="button" className="button primary" onClick={handleAskFollowup} disabled={isLoadingFollowup}>
-              {isLoadingFollowup ? "Answering..." : "Ask Follow-up"}
-              <Send size={16} />
-            </button>
+            <div style={{ display: "flex", gap: "8px", alignItems: "flex-end" }}>
+              <button
+                type="button"
+                onClick={toggleRecording}
+                disabled={isTranscribing}
+                title={isRecording ? "Stop recording" : "Speak in Hindi or English"}
+                style={{
+                  flexShrink: 0,
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  border: isRecording ? "2px solid var(--danger)" : "1px solid var(--line-strong)",
+                  background: isRecording ? "rgba(181, 67, 56, 0.1)" : "var(--card)",
+                  color: isRecording ? "var(--danger)" : "var(--ink-500)",
+                  cursor: isTranscribing ? "not-allowed" : "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.2s ease",
+                  animation: isRecording ? "pulse 1.5s infinite" : "none",
+                  opacity: isTranscribing ? 0.5 : 1
+                }}
+              >
+                {isTranscribing ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round"/>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </button>
+
+              <button type="button" className="button primary" onClick={handleAskFollowup} disabled={isLoadingFollowup}>
+                {isLoadingFollowup ? "Answering..." : "Ask Follow-up"}
+                <Send size={16} />
+              </button>
+            </div>
             <button type="button" className="button ghost" onClick={() => setQuestion(voiceResponse?.followUpPhrases[0] ?? "")}>
               Use Suggested Prompt
             </button>
           </div>
+          {(isRecording || isTranscribing) && (
+            <p style={{
+              fontSize: "12px",
+              color: isRecording ? "var(--danger)" : "var(--ink-500)",
+              margin: "4px 0 0",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px"
+            }}>
+              {isRecording && (
+                <span style={{
+                  width: "8px", height: "8px",
+                  borderRadius: "50%",
+                  background: "var(--danger)",
+                  display: "inline-block",
+                  animation: "pulse 1.5s infinite"
+                }} />
+              )}
+              {isRecording ? "Recording... (Hindi / English supported)" : "Transcribing your speech..."}
+            </p>
+          )}
         </div>
 
         <div className="voice-metrics-card">
@@ -382,7 +538,8 @@ function VoiceAssistantPanelInner({ caseData, analysis, onStatusChange }: VoiceA
             conflicting opinions.
           </p>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }

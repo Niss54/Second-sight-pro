@@ -5,6 +5,7 @@ import { AccessToken } from "livekit-server-sdk";
 import { env } from "../config/env";
 import { reconcileOpinions } from "../services/opinionReconciliationEngine";
 import { speakMedicalSummary, askFollowupQuestion } from "../modules/medical-voice-assistant";
+import { transcribeWithBhashini } from "../modules/medical-voice-assistant/bhashini";
 import type { PatientCaseInput } from "../types/domain";
 
 const voiceRequestSchema = z.object({
@@ -89,3 +90,47 @@ voiceRouter.get(
   })
 );
 
+voiceRouter.post(
+  "/transcribe",
+  asyncHandler(async (req, res) => {
+    // Validate request body
+    const { audioBase64, languageCode } = req.body;
+
+    if (!audioBase64 || typeof audioBase64 !== "string") {
+      res.status(400).json({
+        ok: false,
+        error: "audioBase64 is required and must be a base64 encoded string"
+      });
+      return;
+    }
+
+    if (audioBase64.length > 5 * 1024 * 1024) {
+      // Rough size check: 5MB base64 ~ 3.75MB audio. Prevent huge uploads.
+      res.status(413).json({
+        ok: false,
+        error: "Audio too large. Maximum is approximately 3 minutes of audio."
+      });
+      return;
+    }
+
+    const lang = typeof languageCode === "string" ? languageCode : "hi-IN";
+
+    const transcript = await transcribeWithBhashini(audioBase64, lang);
+
+    if (transcript === null) {
+      res.status(503).json({
+        ok: false,
+        error: "Bhashini STT service unavailable or credentials not configured",
+        hint: "Set BHASHINI_USER_ID and BHASHINI_API_KEY in your .env file. Register free at https://bhashini.gov.in/ulca"
+      });
+      return;
+    }
+
+    res.json({
+      ok: true,
+      transcript,
+      languageCode: lang,
+      source: "bhashini"
+    });
+  })
+);

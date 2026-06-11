@@ -19,6 +19,8 @@ const envSchema = z.object({
     .optional()
     .transform((value) => value !== "false"),
   SARVAM_API_KEY: z.string().optional(),
+  BHASHINI_USER_ID: z.string().optional(),
+  BHASHINI_API_KEY: z.string().optional(),
   LIVEKIT_API_KEY: z.string().optional(),
   LIVEKIT_API_SECRET: z.string().optional()
 });
