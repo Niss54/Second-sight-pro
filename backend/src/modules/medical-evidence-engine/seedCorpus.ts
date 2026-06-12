@@ -123,5 +123,211 @@ export const SEED_MEDICAL_EVIDENCE: SeedEvidenceRecord[] = [
       condition: "full context review"
     },
     scoreHint: 0.84
+  },
+  // ─── NEW ENTRIES START HERE ─────────────────────────────────────────
+  {
+    id: "icmr-diabetes-metformin-001",
+    source: "ICMR",
+    title: "Metformin is first-line for Type 2 Diabetes in India",
+    snippet:
+      "ICMR guidelines recommend Metformin as the first-line pharmacological agent for Type 2 Diabetes unless contraindicated (eGFR <30, hepatic failure, contrast procedures). Start at 500mg once daily and titrate over 4 weeks.",
+    reference: "ICMR Clinical Practice Guidelines for Type 2 Diabetes 2022",
+    confidence: 0.96,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "routine",
+      specialty: "endocrinology",
+      disease: "type 2 diabetes",
+      condition: "first line treatment"
+    },
+    scoreHint: 0.93
+  },
+  {
+    id: "icmr-diabetes-targets-001",
+    source: "ICMR",
+    title: "HbA1c targets for diabetic patients in India",
+    snippet:
+      "HbA1c target for most adults: <7.0%. For elderly patients (>70 years) or those with comorbidities: <8.0%. Fasting glucose target: 80–130 mg/dL. Post-prandial target: <180 mg/dL.",
+    reference: "ICMR Clinical Practice Guidelines for Type 2 Diabetes 2022",
+    confidence: 0.95,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "routine",
+      specialty: "endocrinology",
+      disease: "type 2 diabetes",
+      condition: "glycaemic targets"
+    },
+    scoreHint: 0.91
+  },
+  {
+    id: "who-drug-ace-arb-combination-001",
+    source: "WHO",
+    title: "ACE inhibitor and ARB combination should be avoided",
+    snippet:
+      "Combining an ACE inhibitor (e.g., Ramipril) with an ARB (e.g., Losartan) — called dual renin-angiotensin blockade — increases the risk of hypotension, hyperkalemia, and acute kidney injury without providing additional cardiovascular benefit. This combination should be avoided.",
+    reference: "WHO Essential Medicines Drug Interactions Reference 2021",
+    confidence: 0.98,
+    metadata: {
+      category: "medication_conflicts",
+      urgency: "urgent",
+      specialty: "cardiology",
+      disease: "hypertension",
+      condition: "ACE inhibitor ARB combination contraindicated"
+    },
+    scoreHint: 0.96
+  },
+  {
+    id: "who-drug-statin-antibiotic-001",
+    source: "WHO",
+    title: "Clarithromycin and Simvastatin combination causes myopathy risk",
+    snippet:
+      "Clarithromycin inhibits CYP3A4 and significantly increases Simvastatin blood levels, causing a high risk of myopathy and rhabdomyolysis. If Clarithromycin is needed, suspend Simvastatin during the antibiotic course and consider switching to Rosuvastatin or Pravastatin.",
+    reference: "WHO Essential Medicines Drug Interactions Reference 2021",
+    confidence: 0.97,
+    metadata: {
+      category: "medication_conflicts",
+      urgency: "urgent",
+      specialty: "pharmacology",
+      disease: "drug interaction",
+      condition: "statin macrolide interaction"
+    },
+    scoreHint: 0.94
+  },
+  {
+    id: "icmr-hypertension-india-firstline-001",
+    source: "ICMR",
+    title: "First-line antihypertensives recommended in India",
+    snippet:
+      "ICMR 2023 recommends any of: Amlodipine (CCB), Enalapril or Ramipril (ACE inhibitor), Telmisartan or Losartan (ARB), or Hydrochlorothiazide (thiazide) as first-line therapy. Choice depends on comorbidities. For diabetics with microalbuminuria: prefer ACE inhibitor or ARB. For elderly: prefer CCB or low-dose thiazide.",
+    reference: "ICMR Consensus Guidelines on Hypertension India 2023",
+    confidence: 0.96,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "routine",
+      specialty: "cardiology",
+      disease: "hypertension",
+      condition: "first line antihypertensive India"
+    },
+    scoreHint: 0.93
+  },
+  {
+    id: "icmr-hypertension-resistant-001",
+    source: "ICMR",
+    title: "Resistant hypertension management — add Spironolactone as fourth agent",
+    snippet:
+      "Resistant hypertension is defined as BP uncontrolled despite three agents including a diuretic. The most evidence-based fourth agent is Spironolactone 25mg once daily. Rule out secondary causes: primary aldosteronism, renal artery stenosis, obstructive sleep apnoea.",
+    reference: "ICMR Consensus Guidelines on Hypertension India 2023",
+    confidence: 0.94,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "soon",
+      specialty: "cardiology",
+      disease: "resistant hypertension",
+      condition: "uncontrolled BP on three agents"
+    },
+    scoreHint: 0.90
+  },
+  {
+    id: "who-antibiotic-uti-001",
+    source: "WHO",
+    title: "Nitrofurantoin is first-line for uncomplicated UTI",
+    snippet:
+      "WHO AWaRe guidelines recommend Nitrofurantoin 100mg MR twice daily for 5 days as first-choice for uncomplicated urinary tract infection. Avoid Ciprofloxacin as first-line for uncomplicated UTI to preserve fluoroquinolone effectiveness against serious infections.",
+    reference: "WHO AWaRe Antibiotic Classification and Stewardship Guidelines 2021",
+    confidence: 0.95,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "soon",
+      specialty: "urology",
+      disease: "urinary tract infection",
+      condition: "uncomplicated UTI first line"
+    },
+    scoreHint: 0.92
+  },
+  {
+    id: "who-antibiotic-no-cold-001",
+    source: "WHO",
+    title: "Antibiotics are NOT indicated for common cold or viral respiratory infections",
+    snippet:
+      "WHO guidance clearly states antibiotics do not help and should not be prescribed for common cold, rhinitis, acute bronchitis, or influenza. These are viral infections. Inappropriate antibiotic use contributes to antimicrobial resistance. Treatment is symptomatic: rest, hydration, paracetamol for fever.",
+    reference: "WHO Global Action Plan on Antimicrobial Resistance 2015",
+    confidence: 0.98,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "routine",
+      specialty: "general practice",
+      disease: "viral respiratory infection",
+      condition: "antibiotic not indicated"
+    },
+    scoreHint: 0.95
+  },
+  {
+    id: "nhp-india-cardiovascular-risk-001",
+    source: "NHP India",
+    title: "Indians develop cardiovascular disease earlier than Western populations",
+    snippet:
+      "Indian patients develop coronary artery disease and heart attacks approximately 5–10 years earlier than Europeans. The average age of first MI in India is 53 years. South Asians have higher insulin resistance and central obesity at lower BMI. Indian-specific cutoffs: waist >90cm in men and >80cm in women indicates abdominal obesity.",
+    reference: "National Health Portal India Preventive Health Guidelines",
+    confidence: 0.94,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "routine",
+      specialty: "cardiology",
+      disease: "cardiovascular disease",
+      condition: "Indian population cardiovascular risk"
+    },
+    scoreHint: 0.89
+  },
+  {
+    id: "who-triple-whammy-aki-001",
+    source: "WHO",
+    title: "Triple Whammy combination causes acute kidney injury",
+    snippet:
+      "The combination of ACE inhibitor (or ARB) + NSAID + Diuretic is called the 'Triple Whammy' and is the most common cause of drug-induced acute kidney injury in India. This combination severely reduces renal perfusion. Stop the NSAID first if AKI develops. Prefer Paracetamol for pain in patients on this combination.",
+    reference: "WHO Essential Medicines Drug Interactions Reference 2021",
+    confidence: 0.97,
+    metadata: {
+      category: "medication_conflicts",
+      urgency: "urgent",
+      specialty: "nephrology",
+      disease: "acute kidney injury",
+      condition: "ACE inhibitor NSAID diuretic triple whammy"
+    },
+    scoreHint: 0.95
+  },
+  {
+    id: "icmr-diabetes-pregnancy-001",
+    source: "ICMR",
+    title: "Safe and unsafe diabetes medications in pregnancy",
+    snippet:
+      "In pregnancy, Metformin and Insulin are considered safe for diabetes management. Sulfonylureas (Glimepiride, Gliclazide), SGLT2 inhibitors (Empagliflozin), and GLP-1 agonists (Semaglutide) are NOT recommended during pregnancy. Gestational diabetes target: fasting glucose <95 mg/dL, post-prandial <140 mg/dL at 1 hour.",
+    reference: "ICMR Clinical Practice Guidelines for Type 2 Diabetes 2022",
+    confidence: 0.96,
+    metadata: {
+      category: "treatment_guidelines",
+      urgency: "urgent",
+      specialty: "obstetrics",
+      disease: "gestational diabetes",
+      condition: "diabetes medications pregnancy safe unsafe"
+    },
+    scoreHint: 0.94
+  },
+  {
+    id: "who-nsaid-bleeding-001",
+    source: "WHO",
+    title: "NSAIDs combined with anticoagulants significantly increase bleeding risk",
+    snippet:
+      "NSAIDs (Ibuprofen, Diclofenac, Naproxen) combined with anticoagulants (Warfarin, Heparin, or DOACs like Rivaroxaban, Apixaban) significantly increase the risk of serious GI and intracranial bleeding. If analgesia is needed in anticoagulated patients, prefer Paracetamol at standard doses. If NSAID is unavoidable, add a PPI (Omeprazole, Pantoprazole).",
+    reference: "WHO Essential Medicines Drug Interactions Reference 2021",
+    confidence: 0.97,
+    metadata: {
+      category: "medication_conflicts",
+      urgency: "urgent",
+      specialty: "haematology",
+      disease: "drug interaction",
+      condition: "NSAID anticoagulant bleeding risk"
+    },
+    scoreHint: 0.95
   }
+  // ─── NEW ENTRIES END HERE ────────────────────────────────────────────
 ];

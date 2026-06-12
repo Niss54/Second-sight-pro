@@ -1,0 +1,57 @@
+National Health Portal (NHP) India — Preventive Health and Screening Guidelines
+Source: Ministry of Health and Family Welfare, Government of India / NHP (nhp.gov.in)
+
+SECTION 1 — CARDIOVASCULAR RISK SCREENING (India-Specific)
+- Indians develop cardiovascular disease (CVD) 5–10 years earlier than Western populations (average age of first MI in India is 53 years vs 65 years in Europe).
+- South Asians have higher insulin resistance and central adiposity at lower BMI.
+- Indian-specific CVD risk factors: Family history of premature CHD, abdominal obesity (waist >90cm men, >80cm women by Indian standards), diabetes, hypertension, tobacco use, dyslipidaemia.
+- Screening recommendation: All adults ≥30 years (or ≥20 with risk factors) should be screened for: Blood pressure, fasting glucose, fasting lipids, waist circumference.
+
+SECTION 2 — LIPID GUIDELINES FOR INDIAN PATIENTS
+- LDL Cholesterol targets by risk category:
+  a) Very high risk (established CVD, diabetes with organ damage): LDL <55 mg/dL
+  b) High risk (diabetes without organ damage, hypertension with ≥3 risk factors): LDL <70 mg/dL
+  c) Moderate risk (hypertension with 1–2 risk factors): LDL <100 mg/dL
+  d) Low risk: LDL <116 mg/dL
+- Triglycerides: Target <150 mg/dL.
+- Non-HDL cholesterol: Preferred target in Indian patients with high triglycerides and diabetes.
+- Statin therapy: Rosuvastatin and Atorvastatin are preferred. Start at low dose and titrate.
+
+SECTION 3 — OBESITY AND METABOLIC SYNDROME (India-Specific BMI Cutoffs)
+- India uses lower BMI cutoffs than international standards:
+  - Overweight (India): BMI ≥23 kg/m² (vs 25 internationally)
+  - Obese (India): BMI ≥25 kg/m² (vs 30 internationally)
+- Metabolic syndrome diagnosis (IDF criteria for South Asians):
+  Central obesity: Waist ≥90cm (men), ≥80cm (women) PLUS any two of:
+  a) Triglycerides ≥150 mg/dL
+  b) HDL <40 mg/dL (men), <50 mg/dL (women)
+  c) Blood pressure ≥130/85 mmHg
+  d) Fasting glucose ≥100 mg/dL
+
+SECTION 4 — THYROID DISEASE SCREENING
+- Hypothyroidism is common in India (prevalence ~10.95% — ICMR study 2013).
+- Routine TSH screening recommended for:
+  a) Women above 35 years every 5 years
+  b) Any patient with unexplained fatigue, weight gain, depression, constipation, or cold intolerance
+  c) Pregnant women (first trimester)
+  d) Patients on Amiodarone or Lithium
+- TSH reference range: 0.5–4.5 mIU/L (some labs 0.4–5.0). Confirm with Free T4 if TSH abnormal.
+- Hypothyroidism treatment: Levothyroxine — take on empty stomach, 30–60 minutes before food.
+- Drug interactions with Levothyroxine: Calcium, Iron, Antacids reduce absorption — take 4 hours apart.
+
+SECTION 5 — CANCER SCREENING (India National Program)
+- Oral Cancer: Highest incidence in India due to tobacco/betel nut use. Visual inspection by trained health worker every 3 years for tobacco users.
+- Cervical Cancer: PAP smear every 3 years for women 21–65 years. HPV testing preferred in women >30.
+- Breast Cancer: Clinical breast examination annually for women >40. Mammography recommended from age 45.
+- Colorectal Cancer: Annual FOBT or colonoscopy every 10 years from age 45.
+
+SECTION 6 — COMMON PRESCRIPTION DRUG MONITORING (India Primary Care)
+- Metformin: Monitor renal function (eGFR) annually; stop if eGFR <30.
+- ACE Inhibitors/ARBs: Check potassium and creatinine 1–2 weeks after starting; then annually.
+- Diuretics (Thiazides, Furosemide): Monitor electrolytes (Na, K), uric acid, glucose.
+- Long-term NSAIDs: Monitor renal function, BP, haemoglobin (for GI bleed).
+- Proton Pump Inhibitors (long-term): Risk of hypomagnesemia, C. difficile, bone fractures. Review indication every 6–12 months.
+- Warfarin: Monitor INR frequently when starting, when medications change, or when diet changes significantly.
+
+Safety Disclaimer:
+Guidelines are for reference only. Individual clinical assessment by a qualified physician is mandatory for all treatment decisions.

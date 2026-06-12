@@ -1,0 +1,60 @@
+ICMR Clinical Practice Guidelines for Type 2 Diabetes Mellitus (India, 2018 — Updated 2022)
+Source: Indian Council of Medical Research (ICMR) / Government of India
+
+SECTION 1 — DIAGNOSTIC CRITERIA
+- Fasting Plasma Glucose (FPG) ≥126 mg/dL (7.0 mmol/L) on two occasions confirms diabetes.
+- 2-hour Plasma Glucose ≥200 mg/dL (11.1 mmol/L) during OGTT confirms diabetes.
+- HbA1c ≥6.5% (48 mmol/mol) on a certified assay confirms diabetes.
+- Random Plasma Glucose ≥200 mg/dL with classic symptoms confirms diabetes.
+- Pre-diabetes: FPG 100–125 mg/dL OR 2-hour PG 140–199 mg/dL OR HbA1c 5.7–6.4%.
+
+SECTION 2 — GLYCAEMIC TARGETS (India-specific)
+- HbA1c target for most non-elderly adults: <7.0% (53 mmol/mol).
+- HbA1c target for elderly (>70 years) or comorbid: <8.0% (64 mmol/mol).
+- Fasting glucose target: 80–130 mg/dL.
+- Post-prandial (2-hour) glucose target: <180 mg/dL.
+- Patients with recurrent hypoglycemia: target HbA1c <8.5%.
+
+SECTION 3 — FIRST-LINE TREATMENT
+- Metformin is the first-line pharmacological agent for Type 2 Diabetes in India unless contraindicated.
+- Contraindications to Metformin: eGFR <30 mL/min/1.73m², acute kidney injury, hepatic failure, excessive alcohol use.
+- Metformin dose: Start 500mg once daily with meals. Titrate over 4 weeks to 500mg twice daily, then to 850–1000mg twice daily as tolerated.
+- GI side effects (nausea, diarrhoea) are common and usually transient; taking with food reduces them.
+- Metformin should be stopped 48 hours before any iodinated contrast procedure and restarted after confirming renal function is stable.
+
+SECTION 4 — SECOND-LINE AGENTS (When Metformin Alone Fails)
+- Add a second agent when HbA1c remains above target after 3 months of maximally tolerated Metformin.
+- Preferred second agents in India (ICMR recommendation):
+  a) SGLT2 inhibitors (Empagliflozin, Dapagliflozin) — especially in patients with cardiovascular disease or CKD.
+  b) GLP-1 receptor agonists (Semaglutide, Liraglutide) — especially in obese patients.
+  c) DPP-4 inhibitors (Sitagliptin, Vildagliptin) — preferred in elderly due to low hypoglycemia risk.
+  d) Sulfonylureas (Glimepiride, Gliclazide MR) — low cost, widely available; risk of hypoglycemia.
+- Insulin may be initiated at any stage if HbA1c is >10% or patient is symptomatic (polyuria, weight loss).
+
+SECTION 5 — DRUG INTERACTION WARNINGS (India context)
+- Do NOT use two sulfonylureas simultaneously (e.g., Glimepiride + Gliclazide) — additive hypoglycemia risk.
+- Avoid combining SGLT2 inhibitors with loop diuretics in elderly patients without monitoring (risk of dehydration and AKI).
+- Fluoroquinolone antibiotics (Ciprofloxacin, Levofloxacin) can cause both hypoglycemia and hyperglycemia in diabetic patients on antidiabetic therapy — monitor glucose carefully.
+- NSAIDs (Ibuprofen, Diclofenac) reduce metformin clearance; use with caution and monitor renal function.
+
+SECTION 6 — COMPLICATION MONITORING SCHEDULE
+- HbA1c: Every 3 months until stable, then every 6 months.
+- Fasting lipid profile: Annually.
+- Urine microalbumin (ACR): Annually from diagnosis.
+- Serum creatinine and eGFR: Annually.
+- Foot examination: Every visit.
+- Dilated fundus examination: At diagnosis, then annually.
+- Blood pressure measurement: Every visit; target <130/80 mmHg in diabetics.
+
+SECTION 7 — HYPERTENSION IN DIABETICS (India-specific)
+- ACE inhibitors (Enalapril, Ramipril) or ARBs (Losartan, Telmisartan) are first-line antihypertensives in diabetics with microalbuminuria.
+- IMPORTANT: Do NOT combine ACE inhibitor + ARB — increases risk of hyperkalemia and AKI without additional BP benefit.
+- Target BP in diabetics: <130/80 mmHg.
+
+SECTION 8 — SPECIAL POPULATIONS
+- Pregnancy: Metformin and insulin are safe. Sulfonylureas, SGLT2 inhibitors, GLP-1 agonists are NOT recommended in pregnancy.
+- CKD Stage 3b-5 (eGFR <45): Stop metformin. Prefer insulin or DPP-4 inhibitors (dose-adjusted).
+- Elderly: Avoid tight glycemic control; HbA1c target 7.5–8.5%; prefer agents with low hypoglycemia risk.
+
+Safety Disclaimer:
+This is a summary for clinical decision support. All treatment decisions must be made by a qualified physician with full knowledge of the patient's history.

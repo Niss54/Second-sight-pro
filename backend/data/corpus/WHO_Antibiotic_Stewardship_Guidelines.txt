@@ -1,0 +1,70 @@
+WHO Guidelines on Antibiotic Stewardship and Rational Use of Antimicrobials
+Source: WHO Global Action Plan on Antimicrobial Resistance (2015) + WHO AWaRe Classification (2021)
+
+SECTION 1 — WHO AWaRe ANTIBIOTIC CLASSIFICATION
+Access antibiotics (first-line, widely available):
+- Amoxicillin, Amoxicillin-Clavulanate, Ampicillin
+- Cefalexin (Cephalexin)
+- Doxycycline, Trimethoprim-Sulfamethoxazole (Co-trimoxazole)
+- Metronidazole, Nitrofurantoin
+
+Watch antibiotics (second-line, use only when first-line fail):
+- Ciprofloxacin, Levofloxacin (Fluoroquinolones)
+- Azithromycin, Clarithromycin (Macrolides)
+- Cefuroxime, Ceftriaxone (Cephalosporins 2nd/3rd gen)
+- Piperacillin-Tazobactam, Meropenem (for hospitalised patients only)
+
+Reserve antibiotics (last resort, hospital only):
+- Colistin, Vancomycin, Linezolid, Carbapenems
+- Must NEVER be used empirically in community settings.
+
+SECTION 2 — COMMON INFECTIONS — FIRST-LINE TREATMENT (India Context)
+Community-Acquired Pneumonia (CAP) — Outpatient mild:
+- Amoxicillin 500mg three times daily × 5 days (adults without comorbidities)
+- Amoxicillin-Clavulanate 625mg twice daily × 5 days (if comorbidities)
+- Azithromycin 500mg daily × 5 days (if atypical pathogen suspected)
+- DO NOT use fluoroquinolones as first-line for CAP in outpatients.
+
+Urinary Tract Infection (UTI) — Uncomplicated:
+- Nitrofurantoin 100mg MR twice daily × 5 days (first choice)
+- Co-trimoxazole 960mg twice daily × 3 days (if local resistance <20%)
+- Avoid Ciprofloxacin for uncomplicated UTI to preserve its effectiveness.
+
+Acute Bacterial Skin Infections:
+- Cefalexin 500mg four times daily × 5–7 days
+- Cloxacillin/Flucloxacillin for Staphylococcal infections
+- Add Metronidazole only if anaerobic infection suspected (bite wounds, perianal).
+
+Acute Otitis Media (children):
+- Amoxicillin 40–45 mg/kg/day in 2–3 divided doses × 5–7 days
+- Watch and wait (analgesia only) appropriate for mild cases in children >2 years.
+
+SECTION 3 — ANTIBIOTIC PRESCRIBING RED FLAGS
+DO NOT prescribe antibiotics for:
+- Common cold, rhinitis, sore throat (unless Group A Strep confirmed)
+- Acute bronchitis in otherwise healthy adults
+- Most cases of acute diarrhoea (self-limiting; antibiotics worsen antibiotic-associated diarrhoea)
+- Influenza
+
+ALWAYS check:
+- Allergy history before prescribing any antibiotic
+- Renal function before prescribing Nitrofurantoin (contraindicated in eGFR <30), aminoglycosides, or high-dose beta-lactams
+- Drug interactions before prescribing macrolides, fluoroquinolones, or metronidazole
+
+SECTION 4 — CONFLICTING ANTIBIOTIC PRESCRIPTIONS — WHAT TO DO
+When two doctors prescribe different antibiotics for the same infection:
+1. Identify the suspected organism and site of infection first.
+2. Use WHO AWaRe classification to determine which antibiotic is more appropriate.
+3. Prefer the Access-category antibiotic unless clinical features suggest resistance or severe infection.
+4. NEVER combine two antibiotics from the same class (e.g., two fluoroquinolones, or two macrolides) — no clinical benefit, additive side effects.
+5. If unsure, a culture and sensitivity result should guide therapy.
+
+SECTION 5 — ANTIMICROBIAL RESISTANCE IN INDIA
+- India has the highest burden of antimicrobial resistance (AMR) globally.
+- E. coli resistance to fluoroquinolones in India exceeds 70% in community-acquired UTIs in many regions.
+- MRSA prevalence in India: ~40% of all S. aureus infections.
+- Carbapenem-resistant Klebsiella (CRKP) and E. coli are emerging; require specialist input.
+- This means: empirical fluoroquinolone treatment for UTI often fails in India; culture before or alongside treatment is strongly recommended.
+
+Safety Disclaimer:
+Antibiotic choice must be guided by local resistance patterns, clinical severity, and patient factors.

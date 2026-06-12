@@ -82,13 +82,32 @@ async function ingestFile(filePath: string) {
     const chunk = chunks[i];
     const embedding = await embedText(chunk);
 
+    // Determine source and confidence from filename
+    function getSourceFromFilename(name: string): { source: string; confidence: number; specialty: string } {
+      const n = name.toLowerCase();
+      if (n.includes("icmr")) return { source: "ICMR", confidence: 0.96, specialty: "india_clinical_guidelines" };
+      if (n.includes("who")) return { source: "WHO", confidence: 0.95, specialty: "international_guidelines" };
+      if (n.includes("nhp")) return { source: "NHP India", confidence: 0.93, specialty: "india_preventive_health" };
+      if (n.includes("cdsco")) return { source: "CDSCO", confidence: 0.94, specialty: "india_drug_safety" };
+      if (n.includes("mayo")) return { source: "Mayo Clinic", confidence: 0.94, specialty: "clinical_reference" };
+      if (n.includes("nih") || n.includes("pubmed")) return { source: "NIH", confidence: 0.93, specialty: "research" };
+      return { source: "Medical Corpus", confidence: 0.90, specialty: "general" };
+    }
+
+    const fileSource = getSourceFromFilename(filename);
+
     rowsToInsert.push({
-      title: filename,
+      title: filename.replace(/\.(txt|pdf)$/i, "").replace(/_/g, " "),
       snippet: chunk,
-      source: "RAG Ingestor",
+      source: fileSource.source,
       reference: `${filename}#chunk=${i + 1}`,
-      confidence: 0.95, // Automated ingestion from trusted corpus
-      metadata: { chunkIndex: i, totalChunks: chunks.length },
+      confidence: fileSource.confidence,
+      metadata: {
+        chunkIndex: i,
+        totalChunks: chunks.length,
+        specialty: fileSource.specialty,
+        ingested_at: new Date().toISOString()
+      },
       embedding
     });
   }
