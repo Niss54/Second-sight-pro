@@ -140,12 +140,23 @@ npm run install-all
 # Run the full stack concurrently
 npm run dev
 ```
+class Solution(object):
+    def mapWordWeights(self, words, weights):
+        result = ""
 
-### 4. Ingest Medical Data (Optional)
-To test the RAG engine locally:
-```bash
-cd backend
-npm run ingest
+        for word in words:
+            total_weight = 0
+
+            for ch in word:
+                total_weight += weights[ord(ch) - ord('a')]
+
+            mod_value = total_weight % 26
+
+            mapped_char = chr(ord('z') - mod_value)
+
+            result += mapped_char
+
+        return result
 ```
 
 <div align="center">
