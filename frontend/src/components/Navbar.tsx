@@ -36,6 +36,36 @@ export const Navbar: React.FC = () => {
           fontWeight: location.pathname === "/dashboard" ? 700 : 500,
           fontSize: "0.95rem"
         }}>History</Link>
+        <Link
+          to="/doctor"
+          style={{
+            textDecoration: "none",
+            color: location.pathname === "/doctor" ? "var(--teal)" : "var(--ink-500)",
+            fontWeight: location.pathname === "/doctor" ? 700 : 500,
+            fontSize: "0.95rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "5px"
+          }}
+        >
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: location.pathname === "/doctor" ? "var(--teal)" : "rgba(13,124,115,0.15)",
+              color: location.pathname === "/doctor" ? "#fff" : "var(--teal)",
+              fontSize: "9px",
+              fontWeight: 700,
+              borderRadius: "4px",
+              padding: "2px 5px",
+              letterSpacing: "0.04em"
+            }}
+          >
+            Dr
+          </span>
+          Doctor View
+        </Link>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>

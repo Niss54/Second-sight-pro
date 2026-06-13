@@ -1635,3 +1635,33 @@ textarea:focus {
     opacity: 1;
   }
 }
+
+/* Doctor View — spin animation for loading state */
+@keyframes doctor-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Conflict score badge color overrides for CaseHistoryDashboard */
+.score-badge.high {
+  background: rgba(181, 67, 56, 0.1);
+  color: #b54338;
+  border: 1px solid rgba(181, 67, 56, 0.2);
+}
+
+.score-badge.moderate {
+  background: rgba(199, 120, 29, 0.1);
+  color: #c7781d;
+  border: 1px solid rgba(199, 120, 29, 0.2);
+}
+
+.score-badge.low {
+  background: rgba(13, 124, 115, 0.1);
+  color: #0d7c73;
+  border: 1px solid rgba(13, 124, 115, 0.2);
+}
+
+/* Doctor portal "Dr" badge in navbar pulse on active */
+.nav-pill a[href="/doctor"] .dr-badge {
+  transition: all 0.2s ease;
+}

@@ -7,6 +7,7 @@ import { AuthPanel } from "./components/AuthPanel";
 import { HomePage } from "./pages/HomePage";
 import { IntakePage } from "./pages/IntakePage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { DoctorDashboardPage } from "./pages/DoctorDashboardPage";
 import { ChatPage } from "./pages/ChatPage";
 import "./App.css";
 
@@ -32,6 +33,7 @@ const AppContent: React.FC = () => {
         <Route index element={<HomePage />} />
         <Route path="case/new" element={<IntakePage />} />
         <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="doctor" element={<DoctorDashboardPage />} />
       </Route>
       {/* Full screen layout for chat, no standard navbar/footer */}
       <Route path="/chat" element={<ChatPage />} />

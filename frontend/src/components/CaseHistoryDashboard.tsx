@@ -4,6 +4,19 @@ import { formatDate } from "../utils/format";
 import { Search, FolderOpen, RefreshCw, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Extract numeric 0–100 score from strings like "High conflict (75%)" or raw numbers
+function extractScore(raw: string | number | undefined | null): number {
+  if (raw === null || raw === undefined) return 0;
+  if (typeof raw === "number") return raw <= 1 ? Math.round(raw * 100) : Math.round(raw);
+  const percentMatch = String(raw).match(/(\d+(?:\.\d+)?)\s*%/);
+  if (percentMatch) return Math.round(Number(percentMatch[1]));
+  const lower = String(raw).toLowerCase();
+  if (lower.includes("high")) return 75;
+  if (lower.includes("moderate")) return 45;
+  if (lower.includes("low")) return 20;
+  return 0;
+}
+
 interface CaseHistoryDashboardProps {
   cases: CaseSummary[];
   activeCaseId: string | null;
@@ -66,8 +79,38 @@ export const CaseHistoryDashboard: React.FC<CaseHistoryDashboardProps> = ({
         {isLoading && cases.length === 0 ? (
           <div className="empty-state">Loading history...</div>
         ) : filteredCases.length === 0 ? (
-          <div className="empty-state">
-            {searchQuery ? "No cases found matching your search." : "No saved cases yet. Create one from the Intake tab."}
+          <div
+            style={{
+              padding: "60px 24px",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px"
+            }}
+          >
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                borderRadius: "16px",
+                background: "rgba(13,124,115,0.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "4px"
+              }}
+            >
+              <FolderOpen size={28} style={{ color: "var(--teal)", opacity: 0.7 }} />
+            </div>
+            <p style={{ margin: 0, fontWeight: 600, color: "var(--ink-700)", fontSize: "1.05rem" }}>
+              {searchQuery ? "No cases match your search" : "No cases saved yet"}
+            </p>
+            <p style={{ margin: 0, color: "var(--ink-500)", fontSize: "14px", maxWidth: "320px" }}>
+              {searchQuery
+                ? `Try a different search term for "${searchQuery}"`
+                : "Create a new case from the Active Case tab. Add two or more doctor opinions to run AI conflict analysis."}
+            </p>
           </div>
         ) : (
           <table className="data-table">
@@ -83,10 +126,8 @@ export const CaseHistoryDashboard: React.FC<CaseHistoryDashboardProps> = ({
             </thead>
             <tbody>
               {filteredCases.map((item, index) => {
-                const scoreNum = item.finalScore ? parseFloat(item.finalScore) : NaN;
-                const scoreClass = !isNaN(scoreNum) 
-                  ? (scoreNum >= 0.7 ? "high" : scoreNum >= 0.4 ? "moderate" : "low") 
-                  : "low";
+                const scoreNum = extractScore(item.finalScore);
+                const scoreClass = scoreNum >= 66 ? "high" : scoreNum >= 35 ? "moderate" : "low";
                 
                 return (
                   <motion.tr 
@@ -124,7 +165,7 @@ export const CaseHistoryDashboard: React.FC<CaseHistoryDashboardProps> = ({
                     <td>{item.primaryCondition || "N/A"}</td>
                     <td>
                       <span className={`score-badge ${scoreClass}`}>
-                        {!isNaN(scoreNum) ? (scoreNum * 100).toFixed(0) : item.finalScore || "--"}
+                        {scoreNum > 0 ? `${scoreNum}%` : (item.finalScore || "--")}
                       </span>
                     </td>
                     <td>{item.opinionsCount}</td>

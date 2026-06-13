@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CaseFormPanel } from "../components/CaseFormPanel";
 import { VoiceAssistantPanel } from "../components/VoiceAssistantPanel";
