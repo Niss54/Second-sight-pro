@@ -1,18 +1,11 @@
-import OpenAI from "openai";
 import { env } from "../../config/env";
 import type { EvidenceCitation, ReconciliationOutput, PatientCaseInput } from "../../types/domain";
 import { createMedicalEvidenceEngine } from "../medical-evidence-engine";
 import { buildSsml, buildFollowUpPhrases, segmentText } from "./style";
 import { buildFollowUpPrompt, buildSummaryPrompt } from "./prompts";
 import { generateSarvamSpeech } from "./sarvam";
+import { callWithFailover } from "../../lib/failoverLlm";
 import type { VoiceAssistantContext, VoiceAssistantOutput } from "./types";
-
-const openaiClient = env.OPENAI_API_KEY
-  ? new OpenAI({
-      apiKey: env.OPENAI_API_KEY,
-      baseURL: env.OPENAI_BASE_URL
-    })
-  : null;
 
 const evidenceEngine = createMedicalEvidenceEngine();
 
@@ -73,23 +66,13 @@ async function fetchRelevantCitations(query: string): Promise<EvidenceCitation[]
 }
 
 async function generateVoiceText(prompt: string, fallback: string): Promise<string> {
-  if (!openaiClient) {
-    return fallback;
-  }
-
-  try {
-    const response = await openaiClient.responses.create({
-      model: env.OPENAI_MODEL,
-      instructions:
-        "You are a calm, empathetic medical voice assistant for patients. You never diagnose, prescribe, or override licensed medical care. Speak in short sentences that are easy to read aloud. Be clear about uncertainty and emergency escalation.",
-      input: prompt
-    });
-
-    const output = response.output_text?.trim();
-    return output || fallback;
-  } catch {
-    return fallback;
-  }
+  return callWithFailover({
+    systemPrompt:
+      "You are a calm, empathetic medical voice assistant for patients. You never diagnose, prescribe, or override licensed medical care. Speak in short sentences that are easy to read aloud. Be clear about uncertainty and emergency escalation.",
+    userMessage: prompt,
+    maxTokens: 300,
+    fallbackText: fallback
+  });
 }
 
 function toVoiceOutput(text: string, citations: EvidenceCitation[], style: VoiceAssistantOutput["style"], audioBase64?: string): VoiceAssistantOutput {

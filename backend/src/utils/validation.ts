@@ -1,4 +1,4 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 
 const urgencyEnum = z.enum(["routine", "soon", "urgent", "emergency"]);
 
@@ -19,7 +19,21 @@ export const patientCaseSchema = z.object({
   patientAge: z.number().int().min(0).max(120).nullable().optional(),
   comorbidities: z.array(z.string().trim().min(1)).default([]),
   symptoms: z.array(z.string().trim().min(1)).default([]),
-  opinions: z.array(opinionSchema).min(2).max(5)
+  opinions: z.array(opinionSchema).min(2).max(5),
+  abha_id: z
+    .string()
+    .trim()
+    .optional()
+    .refine(
+      (val) => {
+        if (!val) return true; // optional, undefined is fine
+        // Accept 14-digit numeric ABHA ID or username@abdm format
+        return /^\d{14}$/.test(val) || /^[a-zA-Z0-9._]+@abdm$/.test(val);
+      },
+      {
+        message: "ABHA ID must be a 14-digit number or username@abdm format"
+      }
+    )
 });
 
 export const analyzeRequestSchema = z.object({

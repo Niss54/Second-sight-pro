@@ -151,6 +151,58 @@ export function CaseFormPanel({
             }}
           />
         </label>
+
+        {/* ABHA Health ID — Ayushman Bharat Health Account */}
+        <label>
+          <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#1A5F3C",
+                color: "#fff",
+                fontSize: "10px",
+                fontWeight: 600,
+                borderRadius: "4px",
+                padding: "2px 5px",
+                letterSpacing: "0.03em"
+              }}
+            >
+              ABDM
+            </span>
+            ABHA Health ID
+            <span style={{ fontSize: "11px", color: "var(--ink-300)", fontWeight: 400 }}>(optional)</span>
+          </span>
+          <input
+            id="abha-id-input"
+            type="text"
+            value={caseData.abha_id ?? ""}
+            onChange={(e) =>
+              onChange({ ...caseData, abha_id: e.target.value || undefined })
+            }
+            placeholder="14-digit number or username@abdm"
+            maxLength={50}
+            style={{ fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.04em" }}
+          />
+          {caseData.abha_id && (
+            <p
+              style={{
+                fontSize: "11px",
+                color: "#1A5F3C",
+                margin: "4px 0 0",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px"
+              }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              ABHA ID linked — case will be stored with ABDM identifier
+            </p>
+          )}
+        </label>
       </div>
 
       <div className="field-grid case-grid">

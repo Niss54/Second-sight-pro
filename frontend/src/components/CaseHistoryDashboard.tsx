@@ -99,6 +99,27 @@ export const CaseHistoryDashboard: React.FC<CaseHistoryDashboardProps> = ({
                     <td>
                       <strong>{item.caseLabel || "Untitled"}</strong>
                       {activeCaseId === item.id && <span className="active-badge">Active</span>}
+                      {/* Show ABDM badge if case has ABHA ID */}
+                      {(item as any).abha_id && (
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            background: "#EBF7F1",
+                            color: "#1A5F3C",
+                            fontSize: "10px",
+                            fontWeight: 600,
+                            borderRadius: "4px",
+                            padding: "2px 6px",
+                            marginLeft: "6px",
+                            border: "1px solid #B7E4CC",
+                            letterSpacing: "0.03em",
+                            verticalAlign: "middle"
+                          }}
+                        >
+                          ABDM
+                        </span>
+                      )}
                     </td>
                     <td>{item.primaryCondition || "N/A"}</td>
                     <td>

@@ -20,6 +20,8 @@ export interface PatientCaseInput {
   comorbidities: string[];
   symptoms: string[];
   opinions: DoctorOpinionInput[];
+  /** ABHA Health ID — Ayushman Bharat Health Account (India's national health ID) */
+  abha_id?: string;
 }
 
 export interface AlignmentMetrics {

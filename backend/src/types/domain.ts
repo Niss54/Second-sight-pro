@@ -23,6 +23,12 @@ export interface PatientCaseInput {
   symptoms?: string[];
   language?: SupportedLanguage;
   opinions: DoctorOpinionInput[];
+  /**
+   * Ayushman Bharat Health Account (ABHA) ID — India's national health identifier.
+   * Format: 14-digit number or username@abdm
+   * Optional — stored for ABDM compatibility.
+   */
+  abha_id?: string;
 }
 
 export interface AlignmentMetrics {
