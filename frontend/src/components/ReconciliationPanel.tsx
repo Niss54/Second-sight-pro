@@ -39,19 +39,65 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
 
   const handleShareWhatsApp = () => {
     if (!analysis) return;
-    
-    const text = `*SecondSight Pro - Executive Summary*\n\n` +
-      `*Risk Snapshot:* ${analysis.conflict_score}\n` +
-      `*Agreement:* ${analysis.agreement_score}\n\n` +
-      `*Summary:*\n${analysis.summary}\n\n` +
-      `*Why disagreement may exist:*\n` +
-      analysis.disagreement_reason.map((r, i) => `${i + 1}. ${r}`).join('\n') + `\n\n` +
-      `*Questions to ask specialist:*\n` +
-      analysis.specialist_questions.map((q) => `• ${q}`).join('\n') + `\n\n` +
-      `_Note: ${analysis.safety_disclaimer}_`;
 
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
+    // Use Hindi summary if available (multilingual_output may have it)
+    const hindiSummary = analysis.multilingual_output?.hindi;
+    const hinglishSummary = analysis.multilingual_output?.hinglish;
+
+    // Top citation if available
+    const topCitation =
+      analysis.citations && analysis.citations.length > 0
+        ? analysis.citations[0]
+        : null;
+
+    // Build English section
+    const englishSection =
+      `*🔬 SecondSight Pro — Doctor Opinion Analysis*\n\n` +
+      `*Conflict Score:* ${analysis.conflict_score}\n` +
+      `*Agreement Level:* ${analysis.agreement_score}\n` +
+      `*Confidence:* ${analysis.confidence_level?.toUpperCase() ?? "—"}\n\n` +
+      `*Summary:*\n${analysis.summary}\n\n` +
+      (analysis.disagreement_reason.length > 0
+        ? `*Why doctors disagree:*\n` +
+          analysis.disagreement_reason
+            .slice(0, 3)
+            .map((r, i) => `${i + 1}. ${r}`)
+            .join("\n") +
+          "\n\n"
+        : "") +
+      (analysis.specialist_questions.length > 0
+        ? `*Questions to ask your specialist:*\n` +
+          analysis.specialist_questions
+            .slice(0, 4)
+            .map((q) => `• ${q}`)
+            .join("\n") +
+          "\n\n"
+        : "") +
+      (topCitation
+        ? `*Medical Evidence:*\n_${topCitation.source}: ${topCitation.title}_\n\n`
+        : "");
+
+    // Build Hindi section (add only if available and non-empty)
+    const hindiSection =
+      hindiSummary && hindiSummary.length > 10
+        ? `*हिंदी में सारांश:*\n${hindiSummary}\n\n`
+        : "";
+
+    // Hinglish (brief)
+    const hinglishSection =
+      hinglishSummary && hinglishSummary.length > 10
+        ? `*Hinglish:* ${hinglishSummary}\n\n`
+        : "";
+
+    const footer =
+      `──────────────────\n` +
+      `_⚠️ ${analysis.safety_disclaimer}_\n` +
+      `_SecondSight Pro — AI-powered medical second opinion reconciliation_`;
+
+    const fullText = englishSection + hindiSection + hinglishSection + footer;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fullText)}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   if (!analysis) {
@@ -169,113 +215,157 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
           display: flex;
           gap: 16px;
           margin-bottom: 24px;
+          flex-wrap: wrap;
         }
         .conflict-score-banner {
-          background: #1a1f2e;
-          padding: 16px;
-          border-radius: 8px;
+          background: var(--bg-1);
+          border: 1px solid var(--line-strong);
+          padding: 18px 20px;
+          border-radius: var(--radius-md);
           flex: 1;
+          min-width: 180px;
+        }
+        .conflict-score-banner .meta-label {
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: var(--ink-500);
+          margin: 0 0 6px;
+          font-weight: 600;
+        }
+        .conflict-score-banner .risk-score {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: var(--ink-900);
+          margin: 0 0 4px;
+          font-family: ui-serif, Georgia, serif;
+        }
+        .conflict-score-banner .risk-tier,
+        .conflict-score-banner .confidence {
+          font-size: 12px;
+          color: var(--ink-500);
+          margin: 2px 0 0;
         }
         .summary-text {
           flex: 2;
-          background: #f8fafc;
-          padding: 16px;
-          border-radius: 8px;
-          color: #334155;
-          font-size: 1rem;
+          min-width: 240px;
+          background: var(--card);
+          border: 1px solid var(--line);
+          padding: 16px 18px;
+          border-radius: var(--radius-md);
+          color: var(--ink-700);
+          font-size: 14px;
+          line-height: 1.65;
         }
         .visual-explanation-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 14px;
           margin-bottom: 24px;
         }
         .ui-block {
-          padding: 16px;
-          border-radius: 8px;
+          padding: 16px 18px;
+          border-radius: var(--radius-md);
           border-left: 4px solid transparent;
-          background-color: #ffffff;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          background: var(--card);
+          border: 1px solid var(--line);
+          box-shadow: var(--shadow-sm);
         }
         .ui-block h3 {
-          margin-top: 0;
-          font-size: 1.1rem;
-          margin-bottom: 12px;
+          margin: 0 0 10px;
+          font-size: 13px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: var(--ink-500);
         }
         .ui-block ul {
           margin: 0;
-          padding-left: 20px;
+          padding-left: 18px;
         }
         .ui-block li {
           margin-bottom: 6px;
+          font-size: 13px;
+          color: var(--ink-700);
+          line-height: 1.5;
         }
         .ui-block-green {
-          border-left-color: #10b981;
-          background-color: #ecfdf5;
+          border-left: 4px solid var(--teal) !important;
+          background: rgba(13, 124, 115, 0.05) !important;
         }
+        .ui-block-green h3 { color: var(--teal); }
         .ui-block-yellow {
-          border-left-color: #f59e0b;
-          background-color: #fffbeb;
+          border-left: 4px solid var(--amber) !important;
+          background: rgba(199, 120, 29, 0.05) !important;
         }
+        .ui-block-yellow h3 { color: var(--amber); }
         .ui-block-red {
-          border-left-color: #ef4444;
-          background-color: #fef2f2;
+          border-left: 4px solid var(--danger) !important;
+          background: rgba(181, 67, 56, 0.05) !important;
         }
+        .ui-block-red h3 { color: var(--danger); }
         .multilingual-card {
-          margin-bottom: 24px;
-          background: #f1f5f9;
+          margin-bottom: 20px;
+          background: var(--bg-1);
         }
+        .multilingual-card p {
+          font-size: 13px;
+          color: var(--ink-700);
+          line-height: 1.6;
+          margin: 0 0 8px;
+        }
+        .multilingual-card p:last-child { margin-bottom: 0; }
         .warning-text {
-          color: #ef4444;
-          font-weight: bold;
+          color: var(--danger);
+          font-weight: 600;
+          font-size: 13px;
           margin-top: 8px;
         }
         .citations-section {
-          margin-bottom: 24px;
-          background: #ffffff;
-          padding: 16px;
-          border-radius: 8px;
-          border: 1px solid #e2e8f0;
+          margin-bottom: 20px;
+          background: var(--card);
+          padding: 18px 20px;
+          border-radius: var(--radius-md);
+          border: 1px solid var(--line);
         }
         .citations-section h3 {
-          margin-top: 0;
-          color: #1e293b;
-          font-size: 1.1rem;
+          margin: 0 0 14px;
+          color: var(--ink-900);
+          font-size: 14px;
+          font-weight: 600;
         }
         .citations-list {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 10px;
         }
         .citation-card {
-          background: #f8fafc;
-          border-left: 3px solid #3b82f6;
-          padding: 12px;
-          border-radius: 4px;
+          background: var(--bg-0);
+          border-left: 3px solid var(--teal);
+          padding: 12px 14px;
+          border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
         .citation-card h4 {
-          margin: 0 0 8px 0;
-          color: #3b82f6;
-          font-size: 0.95rem;
+          margin: 0 0 6px;
+          color: var(--teal);
+          font-size: 13px;
+          font-weight: 600;
         }
         .citation-card p {
-          margin: 0 0 8px 0;
-          font-size: 0.9rem;
-          color: #475569;
+          margin: 0 0 6px;
+          font-size: 12px;
+          color: var(--ink-500);
           font-style: italic;
+          line-height: 1.5;
         }
         .citation-link {
-          font-size: 0.85rem;
-          color: #2563eb;
+          font-size: 12px;
+          color: var(--teal);
           text-decoration: none;
           font-weight: 500;
         }
-        .citation-link:hover {
-          text-decoration: underline;
-        }
-        .pdf-export-mode .no-print {
-          display: none !important;
-        }
+        .citation-link:hover { text-decoration: underline; }
+        .pdf-export-mode .no-print { display: none !important; }
       `}</style>
     </section>
   );

@@ -5,7 +5,7 @@ import { CaseFormPanel } from "../components/CaseFormPanel";
 import { VoiceAssistantPanel } from "../components/VoiceAssistantPanel";
 import { ReconciliationPanel } from "../components/ReconciliationPanel";
 import { ToastContainer, type ToastType } from "../components/ToastContainer";
-import { createBlankCase, demoCase } from "../constants/caseTemplates";
+import { createBlankCase, ALL_DEMO_CASES } from "../constants/caseTemplates";
 import { analyzeCase, createCase, updateCase } from "../services/api";
 import type { PatientCaseInput, ReconciliationOutput } from "../types";
 
@@ -16,6 +16,7 @@ export const IntakePage: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [toasts, setToasts] = useState<ToastType[]>([]);
+  const [demoCaseIndex, setDemoCaseIndex] = useState(0);
 
   const topRisk = useMemo(() => analysis ? `${analysis.conflict_score}` : "No active analysis", [analysis]);
 
@@ -79,10 +80,16 @@ export const IntakePage: React.FC = () => {
   };
 
   const handleLoadDemo = () => {
-    setCaseData(demoCase);
+    const nextIndex = demoCaseIndex % ALL_DEMO_CASES.length;
+    const nextCase = ALL_DEMO_CASES[nextIndex];
+    setCaseData(nextCase);
     setAnalysis(null);
     setActiveCaseId(null);
-    notify("Demo case loaded. Run analysis or save.", "info");
+    setDemoCaseIndex(nextIndex + 1);
+    notify(
+      `Demo ${nextIndex + 1}/${ALL_DEMO_CASES.length} loaded: "${nextCase.caseLabel}". Click again to cycle to next demo.`,
+      "info"
+    );
   };
 
   const handleCopySummary = async () => {
