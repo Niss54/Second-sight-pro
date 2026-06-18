@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Github, Twitter, Linkedin, Mail, Stethoscope } from "lucide-react";
+import { Stethoscope } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
@@ -53,10 +53,10 @@ export const Footer: React.FC = () => {
         <div className="footer-col">
           <h4>Connect</h4>
           <div className="footer-socials">
-            <a href="#" className="footer-social-icon"><Twitter size={18} /></a>
-            <a href="#" className="footer-social-icon"><Linkedin size={18} /></a>
-            <a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer" className="footer-social-icon"><Github size={18} /></a>
-            <a href="#" className="footer-social-icon"><Mail size={18} /></a>
+            <a href="#" className="footer-social-icon">Twitter</a>
+            <a href="#" className="footer-social-icon">LinkedIn</a>
+            <a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer" className="footer-social-icon">GitHub</a>
+            <a href="#" className="footer-social-icon">Mail</a>
           </div>
         </div>
       </div>
