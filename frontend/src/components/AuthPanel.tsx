@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { LogIn, Sparkles, Languages, CheckCircle2, Search } from "lucide-react";
+import { Sparkles, Languages, CheckCircle2, Search } from "lucide-react";
 
 export const AuthPanel: React.FC = () => {
   const { signInWithGoogle, continueAsGuest } = useAuth();

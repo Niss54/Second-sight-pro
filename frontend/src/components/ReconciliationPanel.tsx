@@ -222,7 +222,7 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
                     </td>
                     <td style={{ padding: "16px 20px", verticalAlign: "top" }}>
                       <ul style={{ margin: 0, paddingLeft: "20px", fontSize: "0.9rem", color: "var(--ink-700)", lineHeight: 1.6 }}>
-                        {data.notes.map((note, i) => (
+                        {data.notes.map((note: string, i: number) => (
                           <li key={i} style={{ marginBottom: i === data.notes.length - 1 ? 0 : "8px" }}>
                             {note}
                           </li>
