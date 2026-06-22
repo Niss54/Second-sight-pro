@@ -20,7 +20,7 @@ reconciliationRouter.post(
     }
 
     const language = (req.query.lang as any) || "en";
-    const analysis = reconcileOpinions(parsed.data.caseData, language);
+    const analysis = await reconcileOpinions(parsed.data.caseData, language);
 
     res.json({
       ok: true,

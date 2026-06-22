@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { LogIn } from "lucide-react";
+import { LogIn, Sparkles, Languages, CheckCircle2, Search } from "lucide-react";
 
 export const AuthPanel: React.FC = () => {
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, continueAsGuest } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
@@ -19,43 +20,112 @@ export const AuthPanel: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "80vh",
-        width: "100%",
-        padding: "20px"
-      }}
-    >
-      <div className="panel" style={{ maxWidth: "420px", width: "100%", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "ui-serif, Georgia, serif", margin: "0 0 10px", fontSize: "2rem", letterSpacing: "-0.03em" }}>
-          Welcome Back
-        </h2>
-        <p style={{ color: "var(--ink-500)", marginBottom: "30px", fontSize: "1rem" }}>
-          Sign in to access your secure medical dashboard and manage patient cases.
-        </p>
+    <div className="auth-wrapper">
+      {/* Background network pattern */}
+      <div className="auth-bg-pattern"></div>
 
-        {errorMsg && (
-          <div className="status-banner error" style={{ marginBottom: "20px" }}>
-            {errorMsg}
+      <div className="auth-container">
+        {/* Left Side: Branding & Illustration */}
+        <div className="auth-left">
+          {/* Top Logo */}
+          <div className="auth-brand">
+            <Sparkles className="auth-brand-icon" />
+            <h1 className="auth-brand-text">
+              <span>Second</span>Sight Pro
+            </h1>
           </div>
-        )}
 
-        <button
-          className="button primary"
-          onClick={handleGoogleSignIn}
-          disabled={isLoading}
-          style={{ width: "100%", padding: "14px", fontSize: "1.05rem" }}
-        >
-          <LogIn size={20} />
-          {isLoading ? "Signing in..." : "Continue with Google"}
-        </button>
+          {/* Center Illustration Area */}
+          <div className="auth-illustration-container">
+            <div className="auth-illustration-card">
+              <img src="/auth-hero.png" alt="Patient getting conflicting medical advice" className="auth-hero-img" />
+              
+              {/* Floating feature pills */}
+              <div className="auth-pill pill-top-right">
+                <CheckCircle2 size={14} className="pill-icon green" />
+                <span>AI Reconciliation</span>
+              </div>
+              <div className="auth-pill pill-mid-right">
+                <Search size={14} className="pill-icon blue" />
+                <span>Evidence Backed</span>
+              </div>
+              <div className="auth-pill pill-bottom-right">
+                <Languages size={14} className="pill-icon purple" />
+                <span>Hindi Voice STT</span>
+              </div>
+            </div>
 
-        <p className="footnote" style={{ marginTop: "24px", fontSize: "0.85rem", opacity: 0.8 }}>
-          By signing in, you agree to the SecondSight Pro Terms of Service and Privacy Policy. All medical data is encrypted and securely stored.
-        </p>
+            <div className="auth-left-footer">
+              <h3 className="auth-footer-title">Medical Consensus</h3>
+              <p className="auth-footer-desc">with advanced AI guidelines</p>
+            </div>
+          </div>
+          
+          {/* Decorative background waves */}
+          <div className="auth-waves"></div>
+        </div>
+
+        {/* Right Side: Login Form */}
+        <div className="auth-right">
+          <div className="auth-form-container">
+            <h2 className="auth-title">Get the Right Medical Opinion</h2>
+            <p className="auth-subtitle">Log in to manage patient cases, analyze conflicts, and get evidence-backed AI second opinions.</p>
+
+            {errorMsg && (
+              <div className="status-banner error" style={{ marginBottom: "20px" }}>
+                {errorMsg}
+              </div>
+            )}
+
+            <button
+              className="auth-google-btn"
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+            >
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="google-icon" />
+              {isLoading ? "Signing in..." : "Continue with Google"}
+            </button>
+
+            <div className="auth-divider">
+              <span>OR</span>
+            </div>
+
+            <div className="auth-input-group">
+              <label>Email <span className="required">*</span></label>
+              <input 
+                type="email" 
+                placeholder="Enter Email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="auth-password-link">
+              <a href="#">Login via Password</a>
+            </div>
+
+            <button className="auth-otp-btn" disabled>
+              Continue with OTP
+            </button>
+
+            <button
+              className="auth-guest-btn"
+              onClick={() => {
+                setIsLoading(true);
+                setTimeout(() => {
+                  continueAsGuest();
+                }, 500);
+              }}
+              disabled={isLoading}
+            >
+              <Sparkles size={16} /> Continue as Guest (Hackathon Demo)
+            </button>
+
+            <p className="auth-terms">
+              By signing in, you accept the <a href="#">Terms of Service</a> and acknowledge our <a href="#">Privacy Policy</a>.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

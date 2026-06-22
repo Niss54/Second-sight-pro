@@ -13,29 +13,29 @@ export const HomePage: React.FC = () => {
       style={{ paddingBottom: "60px" }}
     >
       {/* 1. Hero Section */}
-      <section className="home-section" style={{ paddingTop: "20px", textAlign: "center", borderBottom: "none" }}>
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
-          <p className="eyebrow" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(13,124,115,0.1)", padding: "6px 14px", borderRadius: "999px" }}>
-            <span style={{ width: "8px", height: "8px", background: "var(--teal)", borderRadius: "50%", display: "inline-block" }} />
-            Live at Medical AI Hackathon
-          </p>
-          <h1 style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", margin: "24px 0 16px", lineHeight: "1.1", fontFamily: "ui-serif, Georgia, serif", letterSpacing: "-0.04em" }}>
-            Conflicting Opinions. <br/>
-            <span style={{ color: "var(--teal)" }}>Resolved by AI.</span>
-          </h1>
-          <p style={{ fontSize: "1.25rem", margin: "0 auto", maxWidth: "700px", color: "var(--ink-700)", lineHeight: "1.6" }}>
-            SecondSight Pro is the first medical voice assistant that ingests conflicting prescriptions and explains them to patients using WHO-grounded RAG.
-          </p>
+      <section className="home-section" style={{ paddingTop: "60px", paddingBottom: "60px", borderBottom: "none", overflow: "hidden", textAlign: "center" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 20px" }}>
           
-          <div style={{ marginTop: "40px", display: "flex", gap: "16px", justifyContent: "center" }}>
-            <Link to="/case/new" className="button primary" style={{ padding: "16px 36px", fontSize: "1.1rem", borderRadius: "999px" }}>
-              Start Triage / New Case
-            </Link>
-            <Link to="/dashboard" className="button ghost" style={{ padding: "16px 36px", fontSize: "1.1rem", borderRadius: "999px" }}>
-              View Dashboard
-            </Link>
-          </div>
-        </motion.div>
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, ease: "easeOut" }} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+            <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", margin: "0 0 24px", lineHeight: "1.1", fontFamily: "ui-serif, Georgia, serif", letterSpacing: "-0.03em", color: "var(--ink-900)" }}>
+              Conflicting Opinions. <br/>
+              <span style={{ color: "var(--teal)" }}>Resolved by AI.</span>
+            </h1>
+            <p style={{ fontSize: "1.2rem", margin: "0 auto 40px", color: "var(--ink-700)", lineHeight: "1.6", maxWidth: "650px" }}>
+              SecondSight Pro is the first medical voice assistant that ingests conflicting prescriptions and explains them to patients using WHO-grounded RAG.
+            </p>
+            
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link to="/case/new" className="button primary" style={{ padding: "18px 36px", fontSize: "1.1rem", borderRadius: "999px", fontWeight: 600 }}>
+                Start Triage / New Case
+              </Link>
+              <Link to="/dashboard" className="button ghost" style={{ padding: "18px 36px", fontSize: "1.1rem", borderRadius: "999px", fontWeight: 600, border: "2px solid var(--line)" }}>
+                View Dashboard
+              </Link>
+            </div>
+          </motion.div>
+
+        </div>
       </section>
 
       {/* 2. Feature Section */}

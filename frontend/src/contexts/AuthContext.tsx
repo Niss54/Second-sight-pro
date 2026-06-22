@@ -8,6 +8,7 @@ interface AuthContextType {
   isLoading: boolean;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
+  continueAsGuest: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -15,7 +16,8 @@ const AuthContext = createContext<AuthContextType>({
   session: null,
   isLoading: true,
   signInWithGoogle: async () => {},
-  signOut: async () => {}
+  signOut: async () => {},
+  continueAsGuest: () => {}
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -59,8 +61,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await supabase.auth.signOut();
   };
 
+  const continueAsGuest = () => {
+    setUser({
+      id: "demo-guest-id",
+      app_metadata: {},
+      user_metadata: { name: "Hackathon Judge" },
+      aud: "authenticated",
+      created_at: new Date().toISOString()
+    } as User);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, session, isLoading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, session, isLoading, signInWithGoogle, signOut, continueAsGuest }}>
       {children}
     </AuthContext.Provider>
   );

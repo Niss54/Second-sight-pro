@@ -10,7 +10,9 @@ import {
   ChevronRight,
   Activity,
   FileText,
-  ShieldCheck
+  ShieldCheck,
+  UserPlus,
+  AlertOctagon
 } from "lucide-react";
 import { listCases } from "../services/api";
 import type { CaseSummary } from "../types";
@@ -53,6 +55,7 @@ export const DoctorDashboardPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
   const [error, setError] = useState<string | null>(null);
+  const [actionNotif, setActionNotif] = useState<string | null>(null);
 
   const loadCases = useCallback(async () => {
     setIsLoading(true);
@@ -73,6 +76,12 @@ export const DoctorDashboardPage: React.FC = () => {
   useEffect(() => {
     loadCases();
   }, [loadCases]);
+
+  const handleQuickAction = (e: React.MouseEvent, caseId: string, actionName: string) => {
+    e.stopPropagation(); 
+    setActionNotif(`${actionName} applied to case ${caseId.slice(0, 8)}`);
+    setTimeout(() => setActionNotif(null), 3000);
+  };
 
   // Derived stats
   const stats = useMemo(() => {
@@ -108,6 +117,12 @@ export const DoctorDashboardPage: React.FC = () => {
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.3 }}
     >
+      {actionNotif && (
+        <div style={{ position: "fixed", bottom: "24px", right: "24px", background: "var(--ink-900)", color: "white", padding: "12px 20px", borderRadius: "8px", zIndex: 9999, boxShadow: "0 10px 25px rgba(0,0,0,0.2)", display: "flex", alignItems: "center", gap: "10px", fontSize: "14px", fontWeight: 500 }}>
+          <CheckCircle size={16} color="#4ade80" /> {actionNotif}
+        </div>
+      )}
+
       {/* ── Page Header ── */}
       <div
         style={{
@@ -342,7 +357,7 @@ export const DoctorDashboardPage: React.FC = () => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "2fr 1.5fr 140px 80px 120px 100px",
+                gridTemplateColumns: "2fr 1.5fr 140px 80px 120px 190px",
                 gap: "12px",
                 padding: "12px 24px",
                 background: "var(--bg-1, rgba(0,0,0,0.03))",
@@ -382,7 +397,7 @@ export const DoctorDashboardPage: React.FC = () => {
                   transition={{ delay: index * 0.04, duration: 0.25 }}
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "2fr 1.5fr 140px 80px 120px 100px",
+                    gridTemplateColumns: "2fr 1.5fr 140px 80px 120px 190px",
                     gap: "12px",
                     padding: "16px 24px",
                     borderBottom: "1px solid var(--line)",
@@ -437,14 +452,35 @@ export const DoctorDashboardPage: React.FC = () => {
                   <div style={{ fontSize: "12px", color: "var(--ink-500)" }}>{dateStr}</div>
 
                   {/* Action */}
-                  <div style={{ textAlign: "right" }}>
+                  <div style={{ display: "flex", gap: "6px", justifyContent: "flex-end", alignItems: "center" }}>
+                    <button
+                      onClick={(e) => handleQuickAction(e, c.id, "Reviewed")}
+                      title="Mark Reviewed"
+                      style={{ background: "transparent", border: "1px solid var(--line)", padding: "6px", borderRadius: "6px", cursor: "pointer", color: "var(--ink-600)", display: "flex", alignItems: "center", justifyContent: "center" }}
+                    >
+                      <CheckCircle size={14} />
+                    </button>
+                    <button
+                      onClick={(e) => handleQuickAction(e, c.id, "Escalated to Specialist")}
+                      title="Escalate to Specialist"
+                      style={{ background: "transparent", border: "1px solid var(--line)", padding: "6px", borderRadius: "6px", cursor: "pointer", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center" }}
+                    >
+                      <UserPlus size={14} />
+                    </button>
+                    <button
+                      onClick={(e) => handleQuickAction(e, c.id, "Flagged as Emergency")}
+                      title="Flag Emergency"
+                      style={{ background: "transparent", border: "1px solid var(--line)", padding: "6px", borderRadius: "6px", cursor: "pointer", color: "var(--danger)", display: "flex", alignItems: "center", justifyContent: "center" }}
+                    >
+                      <AlertOctagon size={14} />
+                    </button>
+                    
                     <button
                       onClick={() => navigate(`/case/new?id=${c.id}`)}
                       className="button primary sm"
-                      style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "12px", padding: "7px 14px" }}
+                      style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "11px", padding: "6px 12px", marginLeft: "4px" }}
                     >
-                      Review
-                      <ChevronRight size={13} />
+                      Open <ChevronRight size={12} />
                     </button>
                   </div>
                 </motion.div>

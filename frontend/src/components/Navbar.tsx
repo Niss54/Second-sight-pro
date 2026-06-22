@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Moon, Sun, LogOut } from "lucide-react";
+import { Moon, Sun, LogOut, Menu, X } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -8,29 +8,40 @@ export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { signOut } = useAuth();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <nav className="nav-pill">
-      <Link to="/" style={{ textDecoration: "none", color: "var(--ink-900)" }}>
-        <h1 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "ui-serif, Georgia, serif", letterSpacing: "-0.03em" }}>
-          <span style={{ color: "var(--teal)" }}>Second</span>Sight Pro
-        </h1>
-      </Link>
+    <nav className={`nav-pill ${isOpen ? 'mobile-open' : ''}`}>
+      <div className="nav-header">
+        <Link to="/" onClick={handleLinkClick} style={{ textDecoration: "none", color: "var(--ink-900)" }}>
+          <h1 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "ui-serif, Georgia, serif", letterSpacing: "-0.03em" }}>
+            <span style={{ color: "var(--teal)" }}>Second</span>Sight Pro
+          </h1>
+        </Link>
+
+        <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
       
-      <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
-        <Link to="/" style={{ 
+      <div className={`nav-links ${isOpen ? 'show' : ''}`}>
+        <Link to="/" onClick={handleLinkClick} style={{ 
           textDecoration: "none", 
           color: location.pathname === "/" ? "var(--teal)" : "var(--ink-500)",
           fontWeight: location.pathname === "/" ? 700 : 500,
           fontSize: "0.95rem"
         }}>Home</Link>
-        <Link to="/case/new" style={{ 
+        <Link to="/case/new" onClick={handleLinkClick} style={{ 
           textDecoration: "none", 
           color: location.pathname.startsWith("/case") ? "var(--teal)" : "var(--ink-500)",
           fontWeight: location.pathname.startsWith("/case") ? 700 : 500,
           fontSize: "0.95rem"
         }}>Active Case</Link>
-        <Link to="/dashboard" style={{ 
+        <Link to="/dashboard" onClick={handleLinkClick} style={{ 
           textDecoration: "none", 
           color: location.pathname === "/dashboard" ? "var(--teal)" : "var(--ink-500)",
           fontWeight: location.pathname === "/dashboard" ? 700 : 500,
@@ -38,6 +49,7 @@ export const Navbar: React.FC = () => {
         }}>History</Link>
         <Link
           to="/doctor"
+          onClick={handleLinkClick}
           style={{
             textDecoration: "none",
             color: location.pathname === "/doctor" ? "var(--teal)" : "var(--ink-500)",
@@ -68,11 +80,11 @@ export const Navbar: React.FC = () => {
         </Link>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <button onClick={toggleTheme} className="button ghost" style={{ padding: "8px", borderRadius: "50%", minWidth: "36px", height: "36px" }}>
+      <div className={`nav-actions ${isOpen ? 'show' : ''}`}>
+        <button onClick={() => { toggleTheme(); handleLinkClick(); }} className="button ghost" style={{ padding: "8px", borderRadius: "50%", minWidth: "36px", height: "36px" }}>
           {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
         </button>
-        <button onClick={signOut} className="button ghost" style={{ padding: "6px 12px", fontSize: "0.85rem", height: "36px" }}>
+        <button onClick={() => { signOut(); handleLinkClick(); }} className="button ghost" style={{ padding: "6px 12px", fontSize: "0.85rem", height: "36px" }}>
           <LogOut size={14} /> Sign Out
         </button>
       </div>

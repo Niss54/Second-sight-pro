@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CaseFormPanel } from "../components/CaseFormPanel";
-import { VoiceAssistantPanel } from "../components/VoiceAssistantPanel";
 import { ReconciliationPanel } from "../components/ReconciliationPanel";
 import { ToastContainer, type ToastType } from "../components/ToastContainer";
 import { createBlankCase, ALL_DEMO_CASES } from "../constants/caseTemplates";
@@ -17,6 +16,16 @@ export const IntakePage: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [toasts, setToasts] = useState<ToastType[]>([]);
   const [demoCaseIndex, setDemoCaseIndex] = useState(0);
+  const [autoLoaded, setAutoLoaded] = useState(false);
+
+  // Auto-load a compelling demo case so judges see data immediately
+  useEffect(() => {
+    if (!autoLoaded) {
+      setCaseData(ALL_DEMO_CASES[0]);
+      setDemoCaseIndex(1);
+      setAutoLoaded(true);
+    }
+  }, [autoLoaded]);
 
   const topRisk = useMemo(() => analysis ? `${analysis.conflict_score}` : "No active analysis", [analysis]);
 
@@ -143,10 +152,9 @@ export const IntakePage: React.FC = () => {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h3 style={{ margin: 0, fontSize: "1.1rem" }}>Patient Interactions</h3>
             <Link to="/chat" className="button primary" style={{ textDecoration: "none", display: "inline-flex", gap: "8px", alignItems: "center" }}>
-              Open Patient Chat UI 💬
+              Open Patient Chat 💬
             </Link>
           </div>
-          <VoiceAssistantPanel caseData={caseData} analysis={analysis} onStatusChange={notify} />
           <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
         </div>
       </div>

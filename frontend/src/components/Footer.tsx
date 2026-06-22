@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Stethoscope } from "lucide-react";
+import { Stethoscope, Github, Linkedin, Twitter } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
@@ -26,37 +26,42 @@ export const Footer: React.FC = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/case/new">Active Case</Link></li>
             <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><a href="#">About Us</a></li>
+            <li><a href="https://github.com/Niss54/Second-sight-pro#team" target="_blank" rel="noreferrer">About Us</a></li>
           </ul>
         </div>
 
         <div className="footer-col">
           <h4>Technology</h4>
           <ul>
-            <li><a href="#">React & Vite</a></li>
-            <li><a href="#">LiveKit WebRTC</a></li>
-            <li><a href="#">pgvector RAG</a></li>
-            <li><a href="#">Sarvam AI Indic</a></li>
+            <li><a href="https://vitejs.dev/" target="_blank" rel="noreferrer">React & Vite</a></li>
+            <li><a href="https://bhashini.gov.in/" target="_blank" rel="noreferrer">Bhashini STT</a></li>
+            <li><a href="https://github.com/pgvector/pgvector" target="_blank" rel="noreferrer">pgvector RAG</a></li>
+            <li><a href="https://sarvam.ai/" target="_blank" rel="noreferrer">Sarvam AI Indic</a></li>
           </ul>
         </div>
 
         <div className="footer-col">
           <h4>Resources</h4>
           <ul>
-            <li><a href="#">WHO Guidelines</a></li>
-            <li><a href="#">API Documentation</a></li>
-            <li><a href="#">Case Studies</a></li>
-            <li><a href="#">Pricing</a></li>
+            <li><a href="https://www.who.int/publications/i" target="_blank" rel="noreferrer">WHO Guidelines</a></li>
+            <li><a href="https://icmr.nic.in/" target="_blank" rel="noreferrer">ICMR Guidelines</a></li>
+            <li><a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer">API Documentation</a></li>
+            <li><a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer">Open Source (Free)</a></li>
           </ul>
         </div>
 
         <div className="footer-col">
           <h4>Connect</h4>
           <div className="footer-socials">
-            <a href="#" className="footer-social-icon">Twitter</a>
-            <a href="#" className="footer-social-icon">LinkedIn</a>
-            <a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer" className="footer-social-icon">GitHub</a>
-            <a href="#" className="footer-social-icon">Mail</a>
+            <a href="https://github.com/Niss54" target="_blank" rel="noreferrer" className="footer-social-icon" aria-label="GitHub">
+              <Github size={20} />
+            </a>
+            <a href="https://linkedin.com/in/nishanthsharma" target="_blank" rel="noreferrer" className="footer-social-icon" aria-label="LinkedIn">
+              <Linkedin size={20} />
+            </a>
+            <a href="https://x.com/Niss54" target="_blank" rel="noreferrer" className="footer-social-icon" aria-label="Twitter">
+              <Twitter size={20} />
+            </a>
           </div>
         </div>
       </div>
@@ -69,12 +74,12 @@ export const Footer: React.FC = () => {
         </div>
         <div className="footer-bottom-links">
           <div>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Cookies</a>
+            <a href="https://github.com/Niss54/Second-sight-pro/blob/main/LICENSE" target="_blank" rel="noreferrer">Terms of Service</a>
+            <a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer">Privacy Policy</a>
+            <a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer">Cookies</a>
           </div>
           <div style={{ marginTop: "4px" }}>
-            Designed & Built with <span style={{ color: "var(--teal)" }}>♥</span> by Team
+            Designed & Built with <span style={{ color: "var(--teal)" }}>♥</span> by SecondSight (@Niss54)
           </div>
         </div>
       </div>

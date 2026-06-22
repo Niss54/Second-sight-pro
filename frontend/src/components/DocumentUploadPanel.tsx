@@ -47,48 +47,60 @@ export function DocumentUploadPanel({ onExtractionComplete }: DocumentUploadPane
   };
 
   return (
-    <div className="glass-panel mb-6 overflow-hidden relative">
+    <div style={{ marginBottom: "24px" }}>
       <div
         onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
         onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
         onDrop={handleDrop}
-        className={`p-8 border-2 border-dashed rounded-xl text-center transition-all duration-300 ${
-          isDragging ? "border-primary-400 bg-primary-50/10" : "border-slate-700/50 hover:border-slate-600/70"
-        } ${isUploading ? "opacity-60 pointer-events-none" : ""}`}
+        style={{
+          padding: "32px 24px",
+          border: `2px dashed ${isDragging ? "var(--teal)" : "rgba(0,0,0,0.15)"}`,
+          borderRadius: "16px",
+          textAlign: "center",
+          backgroundColor: isDragging ? "rgba(13, 124, 115, 0.05)" : "var(--bg-0)",
+          transition: "all 0.3s ease",
+          opacity: isUploading ? 0.6 : 1,
+          pointerEvents: isUploading ? "none" : "auto",
+          cursor: "pointer",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
       >
         <input
           type="file"
           id="document-upload"
-          className="hidden"
+          style={{ display: "none" }}
           accept="application/pdf,image/png,image/jpeg,image/jpg"
           onChange={handleChange}
         />
         
         {isUploading ? (
-          <div className="flex flex-col items-center justify-center space-y-4 py-4">
-            <Loader2 className="w-12 h-12 text-primary-400 animate-spin" />
-            <h3 className="text-lg font-medium text-slate-200">AI is extracting medical data...</h3>
-            <p className="text-sm text-slate-400">This may take a few seconds.</p>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", padding: "16px 0" }}>
+            <Loader2 size={48} color="var(--teal)" style={{ animation: "spin 1s linear infinite" }} />
+            <h3 style={{ margin: 0, fontSize: "1.1rem", color: "var(--ink-900)" }}>AI is extracting medical data...</h3>
+            <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--ink-500)" }}>This may take a few seconds.</p>
           </div>
         ) : (
-          <label htmlFor="document-upload" className="cursor-pointer flex flex-col items-center justify-center space-y-4 py-4">
-            <div className="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-2 shadow-inner border border-slate-700/50">
-              <UploadCloud className="w-8 h-8 text-primary-400" />
+          <label htmlFor="document-upload" style={{ cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+            <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "rgba(13, 124, 115, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px" }}>
+              <UploadCloud size={32} color="var(--teal)" />
             </div>
-            <div>
-              <h3 className="text-lg font-medium text-slate-200 mb-1">Drag & Drop Documents</h3>
-              <p className="text-sm text-slate-400 mb-4">Upload PDFs for medical reports or images for prescriptions</p>
-            </div>
-            <div className="flex gap-4 text-xs font-medium">
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-800/80 text-blue-300 border border-blue-900/30">
-                <FileText className="w-3.5 h-3.5" /> PDF Reports
+            <h3 style={{ margin: "0 0 8px", fontSize: "1.2rem", fontWeight: 600, color: "var(--ink-900)" }}>Drag & Drop Documents</h3>
+            <p style={{ margin: "0 0 20px", fontSize: "0.9rem", color: "var(--ink-500)" }}>Upload PDFs for medical reports or images for prescriptions</p>
+            
+            <div style={{ display: "flex", gap: "12px", fontSize: "0.85rem", fontWeight: 500 }}>
+              <span style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", borderRadius: "8px", backgroundColor: "rgba(59, 130, 246, 0.1)", color: "#2563eb", border: "1px solid rgba(59, 130, 246, 0.2)" }}>
+                <FileText size={14} /> PDF Reports
               </span>
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-800/80 text-emerald-300 border border-emerald-900/30">
-                <ImageIcon className="w-3.5 h-3.5" /> Image Prescriptions
+              <span style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", borderRadius: "8px", backgroundColor: "rgba(16, 185, 129, 0.1)", color: "#059669", border: "1px solid rgba(16, 185, 129, 0.2)" }}>
+                <ImageIcon size={14} /> Image Prescriptions
               </span>
             </div>
+            
             {error && (
-              <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg max-w-md">
+              <div style={{ marginTop: "16px", padding: "10px 16px", backgroundColor: "rgba(220, 38, 38, 0.1)", border: "1px solid rgba(220, 38, 38, 0.2)", color: "#dc2626", fontSize: "0.85rem", borderRadius: "8px", maxWidth: "400px" }}>
                 {error}
               </div>
             )}
