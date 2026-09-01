@@ -1,0 +1,127 @@
+import axios from "axios";
+import { supabase } from "./supabase";
+import type {
+  CaseSummary,
+  ReconciliationOutput,
+  PatientCaseInput,
+  StoredCase,
+  VoiceAssistantResponse
+} from "../types";
+
+let API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+
+if (API_BASE_URL && !API_BASE_URL.startsWith("http")) {
+  API_BASE_URL = `https://${API_BASE_URL}`;
+}
+if (API_BASE_URL && !API_BASE_URL.endsWith("/api")) {
+  API_BASE_URL = `${API_BASE_URL}/api`;
+}
+
+const http = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 30000
+});
+
+http.interceptors.request.use(async (config) => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.access_token) {
+    config.headers.Authorization = `Bearer ${session.access_token}`;
+  }
+  return config;
+});
+
+export async function analyzeCase(caseData: PatientCaseInput): Promise<ReconciliationOutput> {
+  const response = await http.post<{ ok: boolean; analysis: ReconciliationOutput }>("/reconciliation/compare", {
+    caseData
+  });
+
+  return response.data.analysis;
+}
+
+export async function listCases(): Promise<CaseSummary[]> {
+  const response = await http.get<{ ok: boolean; cases: CaseSummary[] }>("/cases");
+  return response.data.cases;
+}
+
+export async function getCaseById(id: string): Promise<StoredCase> {
+  const response = await http.get<{ ok: boolean; case: StoredCase }>(`/cases/${id}`);
+  return response.data.case;
+}
+
+export async function createCase(caseData: PatientCaseInput): Promise<StoredCase> {
+  const response = await http.post<{ ok: boolean; case: StoredCase }>("/cases", { caseData });
+  return response.data.case;
+}
+
+export async function updateCase(id: string, caseData: PatientCaseInput): Promise<StoredCase> {
+  const response = await http.put<{ ok: boolean; case: StoredCase }>(`/cases/${id}`, { caseData });
+  return response.data.case;
+}
+
+export async function deleteCase(id: string): Promise<void> {
+  await http.delete(`/cases/${id}`);
+}
+
+export async function reanalyzeCase(id: string): Promise<StoredCase> {
+  const response = await http.post<{ ok: boolean; case: StoredCase }>(`/cases/${id}/reanalyze`);
+  return response.data.case;
+}
+
+export async function speakMedicalSummary(
+  caseData: PatientCaseInput,
+  analysis?: ReconciliationOutput
+): Promise<VoiceAssistantResponse> {
+  const response = await http.post<{ ok: boolean; result: VoiceAssistantResponse }>("/voice/summary", {
+    caseData,
+    analysis
+  });
+
+  return response.data.result;
+}
+
+export async function askFollowupQuestion(
+  caseData: PatientCaseInput,
+  question: string,
+  analysis?: ReconciliationOutput
+): Promise<VoiceAssistantResponse> {
+  const response = await http.post<{ ok: boolean; result: VoiceAssistantResponse }>("/voice/followup", {
+    caseData,
+    analysis,
+    question
+  });
+
+  return response.data.result;
+}
+
+export async function uploadPrescriptionImage(file: File): Promise<{
+  medicines: string[];
+  dosage: string[];
+  tests: string[];
+  doctor_notes: string[];
+}> {
+  const formData = new FormData();
+  formData.append("image", file);
+  const response = await http.post("/ocr/prescription", formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return response.data.result;
+}
+
+export async function uploadMedicalReportPdf(file: File): Promise<{
+  patientInfo: {
+    age?: number;
+    gender?: string;
+  };
+  primaryCondition: string;
+  background: string;
+  currentMedications: string[];
+  allergies: string[];
+  keyFindings: string[];
+}> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await http.post("/reports/extract", formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return response.data.result;
+}

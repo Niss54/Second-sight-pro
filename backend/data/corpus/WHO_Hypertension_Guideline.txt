@@ -1,0 +1,25 @@
+WHO Guideline for the pharmacological treatment of hypertension in adults (2021)
+
+1. Thresholds for initiation of pharmacological treatment:
+   - For adults with hypertension, WHO recommends initiation of pharmacological blood pressure-lowering treatment when systolic blood pressure is ≥140 mmHg or diastolic blood pressure is ≥90 mmHg.
+   - For adults with existing cardiovascular disease (CVD) and systolic blood pressure 130–139 mmHg, WHO suggests initiation of pharmacological treatment.
+   - For adults without CVD but with high cardiovascular risk, diabetes mellitus, or chronic kidney disease (CKD), and systolic blood pressure 130–139 mmHg, WHO suggests initiation of pharmacological treatment.
+
+2. Blood pressure targets:
+   - For adults with hypertension, the WHO recommends a target blood pressure treatment goal of <140/90 mmHg.
+   - For adults with hypertension and known CVD, diabetes mellitus, or CKD, the WHO suggests a target blood pressure treatment goal of <130/80 mmHg.
+
+3. Pharmacological treatment choices:
+   - For adults with hypertension requiring pharmacological treatment, WHO recommends using any of the following three classes of pharmacological blood pressure-lowering medications as an initial treatment:
+     a) Thiazide and thiazide-like diuretics
+     b) Angiotensin-converting enzyme (ACE) inhibitors or angiotensin-receptor blockers (ARBs)
+     c) Long-acting dihydropyridine calcium channel blockers (CCBs).
+   - WHO suggests combination therapy, preferably with a single-pill combination (to improve adherence and persistence), as an initial treatment or to achieve blood pressure control.
+   - For patients with specific comorbidities (e.g., ischemic heart disease), beta-blockers may be considered in addition to or in place of these primary choices.
+
+4. Follow-up and reassessment:
+   - WHO suggests scheduling a follow-up visit 4 weeks after initiating or changing blood pressure-lowering medication to assess blood pressure control, medication tolerance, and adherence.
+   - Once blood pressure is controlled, WHO suggests follow-up visits every 3–6 months.
+
+Safety Disclaimer:
+Do not prescribe ACE inhibitors and ARBs simultaneously due to the increased risk of renal impairment and hyperkalemia. Provide dose adjustments based on renal function if using thiazide diuretics in advanced CKD.

@@ -1,0 +1,54 @@
+WHO Essential Medicines — Key Drug Interactions Reference
+Source: WHO Model List of Essential Medicines (22nd Edition, 2021) + WHO Drug Information
+
+SECTION 1 — CARDIOVASCULAR DRUG INTERACTIONS
+1.1 ACE Inhibitors (Enalapril, Ramipril, Lisinopril)
+- ACE Inhibitor + ARB (e.g., Losartan): AVOID COMBINATION. Dual blockade increases risk of hypotension, hyperkalemia, and acute kidney injury without additional cardiovascular benefit (ONTARGET trial).
+- ACE Inhibitor + Potassium-sparing diuretic (Spironolactone): HIGH RISK of hyperkalemia; monitor potassium closely if combined; especially dangerous in CKD.
+- ACE Inhibitor + NSAIDs (Ibuprofen, Diclofenac): Reduces antihypertensive effect; increases risk of AKI. Avoid combination where possible.
+- ACE Inhibitor + Aliskiren: Contraindicated in diabetics and CKD (increased risk of hypotension, renal impairment, hyperkalemia).
+
+1.2 Beta-Blockers (Atenolol, Metoprolol, Carvedilol)
+- Beta-Blocker + Verapamil or Diltiazem (non-dihydropyridine CCBs): RISK of severe bradycardia and heart block. Avoid IV combinations. Oral combination requires close monitoring.
+- Beta-Blocker + Insulin or Sulfonylureas: Beta-blockers may mask hypoglycemia symptoms (tachycardia, tremor) — only sweating remains as warning sign.
+- Beta-Blocker + Clonidine: Abrupt clonidine withdrawal with concurrent beta-blockade causes severe rebound hypertension. Taper clonidine slowly.
+
+1.3 Statins (Atorvastatin, Rosuvastatin, Simvastatin)
+- Simvastatin + Amlodipine: Limit Simvastatin dose to 20mg/day; combination increases risk of myopathy.
+- Simvastatin + Erythromycin or Clarithromycin: HIGH RISK of myopathy and rhabdomyolysis. Switch to Rosuvastatin or Pravastatin for antibiotic course.
+- Statin + Gemfibrozil: Significantly increased risk of myopathy. Use Fenofibrate instead if fibrate needed.
+- Statin + Warfarin: Statins enhance anticoagulant effect of Warfarin; monitor INR closely when starting or changing statin.
+
+SECTION 2 — ANTIBIOTIC DRUG INTERACTIONS
+2.1 Fluoroquinolones (Ciprofloxacin, Levofloxacin, Ofloxacin)
+- Fluoroquinolone + Antacids containing Aluminum/Magnesium: Reduces fluoroquinolone absorption by up to 90%. Take antacid 2 hours before or 6 hours after fluoroquinolone.
+- Fluoroquinolone + Warfarin: Significantly potentiates Warfarin anticoagulation; monitor INR closely.
+- Fluoroquinolone + NSAIDs: Increases risk of CNS side effects and seizures.
+- Fluoroquinolone + Metformin: Can cause dysglycemia (both hypoglycemia and hyperglycemia) in diabetics; monitor blood glucose.
+
+2.2 Macrolides (Erythromycin, Azithromycin, Clarithromycin)
+- Clarithromycin + Statins (especially Simvastatin, Lovastatin): Suspend statin during Clarithromycin course; risk of rhabdomyolysis.
+- Azithromycin + QT-prolonging drugs (Ondansetron, Haloperidol, Amiodarone): Additive QTc prolongation; risk of Torsades de Pointes. Avoid combination.
+- Erythromycin + Carbamazepine: Significantly increases Carbamazepine levels; toxicity risk (nausea, diplopia, ataxia).
+
+SECTION 3 — ANALGESIC AND ANTI-INFLAMMATORY INTERACTIONS
+3.1 NSAIDs (Ibuprofen, Diclofenac, Naproxen, Ketorolac)
+- NSAIDs + Anticoagulants (Warfarin, Heparin, DOACs): Significantly increases bleeding risk. Prefer Paracetamol (Acetaminophen) for analgesia.
+- NSAIDs + Antihypertensives: Reduces antihypertensive effect of ACE inhibitors, ARBs, diuretics.
+- NSAIDs + Corticosteroids: Additive risk of GI bleeding. Co-prescribe PPI (Omeprazole, Pantoprazole) if combination unavoidable.
+- NSAIDs + Methotrexate: Increases Methotrexate toxicity (bone marrow suppression, renal impairment). Avoid combination.
+- NSAIDs + Lithium: NSAIDs reduce renal lithium clearance, causing lithium toxicity.
+
+3.2 Opioids (Tramadol, Codeine, Morphine)
+- Tramadol + SSRIs (Fluoxetine, Sertraline): Risk of Serotonin Syndrome; symptoms include agitation, hyperthermia, clonus.
+- Tramadol + MAOIs: CONTRAINDICATED; severe serotonin syndrome.
+- Opioids + Benzodiazepines: Increased risk of respiratory depression and death; use lowest effective doses if combination unavoidable.
+
+SECTION 4 — COMMON POLYPHARMACY SCENARIOS IN INDIA
+- Elderly patients on ≥5 medications are at HIGH RISK for adverse drug events.
+- Most common dangerous combination in Indian primary care: ACE inhibitor + NSAID + Diuretic ("Triple Whammy") — causes acute kidney injury.
+- Second most common: Warfarin + Antibiotic + NSAID — causes severe bleeding.
+- Patients on TB treatment (Rifampicin) must have ALL other drug interactions reviewed — Rifampicin is a powerful enzyme inducer that reduces levels of many drugs including Warfarin, oral contraceptives, and antiretrovirals.
+
+Safety Disclaimer:
+This is a summary for decision support. All prescribing decisions require clinical judgment by a qualified physician.

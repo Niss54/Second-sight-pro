@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.DS_Store
+.env
+.env.local
+.env.*.local
+dist
+coverage
+data/cases.json
+data/corpus/*
+!data/corpus/.gitkeep

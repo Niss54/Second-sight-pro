@@ -1,0 +1,79 @@
+ICMR Consensus Guidelines on Hypertension Management in India (2023)
+Source: Indian Council of Medical Research (ICMR) / Indian College of Physicians
+
+SECTION 1 — EPIDEMIOLOGY (India Context)
+- Hypertension affects approximately 30% of Indian adults (2023 estimates).
+- Only 45% of hypertensive Indians are diagnosed; of those diagnosed, only 15% achieve target BP.
+- Indians develop hypertension at a younger age compared to Western populations.
+- Salt intake in India is 2–3× the WHO recommended maximum of 5g/day.
+- Salt restriction (to <5g/day) alone can reduce systolic BP by 4–5 mmHg.
+
+SECTION 2 — DEFINITION AND CLASSIFICATION (India 2023)
+- Normal BP: <120/80 mmHg
+- Elevated BP (pre-hypertension): 120–129 / <80 mmHg
+- Stage 1 Hypertension: 130–139 / 80–89 mmHg
+- Stage 2 Hypertension: ≥140/90 mmHg
+- Hypertensive Urgency: BP >180/110 without end-organ damage
+- Hypertensive Emergency: BP >180/120 WITH end-organ damage (chest pain, neurological changes, AKI, pulmonary oedema)
+
+NOTE: The ICMR (2023) recommends using the American College of Cardiology (ACC/AHA) 2017 thresholds (130/80) for high-risk Indians but acknowledges resource constraints in primary care.
+
+SECTION 3 — FIRST-LINE TREATMENT FOR HYPERTENSION IN INDIA
+Step 1 (all patients, lifestyle measures first):
+- Sodium restriction to <5g NaCl/day
+- Weight loss if BMI >23 kg/m²
+- DASH or equivalent diet (increase fruits, vegetables, reduce saturated fat)
+- Physical activity: 150 minutes moderate-intensity per week
+- Reduce or stop alcohol; stop tobacco
+
+Step 2 (pharmacological, Stage 1 or failed lifestyle):
+- Low-to-moderate cardiovascular risk: ANY of:
+  a) Amlodipine 5mg once daily (Calcium Channel Blocker — CCB) — preferred in elderly and Afro-Indian patients
+  b) Enalapril 5mg OR Ramipril 2.5mg once daily (ACE inhibitor) — preferred in diabetics with microalbuminuria
+  c) Telmisartan 40mg OR Losartan 50mg once daily (ARB) — preferred if ACE inhibitor cough develops
+  d) Hydrochlorothiazide 12.5mg OR Chlorthalidone 12.5mg once daily (Thiazide diuretic) — preferred if oedema present
+- Choose based on comorbidities and affordability.
+
+Step 3 (if BP uncontrolled on monotherapy):
+- Combine two agents from different classes.
+- Preferred combination: CCB + ACE inhibitor/ARB (e.g., Amlodipine + Ramipril)
+- Alternative: CCB + Thiazide diuretic
+- AVOID: ACE inhibitor + ARB (dual blockade — increases risk without additional benefit)
+
+Step 4 (resistant hypertension — BP uncontrolled on 3 agents including diuretic):
+- Refer to physician/specialist.
+- Consider Spironolactone 25mg added as 4th agent (most effective add-on in resistant hypertension).
+- Rule out secondary causes: renal artery stenosis, primary aldosteronism, sleep apnoea.
+
+SECTION 4 — SPECIFIC POPULATIONS
+Hypertension in Diabetics:
+- Target BP: <130/80 mmHg
+- First-line: ACE inhibitor or ARB (renoprotective)
+- Avoid: Thiazide as first-line in diabetics (worsens glucose control at high doses)
+
+Hypertension in CKD:
+- Target BP: <130/80 mmHg
+- ACE inhibitor or ARB: First-line (proteinuria reduction)
+- Avoid: High-dose thiazides if eGFR <30
+- Avoid: ACE inhibitor + ARB combination
+
+Hypertension in Pregnancy:
+- SAFE: Methyldopa, Nifedipine (extended release), Labetalol
+- AVOID: ACE inhibitors, ARBs, direct renin inhibitors (teratogenic)
+- Target: 110–140 / 80–85 mmHg
+
+Elderly Hypertension (>65 years):
+- Target: <140/90 mmHg (not <130/80 — increases fall and syncope risk in elderly)
+- Prefer once-daily formulations for adherence
+- Start low, go slow with dosing
+- Monitor for orthostatic hypotension
+
+SECTION 5 — MONITORING AND FOLLOW-UP
+- After initiating or changing BP medication: Check BP and renal function (creatinine, potassium) at 2–4 weeks.
+- ACE inhibitor/ARB: Increase in creatinine <30% from baseline is acceptable; continue. >30% increase — stop and investigate.
+- Once BP is stable: Review every 3–6 months.
+- Home BP monitoring (HBPM): Preferred over office BP for diagnosis and monitoring; take two readings 1 minute apart, morning and evening, for 7 days before appointment.
+- White-coat hypertension: Consider 24-hour ABPM before starting treatment in patients with borderline BP.
+
+Safety Disclaimer:
+This is a clinical reference summary. Treatment must be individualised by a qualified physician.

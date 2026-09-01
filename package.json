@@ -1,0 +1,17 @@
+{
+  "name": "medical-guideline-rag",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Guideline retrieval API with evidence-backed medical citations",
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w backend",
+    "dev:api": "npm run dev -w backend",
+    "build": "npm run build -w backend",
+    "build:api": "npm run build -w backend",
+    "start": "npm run start -w backend",
+    "lint": "npm run check -w backend"
+  }
+}
