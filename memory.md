@@ -92,6 +92,16 @@ In India, patients consult multiple doctors for complex conditions and frequentl
   - [x] Purged root duplicate/stale documentation files (`architecture.md`, `PRD.md`, `TODO.md`, `todo2.md`, etc.), preserving the entire `docs/` folder untouched
   - [x] Added npm scripts (`docker:build`, `docker:up`, `docker:down`, `docker:dev`) to root `package.json`
 
+- [x] **Phase 11: `nissh.info` Inspired Kinetic Visual & Neo-Brutalist Redesign**
+  - [x] Inspected user's personal website (`https://nissh.info`) for design tokens, kinetic animations, and neo-brutalist interactive elements
+  - [x] Created `InteractiveCursor.tsx`: Desktop pointer-following interactive bubble displaying contextual action labels via `data-cursor` attributes
+  - [x] Created `AmbientParticles.tsx`: Pulsing ambient particle system with staggered animation delays
+  - [x] Created `InteractiveStickers.tsx`: Kinetic stickers including `SpinningStar`, `WobblySmiley`, `HandDrawnUnderline`, `HandDrawnOval`, and `NeoPill`
+  - [x] Created `MarqueeTicker.tsx`: Continuous dual-track infinite marquee ticker with colorful clinical safety pills and edge gradient masks
+  - [x] Created `MotionCardDeck.tsx`: 4-card overlapping fan deck displaying conflicting doctor opinions, conflict detection alert, and ICMR reconciliation with hover fanning and click focus
+  - [x] Added kinetic CSS rules to `App.css` (`@keyframes pulseParticle`, `spinSlow`, `floatWobble`, `drawUnderline`, `scrollLeft`, `scrollRight`, `floatTag`, `.neo-cta`, `.neo-badge`, `.fan-card`)
+  - [x] Integrated into `HomePage.tsx`, and updated `App.tsx` and `Navbar.tsx` for seamless public landing page navigation and guest demo access
+
 ---
 
 ## 📝 4. Changelog & Activity Log
@@ -104,5 +114,6 @@ In India, patients consult multiple doctors for complex conditions and frequentl
 - **2026-09-24 22:48:** Seeded 19 verified ICMR/WHO medical guideline evidence records into `medical_evidence` and deployed `search_medical_evidence` RPC.
 - **2026-09-24 22:52:** Hardened backend security with sliding-window rate limiting, production error sanitization, DNS fallback resolvers, and generated Supabase TypeScript types. Verified with live end-to-end clinical query.
 - **2026-09-24 23:40:** Removed redundant root markdown files and scratch scripts while preserving all documentation in `docs/`. Added full Docker containerization (`docker-compose.yml`, `docker-compose.dev.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`).
+- **2026-09-25 00:10:** Implemented `nissh.info` kinetic visual elements: interactive follower cursor bubble, ambient pulsing particles, neo-brutalist stickers, infinite dual-track marquee, and 4-card fanning motion deck. Verified with successful clean frontend build.
 
 

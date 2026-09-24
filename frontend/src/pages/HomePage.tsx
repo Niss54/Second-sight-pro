@@ -14,6 +14,10 @@ import {
   Activity,
   Flame
 } from "lucide-react";
+import { AmbientParticles } from "../components/AmbientParticles";
+import { SpinningStar, WobblySmiley, HandDrawnUnderline, NeoPill } from "../components/InteractiveStickers";
+import { MarqueeTicker } from "../components/MarqueeTicker";
+import { MotionCardDeck } from "../components/MotionCardDeck";
 
 export const HomePage: React.FC = () => {
   return (
@@ -25,15 +29,54 @@ export const HomePage: React.FC = () => {
       style={{ paddingBottom: "70px" }}
     >
       {/* ─── 1. HERO SECTION ─── */}
-      <section className="home-hero-section">
-        <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 20px", textAlign: "center" }}>
+      <section className="home-hero-section" style={{ position: "relative", overflow: "hidden" }}>
+        {/* Ambient Pulsing Particles matching nissh.info */}
+        <AmbientParticles count={20} />
+
+        {/* Playful Stickers matching nissh.info */}
+        <div
+          className="hero-sticker-left"
+          style={{
+            position: "absolute",
+            top: "24px",
+            left: "24px",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            zIndex: 2,
+            pointerEvents: "none"
+          }}
+        >
+          <SpinningStar size={34} color="var(--color-orange, #f5693c)" />
+          <NeoPill label="Clinical Diff Engine" theme="yellow" tilt={-4} />
+        </div>
+
+        <div
+          className="hero-sticker-right"
+          style={{
+            position: "absolute",
+            top: "24px",
+            right: "24px",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            zIndex: 2,
+            pointerEvents: "none"
+          }}
+        >
+          <NeoPill label="Zero Hallucination" theme="green" tilt={3} />
+          <WobblySmiley size={36} />
+        </div>
+
+        <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 20px", textAlign: "center", position: "relative", zIndex: 1 }}>
           
           {/* Trust Badge */}
           <motion.div
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 16px", borderRadius: "999px", background: "rgba(13, 124, 115, 0.09)", border: "1px solid rgba(13, 124, 115, 0.22)", color: "var(--teal)", fontSize: "0.85rem", fontWeight: 600, marginBottom: "24px" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "7px 18px", borderRadius: "999px", background: "rgba(13, 124, 115, 0.09)", border: "1.5px solid rgba(13, 124, 115, 0.25)", color: "var(--teal)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "24px" }}
+            data-cursor="guidelines"
           >
             <ShieldCheck size={16} />
             <span>Grounded in ICMR 2022 & WHO Guidelines · Ayushman Bharat ABDM Ready</span>
@@ -54,13 +97,17 @@ export const HomePage: React.FC = () => {
             }}
           >
             Conflicting Doctor Opinions? <br />
-            <span style={{
-              background: "linear-gradient(135deg, var(--teal), #2563eb)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
-            }}>
-              Reconciled by Clinical AI.
-            </span>
+            <span style={{ position: "relative", display: "inline-block" }}>
+              <span style={{
+                background: "linear-gradient(135deg, var(--teal), #2563eb)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent"
+              }}>
+                Reconciled
+              </span>
+              <HandDrawnUnderline color="var(--color-orange, #f5693c)" />
+            </span>{" "}
+            <span>by Clinical AI.</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -88,16 +135,16 @@ export const HomePage: React.FC = () => {
           >
             <Link
               to="/case/new"
-              className="button primary"
+              className="button primary neo-cta"
+              data-cursor="start case"
               style={{
                 padding: "16px 34px",
                 fontSize: "1.05rem",
                 borderRadius: "999px",
-                fontWeight: 600,
+                fontWeight: 700,
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px",
-                boxShadow: "0 8px 24px rgba(13, 124, 115, 0.28)"
+                gap: "10px"
               }}
             >
               <span>Analyze Conflicting Case</span>
@@ -106,13 +153,14 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/chat"
-              className="button ghost"
+              className="button ghost neo-cta"
+              data-cursor="voice ai"
               style={{
                 padding: "16px 28px",
                 fontSize: "1.05rem",
                 borderRadius: "999px",
-                fontWeight: 600,
-                border: "1.5px solid var(--line-strong)",
+                fontWeight: 700,
+                border: "2px solid #111111",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px"
@@ -124,13 +172,14 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/doctor"
-              className="button ghost"
+              className="button ghost neo-cta"
+              data-cursor="doctor queue"
               style={{
                 padding: "16px 24px",
                 fontSize: "1.05rem",
                 borderRadius: "999px",
-                fontWeight: 600,
-                border: "1.5px solid var(--line-strong)",
+                fontWeight: 700,
+                border: "2px solid #111111",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px"
@@ -168,6 +217,7 @@ export const HomePage: React.FC = () => {
             <Link
               to="/case/new"
               className="demo-pill"
+              data-cursor="diabetes demo"
               style={{
                 fontSize: "0.85rem",
                 padding: "5px 12px",
@@ -185,6 +235,7 @@ export const HomePage: React.FC = () => {
             <Link
               to="/case/new"
               className="demo-pill"
+              data-cursor="danger demo"
               style={{
                 fontSize: "0.85rem",
                 padding: "5px 12px",
@@ -202,6 +253,7 @@ export const HomePage: React.FC = () => {
             <Link
               to="/case/new"
               className="demo-pill"
+              data-cursor="imaging demo"
               style={{
                 fontSize: "0.85rem",
                 padding: "5px 12px",
@@ -220,8 +272,18 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* ─── KINETIC MARQUEE TICKER (Double track) ─── */}
+      <section style={{ margin: "32px 0 20px" }}>
+        <MarqueeTicker />
+      </section>
+
+      {/* ─── INTERACTIVE FANNING MOTION CARDS DECK ─── */}
+      <section style={{ margin: "20px 0 60px" }}>
+        <MotionCardDeck />
+      </section>
+
       {/* ─── 2. CORE CAPABILITIES (4 CARDS) ─── */}
-      <section className="home-section" style={{ marginTop: "60px" }}>
+      <section className="home-section" style={{ marginTop: "40px" }}>
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 40px" }}>
           <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--teal)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
             Engineered For Clinical Trust
@@ -503,12 +565,13 @@ export const HomePage: React.FC = () => {
           <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap" }}>
             <Link
               to="/case/new"
-              className="button primary"
+              className="button primary neo-cta"
+              data-cursor="start case"
               style={{
                 padding: "16px 36px",
                 fontSize: "1rem",
                 borderRadius: "999px",
-                fontWeight: 600,
+                fontWeight: 700,
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px"
@@ -520,13 +583,14 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/doctor"
-              className="button ghost"
+              className="button ghost neo-cta"
+              data-cursor="doctor queue"
               style={{
                 padding: "16px 28px",
                 fontSize: "1rem",
                 borderRadius: "999px",
-                fontWeight: 600,
-                border: "1.5px solid var(--line-strong)",
+                fontWeight: 700,
+                border: "2px solid #111111",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px"

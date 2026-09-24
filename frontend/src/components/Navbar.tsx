@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { signOut } = useAuth();
+  const { user, signOut, continueAsGuest } = useAuth();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -121,14 +121,26 @@ export const Navbar: React.FC = () => {
         >
           {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
         </button>
-        <button
-          onClick={() => { signOut(); handleLinkClick(); }}
-          className="button ghost signout-btn"
-          style={{ padding: "6px 14px", fontSize: "0.85rem", height: "36px", display: "flex", alignItems: "center", gap: "6px", borderRadius: "999px" }}
-        >
-          <LogOut size={14} />
-          <span>Sign Out</span>
-        </button>
+        {user ? (
+          <button
+            onClick={() => { signOut(); handleLinkClick(); }}
+            className="button ghost signout-btn"
+            data-cursor="sign out"
+            style={{ padding: "6px 14px", fontSize: "0.85rem", height: "36px", display: "flex", alignItems: "center", gap: "6px", borderRadius: "999px" }}
+          >
+            <LogOut size={14} />
+            <span>Sign Out</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => { continueAsGuest(); handleLinkClick(); }}
+            className="button primary neo-cta"
+            data-cursor="demo access"
+            style={{ padding: "6px 14px", fontSize: "0.85rem", height: "36px", display: "flex", alignItems: "center", gap: "6px", borderRadius: "999px" }}
+          >
+            <span>Demo Access</span>
+          </button>
+        )}
       </div>
     </nav>
   );

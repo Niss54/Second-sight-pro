@@ -2286,3 +2286,609 @@ textarea:focus {
 .nav-pill a[href="/doctor"] .dr-badge {
   transition: all 0.2s ease;
 }
+
+/* ==============================================================================
+   KINETIC NEO-BRUTALIST DESIGN & VISUAL SYSTEM (Inspired by nissh.info)
+   ============================================================================== */
+
+:root {
+  --color-orange: #f5693c;
+  --color-pink: #f0befa;
+  --color-lightgreen: #bef264;
+  --color-lightblue: #82a0ff;
+  --color-yellow: #fef08a;
+  --color-neo-dark: #12181a;
+  --color-neo-border: #12181a;
+}
+
+html.dark {
+  --color-neo-dark: #f0f6f8;
+  --color-neo-border: rgba(255, 255, 255, 0.25);
+}
+
+/* 1. Cursor Bubble Follower */
+.cursor-bubble-follower {
+  position: fixed;
+  pointer-events: none;
+  background-color: var(--color-pink);
+  color: #111111;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border-bottom-left-radius: 2px;
+  border: 2px solid #111111;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  z-index: 99999;
+  box-shadow: 3px 3px 0 #111111;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+/* 2. Ambient Particles Container */
+.particles-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;
+  animation: pulseParticle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseParticle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.55;
+  }
+}
+
+/* 3. Spinning Star & Wobbly Stickers */
+.sticker-star-wrap {
+  display: inline-block;
+  animation: spinSlow 14s linear infinite;
+  transition: transform 0.3s ease;
+}
+
+.sticker-star-wrap:hover {
+  animation-duration: 3s;
+  transform: scale(1.2);
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sticker-smiley-wrap {
+  display: inline-block;
+  animation: floatWobble 4s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sticker-smiley-wrap:hover {
+  transform: scale(1.25) rotate(-12deg);
+}
+
+@keyframes floatWobble {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(-6deg); }
+  75% { transform: translateY(-2px) rotate(6deg); }
+}
+
+/* 4. Hand-drawn SVG animated underlines & ovals */
+.hand-drawn-underline-svg {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: -8px auto 0;
+  overflow: visible;
+}
+
+.hand-drawn-underline-svg path {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 0;
+  animation: drawUnderline 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes drawUnderline {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
+}
+
+.hand-drawn-oval-svg {
+  position: absolute;
+  inset: -12px -16px;
+  width: calc(100% + 32px);
+  height: calc(100% + 24px);
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* 5. Neo-Brutalist Badges & Pills */
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border-bottom-left-radius: 2px;
+  border: 2px solid var(--color-neo-border);
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 3px 3px 0 var(--color-neo-border);
+  color: #111111;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.neo-badge:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--color-neo-border);
+}
+
+.neo-badge--orange { background-color: var(--color-orange); color: #ffffff; }
+.neo-badge--pink { background-color: var(--color-pink); }
+.neo-badge--green { background-color: var(--color-lightgreen); }
+.neo-badge--blue { background-color: var(--color-lightblue); }
+.neo-badge--yellow { background-color: var(--color-yellow); }
+
+.neo-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border-bottom-left-radius: 2px;
+  border: 1.5px solid #111111;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 2px 2px 0 #111111;
+  color: #111111;
+  transition: transform 0.2s ease;
+}
+
+.neo-pill:hover {
+  transform: scale(1.05);
+}
+
+.neo-pill--orange { background-color: #ffedd5; border-color: #ea580c; color: #9a3412; }
+.neo-pill--pink { background-color: #fce7f3; border-color: #db2777; color: #9d174d; }
+.neo-pill--green { background-color: #dcfce7; border-color: #16a34a; color: #166534; }
+.neo-pill--blue { background-color: #e0f2fe; border-color: #0284c7; color: #075985; }
+.neo-pill--yellow { background-color: #fef9c3; border-color: #ca8a04; color: #854d0e; }
+
+/* Neo-Brutalist Action Button Enhancements */
+.button.primary.neo-cta {
+  background: var(--teal);
+  color: #ffffff;
+  border: 2px solid #111111 !important;
+  box-shadow: 4px 4px 0 #111111 !important;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.button.primary.neo-cta:hover {
+  transform: translate(-3px, -3px) !important;
+  box-shadow: 8px 8px 0 #111111 !important;
+}
+
+.button.ghost.neo-cta {
+  border: 2px solid #111111 !important;
+  box-shadow: 3px 3px 0 #111111 !important;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.button.ghost.neo-cta:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0 #111111 !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 6. Dual Infinite Marquee Ticker */
+.marquee-banner-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 24px 0;
+  margin: 32px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.marquee-row {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.marquee-row--left .marquee-content {
+  animation: scrollLeft 32s linear infinite;
+}
+
+.marquee-row--right .marquee-content {
+  animation: scrollRight 32s linear infinite;
+}
+
+.marquee-banner-container:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 2px solid #111111;
+  box-shadow: 3px 3px 0 #111111;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+.marquee-badge--orange { background-color: #ffedd5; border-color: #ea580c; color: #9a3412; }
+.marquee-badge--pink { background-color: #fce7f3; border-color: #db2777; color: #9d174d; }
+.marquee-badge--green { background-color: #dcfce7; border-color: #16a34a; color: #166534; }
+.marquee-badge--blue { background-color: #e0f2fe; border-color: #0284c7; color: #075985; }
+.marquee-badge--yellow { background-color: #fef9c3; border-color: #ca8a04; color: #854d0e; }
+
+/* 7. Motion Card Deck Section (Fanning cards) */
+.motion-cards-container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 40px auto 70px;
+  padding: 30px 20px;
+  position: relative;
+}
+
+.motion-cards-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 30px;
+}
+
+.motion-cards-headline {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 16px 0 12px;
+  color: var(--ink-900);
+}
+
+.motion-cards-headline em {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-orange);
+}
+
+.motion-cards-subheadline {
+  font-size: 1.1rem;
+  color: var(--ink-700);
+  line-height: 1.6;
+}
+
+.motion-cards-stage {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Floating labels */
+.motion-floating-tag {
+  position: absolute;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border-bottom-left-radius: 2px;
+  border: 2px solid #111111;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 3px 3px 0 #111111;
+  color: #111111;
+  z-index: 10;
+  animation: floatTag 5s ease-in-out infinite alternate;
+}
+
+.motion-floating-tag--pink {
+  background-color: var(--color-pink);
+  top: 6%;
+  left: 4%;
+  animation-delay: 0s;
+  transform: rotate(-4deg);
+}
+
+.motion-floating-tag--orange {
+  background-color: var(--color-orange);
+  color: #ffffff;
+  top: 4%;
+  right: 5%;
+  animation-delay: 1.2s;
+  transform: rotate(3deg);
+}
+
+.motion-floating-tag--green {
+  background-color: var(--color-lightgreen);
+  bottom: 6%;
+  left: 8%;
+  animation-delay: 2.4s;
+  transform: rotate(2deg);
+}
+
+.motion-floating-tag--blue {
+  background-color: var(--color-lightblue);
+  bottom: 4%;
+  right: 6%;
+  animation-delay: 0.8s;
+  transform: rotate(-3deg);
+}
+
+@keyframes floatTag {
+  0% { transform: translateY(0px) rotate(-3deg); }
+  100% { transform: translateY(-8px) rotate(2deg); }
+}
+
+/* Cards Fan Layout */
+.motion-cards-fan {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fan-card {
+  position: absolute;
+  width: 310px;
+  min-height: 380px;
+  background: #ffffff;
+  border: 2.5px solid #111111;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 6px 6px 0 #111111;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+html.dark .fan-card {
+  background: #172428;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.7);
+}
+
+.fan-card--1 {
+  transform: rotate(-8deg) translateX(-180px);
+  z-index: 1;
+}
+
+.fan-card--2 {
+  transform: rotate(-2deg) translateX(-60px);
+  z-index: 2;
+}
+
+.fan-card--3 {
+  transform: rotate(4deg) translateX(60px);
+  z-index: 3;
+}
+
+.fan-card--4 {
+  transform: rotate(9deg) translateX(180px);
+  z-index: 4;
+}
+
+/* Hover expansion */
+.motion-cards-fan:hover .fan-card--1 {
+  transform: rotate(-12deg) translateX(-240px);
+}
+
+.motion-cards-fan:hover .fan-card--2 {
+  transform: rotate(-4deg) translateX(-80px);
+}
+
+.motion-cards-fan:hover .fan-card--3 {
+  transform: rotate(4deg) translateX(80px);
+}
+
+.motion-cards-fan:hover .fan-card--4 {
+  transform: rotate(12deg) translateX(240px);
+}
+
+.fan-card:hover,
+.fan-card.is-focused {
+  transform: translateY(-24px) scale(1.06) rotate(0deg) !important;
+  z-index: 20 !important;
+  box-shadow: 12px 14px 0 #111111 !important;
+}
+
+html.dark .fan-card:hover,
+html.dark .fan-card.is-focused {
+  box-shadow: 12px 14px 0 rgba(0, 0, 0, 0.8) !important;
+}
+
+.fan-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.fan-card-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1.5px solid #111111;
+  color: #111111;
+}
+
+.fan-card-pill--blue { background: #e0f2fe; }
+.fan-card-pill--orange { background: #ffedd5; }
+.fan-card-pill--danger { background: #fee2e2; border-color: #b91c1c; color: #991b1b; }
+.fan-card-pill--green { background: #dcfce7; border-color: #15803d; color: #166534; }
+
+.fan-card-status {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0d7c73;
+}
+
+.fan-card-status.status-urgent {
+  color: #c2410c;
+}
+
+.fan-card-doctor h4 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.fan-card-doctor p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-500);
+}
+
+.fan-card-body {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.88rem;
+}
+
+.fan-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.fan-card-label {
+  font-weight: 600;
+  color: var(--ink-500);
+  font-size: 0.8rem;
+}
+
+.fan-card-val {
+  font-weight: 700;
+  color: var(--ink-900);
+  text-align: right;
+}
+
+.fan-card-val.rx-val {
+  color: var(--teal);
+}
+
+.fan-card-alert-box {
+  background: #fef2f2;
+  border: 1.5px solid #f87171;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 12px 0;
+  font-size: 0.82rem;
+  color: #991b1b;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.fan-card-footer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+html.dark .fan-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+.fan-card-tag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--ink-500);
+}
+
+.fan-card-tag.tag-urgent { color: #ea580c; }
+.fan-card-tag.tag-danger { color: #dc2626; }
+
+.fan-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.fan-card-cta:hover {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .motion-cards-fan {
+    height: auto;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .fan-card {
+    position: relative !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    margin: 0 auto;
+  }
+  .motion-floating-tag {
+    display: none;
+  }
+  .hero-sticker-left,
+  .hero-sticker-right {
+    display: none !important;
+  }
+}
+
