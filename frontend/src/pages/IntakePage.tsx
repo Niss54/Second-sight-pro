@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CaseFormPanel } from "../components/CaseFormPanel";
@@ -7,6 +7,12 @@ import { ToastContainer, type ToastType } from "../components/ToastContainer";
 import { createBlankCase, ALL_DEMO_CASES } from "../constants/caseTemplates";
 import { analyzeCase, createCase, updateCase } from "../services/api";
 import type { PatientCaseInput, ReconciliationOutput } from "../types";
+import {
+  MessageSquare,
+  AlertTriangle,
+  Activity,
+  FileCheck
+} from "lucide-react";
 
 export const IntakePage: React.FC = () => {
   const [caseData, setCaseData] = useState<PatientCaseInput>(() => createBlankCase());
@@ -18,7 +24,7 @@ export const IntakePage: React.FC = () => {
   const [demoCaseIndex, setDemoCaseIndex] = useState(0);
   const [autoLoaded, setAutoLoaded] = useState(false);
 
-  // Auto-load a compelling demo case so judges see data immediately
+  // Auto-load initial demo case
   useEffect(() => {
     if (!autoLoaded) {
       setCaseData(ALL_DEMO_CASES[0]);
@@ -26,8 +32,6 @@ export const IntakePage: React.FC = () => {
       setAutoLoaded(true);
     }
   }, [autoLoaded]);
-
-  const topRisk = useMemo(() => analysis ? `${analysis.conflict_score}` : "No active analysis", [analysis]);
 
   const notify = (message: string, tone: "info" | "success" | "error" = "info") => {
     const id = Math.random().toString(36).substring(2, 9);
@@ -58,9 +62,9 @@ export const IntakePage: React.FC = () => {
     try {
       const nextAnalysis = await analyzeCase(caseData);
       setAnalysis(nextAnalysis);
-      notify("Analysis completed successfully.", "success");
+      notify("Clinical analysis completed successfully.", "success");
     } catch {
-      notify("Analysis failed. Please verify API server and input payload.", "error");
+      notify("Analysis failed. Please verify API server and inputs.", "error");
     } finally {
       setIsAnalyzing(false);
     }
@@ -73,7 +77,7 @@ export const IntakePage: React.FC = () => {
       const saved = activeCaseId ? await updateCase(activeCaseId, caseData) : await createCase(caseData);
       setActiveCaseId(saved.id);
       setAnalysis(saved.analysis);
-      notify(activeCaseId ? "Case updated." : "Case saved.", "success");
+      notify(activeCaseId ? "Case updated successfully." : "Case saved to database.", "success");
     } catch {
       notify("Save failed. Please retry.", "error");
     } finally {
@@ -85,7 +89,7 @@ export const IntakePage: React.FC = () => {
     setCaseData(createBlankCase());
     setAnalysis(null);
     setActiveCaseId(null);
-    notify("Form reset. You can start a new case.", "info");
+    notify("Form reset. You can enter a new patient case.", "info");
   };
 
   const handleLoadDemo = () => {
@@ -96,7 +100,7 @@ export const IntakePage: React.FC = () => {
     setActiveCaseId(null);
     setDemoCaseIndex(nextIndex + 1);
     notify(
-      `Demo ${nextIndex + 1}/${ALL_DEMO_CASES.length} loaded: "${nextCase.caseLabel}". Click again to cycle to next demo.`,
+      `Demo Case ${nextIndex + 1}/${ALL_DEMO_CASES.length}: "${nextCase.caseLabel}" loaded.`,
       "info"
     );
   };
@@ -104,40 +108,159 @@ export const IntakePage: React.FC = () => {
   const handleCopySummary = async () => {
     if (!analysis) return notify("Run analysis first.", "error");
     const lines = [
-      `SecondSight Executive Summary`,
+      `SecondSight Pro Clinical Reconciliation Report`,
       `Case: ${caseData.caseLabel || "Untitled case"}`,
       `Condition: ${caseData.primaryCondition}`,
-      `Final Conflict Score: ${analysis.conflict_score}`,
-      `Summary: ${analysis.summary}`,
+      `Conflict Score: ${analysis.conflict_score}`,
+      `Agreement Score: ${analysis.agreement_score}`,
+      `\nExecutive Summary:\n${analysis.summary}`,
     ];
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
-      notify("Executive summary copied.", "success");
+      notify("Executive summary copied to clipboard.", "success");
     } catch {
       notify("Clipboard access failed.", "error");
     }
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.3 }}>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3 }}
+      style={{ paddingBottom: "40px" }}
+    >
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      
-      <section className="top-meta" style={{ marginBottom: "16px" }}>
-        <article>
-          <p>Active Case</p>
-          <strong>{caseData.caseLabel || "Unsaved case"}</strong>
-        </article>
-        <article>
-          <p>Case ID</p>
-          <strong>{activeCaseId || "Not saved"}</strong>
-        </article>
-        <article>
-          <p>Risk Snapshot</p>
-          <strong>{topRisk}</strong>
-        </article>
+
+      {/* Top Meta Status Strip */}
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "14px",
+          marginBottom: "24px"
+        }}
+      >
+        <div
+          style={{
+            background: "var(--card)",
+            border: "1px solid var(--line)",
+            borderRadius: "16px",
+            padding: "16px 20px",
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            boxShadow: "var(--shadow-sm)"
+          }}
+        >
+          <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(13, 124, 115, 0.1)", display: "grid", placeItems: "center", color: "var(--teal)" }}>
+            <FileCheck size={20} />
+          </div>
+          <div>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--ink-500)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Active Case
+            </span>
+            <div style={{ fontSize: "1rem", fontWeight: 700, color: "var(--ink-900)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "220px" }}>
+              {caseData.caseLabel || "New Clinical Case"}
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "var(--card)",
+            border: "1px solid var(--line)",
+            borderRadius: "16px",
+            padding: "16px 20px",
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            boxShadow: "var(--shadow-sm)"
+          }}
+        >
+          <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(37, 99, 235, 0.1)", display: "grid", placeItems: "center", color: "#2563eb" }}>
+            <Activity size={20} />
+          </div>
+          <div>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--ink-500)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Database Sync
+            </span>
+            <div style={{ fontSize: "0.95rem", fontWeight: 700, color: activeCaseId ? "var(--teal)" : "var(--ink-700)" }}>
+              {activeCaseId ? `Saved (#${activeCaseId.substring(0, 8)})` : "Unsaved Local Draft"}
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "var(--card)",
+            border: "1px solid var(--line)",
+            borderRadius: "16px",
+            padding: "16px 20px",
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            boxShadow: "var(--shadow-sm)"
+          }}
+        >
+          <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: analysis ? "rgba(239, 68, 68, 0.1)" : "rgba(100, 116, 139, 0.1)", display: "grid", placeItems: "center", color: analysis ? "#ef4444" : "var(--ink-500)" }}>
+            <AlertTriangle size={20} />
+          </div>
+          <div>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--ink-500)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Conflict Severity
+            </span>
+            <div style={{ fontSize: "0.95rem", fontWeight: 700, color: analysis ? "var(--ink-900)" : "var(--ink-500)" }}>
+              {analysis ? analysis.conflict_score : "Awaiting Analysis"}
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(37, 99, 235, 0.1))",
+            border: "1px solid rgba(139, 92, 246, 0.25)",
+            borderRadius: "16px",
+            padding: "16px 20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px"
+          }}
+        >
+          <div>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#8b5cf6", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Patient Voice Copilot
+            </span>
+            <div style={{ fontSize: "0.92rem", fontWeight: 600, color: "var(--ink-900)" }}>
+              Ask in Hindi or English
+            </div>
+          </div>
+          <Link
+            to="/chat"
+            className="button primary"
+            style={{
+              padding: "8px 16px",
+              fontSize: "0.85rem",
+              borderRadius: "999px",
+              fontWeight: 700,
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px"
+            }}
+          >
+            <MessageSquare size={14} />
+            <span>Chat</span>
+          </Link>
+        </div>
       </section>
 
-      <div className="content-grid">
+      {/* Main 2-Column Grid */}
+      <div className="content-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "24px", alignItems: "start" }}>
+        
+        {/* Left: Input Form */}
         <CaseFormPanel
           caseData={caseData}
           onChange={setCaseData}
@@ -148,15 +271,12 @@ export const IntakePage: React.FC = () => {
           isAnalyzing={isAnalyzing}
           isSaving={isSaving}
         />
-        <div className="right-stack">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3 style={{ margin: 0, fontSize: "1.1rem" }}>Patient Interactions</h3>
-            <Link to="/chat" className="button primary" style={{ textDecoration: "none", display: "inline-flex", gap: "8px", alignItems: "center" }}>
-              Open Patient Chat 💬
-            </Link>
-          </div>
+
+        {/* Right: Reconciliation Output */}
+        <div className="right-stack" style={{ position: "sticky", top: "80px" }}>
           <ReconciliationPanel analysis={analysis} onCopySummary={handleCopySummary} />
         </div>
+
       </div>
     </motion.div>
   );

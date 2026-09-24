@@ -1,6 +1,8 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Space+Grotesk:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Space+Grotesk:wght@500;700&display=swap");
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -13,6 +15,9 @@ body,
 
 body {
   min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button,
@@ -20,4 +25,10 @@ input,
 select,
 textarea {
   font-family: inherit;
+}
+
+/* Custom focus styles for WCAG accessibility */
+:focus-visible {
+  outline: 2px solid var(--teal, #0d7c73);
+  outline-offset: 2px;
 }

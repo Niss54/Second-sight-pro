@@ -24,9 +24,11 @@ export const Footer: React.FC = () => {
           <h4>Quick Links</h4>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/case/new">Active Case</Link></li>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><a href="https://github.com/Niss54/Second-sight-pro#team" target="_blank" rel="noreferrer">About Us</a></li>
+            <li><Link to="/case/new">Active Case Triage</Link></li>
+            <li><Link to="/chat">AI Voice Copilot</Link></li>
+            <li><Link to="/dashboard">Patient History</Link></li>
+            <li><Link to="/doctor">Doctor Review Portal</Link></li>
+            <li><a href="https://github.com/Niss54/Second-sight-pro" target="_blank" rel="noreferrer">GitHub Repo</a></li>
           </ul>
         </div>
 
