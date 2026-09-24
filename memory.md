@@ -102,15 +102,15 @@ In India, patients consult multiple doctors for complex conditions and frequentl
   - [x] Added kinetic CSS rules to `App.css` (`@keyframes pulseParticle`, `spinSlow`, `floatWobble`, `drawUnderline`, `scrollLeft`, `scrollRight`, `floatTag`, `.neo-cta`, `.neo-badge`, `.fan-card`)
   - [x] Integrated into `HomePage.tsx`, and updated `App.tsx` and `Navbar.tsx` for seamless public landing page navigation and guest demo access
 
-- [x] **Phase 12: Light & Dark Mode Strict Separation & Navbar Cleanup**
-  - [x] Removed rotating rainbow multi-colored border (`#1cb5a8, #5e8cf2, #d9913c`) from `html.dark .nav-pill`
-  - [x] Removed purple-to-blue gradient on the navbar `Voice` badge; replaced with unified clinical teal tag
-  - [x] Replaced multi-gradient brand icon with clean solid clinical teal icon
-  - [x] Stripped out overlapping green, blue, and amber radial blobs from `body` and `.ambient-bg` that caused tie-dye discoloration in light mode
-  - [x] Set Light Mode to pristine, bright Slate-50 (`#f8fafc`) with pure white cards (`#ffffff`) and sharp high-contrast text (`#0f172a`)
-  - [x] Set Dark Mode to deep, sleek dark slate (`#0b1117`) with rich dark cards (`#131d26`) and soft glow borders
-  - [x] Balanced particle opacity (0.15 in light mode, 0.38 in dark mode)
-  - [x] Live visual verification completed via Chrome DevTools MCP with zero console errors
+- [x] **Phase 13: End-to-End Step-by-Step MCP Verification & Visual Polishing**
+  - [x] Verified **Homepage (`/`)** in Light & Dark Mode via Chrome DevTools MCP screenshots: hero, animated stickers, 4-pillar cards, timeline, comparison table, marquee, and motion card deck.
+  - [x] Verified **Case Intake (`/case/new`)** in Light & Dark Mode: drag-and-drop zone, form inputs, doctor opinion cards, and action buttons.
+  - [x] Fixed **Critical Alert Banner** in `ReconciliationPanel.tsx`: converted hardcoded white/pink gradient to responsive CSS classes (`emergency-alert-banner`), rendering sleek dark crimson in dark mode and clean soft red in light mode.
+  - [x] Fixed **Confidence Badges & Meta Pills** in `ReconciliationPanel.tsx`: converted hardcoded inline pastel badges to responsive high/medium/low classes and `var(--card)` background.
+  - [x] Fixed **Data Table & Table Container** in `App.css`: removed hardcoded white/gray backgrounds causing light strips in dark mode; verified `/dashboard` in both modes.
+  - [x] Started Guideline Retrieval Backend (port 8080) and verified **Doctor Portal (`/doctor`)** with live saved cases, KPI metrics, filter chips, and navigation to case triage.
+  - [x] Enhanced **AI Voice Chat (`/chat`)**: added top navigation (`← Home`) and Theme Toggle (`Moon/Sun`) directly to the chat header; executed live query and verified bilingual AI response with RAG citations in Light and Dark mode.
+  - [x] Confirmed zero build errors via `tsc -b && vite build` in 3.32s.
 
 ---
 
@@ -126,5 +126,6 @@ In India, patients consult multiple doctors for complex conditions and frequentl
 - **2026-09-24 23:40:** Removed redundant root markdown files and scratch scripts while preserving all documentation in `docs/`. Added full Docker containerization (`docker-compose.yml`, `docker-compose.dev.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`).
 - **2026-09-25 00:10:** Implemented `nissh.info` kinetic visual elements: interactive follower cursor bubble, ambient pulsing particles, neo-brutalist stickers, infinite dual-track marquee, and 4-card fanning motion deck. Verified with successful clean frontend build.
 - **2026-09-25 00:30:** Fixed Light Mode and Dark Mode strict separation: eliminated rainbow navbar borders, removed background color splotches, polished clinical tokens, and verified via Chrome DevTools MCP.
+- **2026-09-25 01:00:** Step-by-step MCP visual inspection completed across all pages (`/`, `/case/new`, `/dashboard`, `/doctor`, `/chat`). Fixed critical alert dark mode styling, table dark mode background, and added header controls to AI chat. Verified with 100% clean production build.
 
 

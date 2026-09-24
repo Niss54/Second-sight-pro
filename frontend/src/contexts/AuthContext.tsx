@@ -26,7 +26,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Initial fetch
+    // Check if guest demo session is active
+    const isGuest = localStorage.getItem("is-guest-demo") === "true";
+    if (isGuest) {
+      setUser({
+        id: "demo-guest-id",
+        app_metadata: {},
+        user_metadata: { name: "Hackathon Judge" },
+        aud: "authenticated",
+        created_at: new Date().toISOString()
+      } as User);
+      setIsLoading(false);
+      return;
+    }
+
+    // Initial fetch from Supabase
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
@@ -58,10 +72,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    localStorage.removeItem("is-guest-demo");
+    setUser(null);
+    setSession(null);
     await supabase.auth.signOut();
   };
 
   const continueAsGuest = () => {
+    localStorage.setItem("is-guest-demo", "true");
     setUser({
       id: "demo-guest-id",
       app_metadata: {},

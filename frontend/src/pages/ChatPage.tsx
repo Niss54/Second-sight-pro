@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, Plus, Search, Mic, ArrowUp, Square, Loader2 } from "lucide-react";
+import { Sparkles, Plus, Search, Mic, ArrowUp, Square, Loader2, Moon, Sun } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import { askFollowupQuestion } from "../services/api";
 import type { PatientCaseInput, VoiceAssistantResponse } from "../types";
@@ -71,7 +71,7 @@ const SUGGESTIONS = [
 ];
 
 export const ChatPage: React.FC = () => {
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   /* ─── state ─── */
   const [input, setInput] = useState("");
@@ -332,10 +332,46 @@ export const ChatPage: React.FC = () => {
       {/* ── Main Chat Area ── */}
       <main className="chat-main">
         <header className="chat-header">
-          <div style={{ fontWeight: 600, color: "var(--ink-900)" }}>
-            {hasMessages ? "Patient Triage Chat" : "New Patient Triage"}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <Link
+              to="/"
+              className="button ghost"
+              style={{
+                padding: "6px 12px",
+                fontSize: "0.82rem",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                borderRadius: "8px",
+              }}
+            >
+              ← Home
+            </Link>
+            <div style={{ fontWeight: 600, color: "var(--ink-900)" }}>
+              {hasMessages ? "Patient Triage Chat" : "New Patient Triage"}
+            </div>
           </div>
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <button
+              className="button ghost"
+              onClick={toggleTheme}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              style={{
+                width: "36px",
+                height: "36px",
+                padding: "0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                border: "1px solid var(--line)",
+                color: "var(--ink-700)",
+                cursor: "pointer",
+              }}
+            >
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
             <button
               className="button ghost"
               onClick={toggleRecording}

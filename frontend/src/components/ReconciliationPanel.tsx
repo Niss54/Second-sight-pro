@@ -113,17 +113,13 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
       </div>
 
       {scoreValue >= 70 && (
-        <div className="emergency-alert-banner" style={{
-          display: 'flex', gap: '16px', background: 'linear-gradient(to right, #fef2f2, #fff)', border: '1px solid #fca5a5',
-          padding: '16px 20px', borderRadius: '12px', marginBottom: '24px', alignItems: 'flex-start',
-          boxShadow: '0 8px 20px rgba(220, 38, 38, 0.1)'
-        }}>
-          <AlertTriangle color="#dc2626" size={28} style={{ flexShrink: 0, marginTop: '2px' }} />
+        <div className="emergency-alert-banner">
+          <AlertTriangle className="emergency-alert-icon" size={28} />
           <div>
-            <h3 style={{ color: '#991b1b', margin: '0 0 4px', fontSize: '1.05rem', fontWeight: 700 }}>
+            <h3>
               Critical Alert: Immediate Specialist Consultation Required
             </h3>
-            <p style={{ color: '#b91c1c', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
+            <p>
               The conflicting medical opinions present a severe risk (Conflict Score: {scoreValue}%). Do not proceed with self-medication or assume either treatment is safe without consulting a higher-level specialist or visiting an emergency department immediately.
             </p>
           </div>
@@ -265,7 +261,7 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
               <div key={`citation-${idx}`} className="citation-card">
                 <div className="citation-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <h4 style={{ margin: 0 }}>{citation.title || citation.source}</h4>
-                  <span className="confidence-badge" style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: '12px', background: citation.confidence > 0.8 ? '#dcfce7' : citation.confidence > 0.5 ? '#fef08a' : '#fee2e2', color: citation.confidence > 0.8 ? '#166534' : citation.confidence > 0.5 ? '#854d0e' : '#991b1b', fontWeight: 600 }}>
+                  <span className={`confidence-badge ${citation.confidence > 0.8 ? "confidence-high" : citation.confidence > 0.5 ? "confidence-med" : "confidence-low"}`}>
                     Confidence: {Math.round(citation.confidence * 100)}%
                   </span>
                 </div>
@@ -394,9 +390,34 @@ export function ReconciliationPanel({ analysis, onCopySummary }: ReconciliationP
           font-size: 2rem; font-weight: 800; margin: 0 0 12px; font-family: ui-serif, Georgia, serif; letter-spacing: -0.02em;
         }
         .score-pills { display: flex; gap: 10px; flex-wrap: wrap; }
-        .meta-pill {
-          font-size: 11.5px; background: white; border: 1px solid var(--line); padding: 5px 12px; border-radius: 20px; color: var(--ink-700); font-weight: 500;
+        .emergency-alert-banner {
+          display: flex; gap: 16px; background: #fef2f2; border: 1px solid #fca5a5;
+          padding: 16px 20px; border-radius: 12px; margin-bottom: 24px; align-items: flex-start;
+          box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
         }
+        .emergency-alert-banner h3 { color: #991b1b; margin: 0 0 4px; font-size: 1.05rem; font-weight: 700; }
+        .emergency-alert-banner p { color: #b91c1c; margin: 0; font-size: 0.9rem; line-height: 1.5; }
+        .emergency-alert-icon { color: #dc2626; flex-shrink: 0; margin-top: 2px; }
+        html.dark .emergency-alert-banner {
+          background: rgba(220, 38, 38, 0.12);
+          border-color: rgba(239, 68, 68, 0.35);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        html.dark .emergency-alert-banner h3 { color: #fca5a5; }
+        html.dark .emergency-alert-banner p { color: #fecaca; }
+        html.dark .emergency-alert-icon { color: #ef4444; }
+
+        .meta-pill {
+          font-size: 11.5px; background: var(--card); border: 1px solid var(--line); padding: 5px 12px; border-radius: 20px; color: var(--ink-700); font-weight: 500;
+        }
+
+        .confidence-badge { font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; }
+        .confidence-high { background: #dcfce7; color: #166534; }
+        .confidence-med { background: #fef08a; color: #854d0e; }
+        .confidence-low { background: #fee2e2; color: #991b1b; }
+        html.dark .confidence-high { background: rgba(34, 197, 94, 0.15); color: #86efac; }
+        html.dark .confidence-med { background: rgba(234, 179, 8, 0.15); color: #fde047; }
+        html.dark .confidence-low { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
         .summary-text {
           flex: 2; min-width: 240px; background: var(--card); border: 1px solid var(--line); padding: 16px 18px;
           border-radius: var(--radius-md); color: var(--ink-700); font-size: 14px; line-height: 1.65;
