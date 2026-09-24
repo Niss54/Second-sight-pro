@@ -37,8 +37,7 @@ export const MotionCardDeck: React.FC = () => {
           {/* Card 1: Doctor A */}
           <div
             className={`fan-card fan-card--1 ${activeCard === 1 ? "is-focused" : ""}`}
-            onMouseEnter={() => setActiveCard(1)}
-            onMouseLeave={() => setActiveCard(null)}
+            onClick={() => setActiveCard(activeCard === 1 ? null : 1)}
             data-cursor="Doctor A"
           >
             <div className="fan-card-header">
@@ -71,8 +70,7 @@ export const MotionCardDeck: React.FC = () => {
           {/* Card 2: Doctor B */}
           <div
             className={`fan-card fan-card--2 ${activeCard === 2 ? "is-focused" : ""}`}
-            onMouseEnter={() => setActiveCard(2)}
-            onMouseLeave={() => setActiveCard(null)}
+            onClick={() => setActiveCard(activeCard === 2 ? null : 2)}
             data-cursor="Doctor B"
           >
             <div className="fan-card-header">
@@ -105,8 +103,7 @@ export const MotionCardDeck: React.FC = () => {
           {/* Card 3: AI Conflict Engine */}
           <div
             className={`fan-card fan-card--3 ${activeCard === 3 ? "is-focused" : ""}`}
-            onMouseEnter={() => setActiveCard(3)}
-            onMouseLeave={() => setActiveCard(null)}
+            onClick={() => setActiveCard(activeCard === 3 ? null : 3)}
             data-cursor="Hazard Alert"
           >
             <div className="fan-card-header">
@@ -133,8 +130,7 @@ export const MotionCardDeck: React.FC = () => {
           {/* Card 4: ICMR Synthesis */}
           <div
             className={`fan-card fan-card--4 ${activeCard === 4 ? "is-focused" : ""}`}
-            onMouseEnter={() => setActiveCard(4)}
-            onMouseLeave={() => setActiveCard(null)}
+            onClick={() => setActiveCard(activeCard === 4 ? null : 4)}
             data-cursor="ICMR Synthesis"
           >
             <div className="fan-card-header">

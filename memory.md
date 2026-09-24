@@ -127,5 +127,6 @@ In India, patients consult multiple doctors for complex conditions and frequentl
 - **2026-09-25 00:10:** Implemented `nissh.info` kinetic visual elements: interactive follower cursor bubble, ambient pulsing particles, neo-brutalist stickers, infinite dual-track marquee, and 4-card fanning motion deck. Verified with successful clean frontend build.
 - **2026-09-25 00:30:** Fixed Light Mode and Dark Mode strict separation: eliminated rainbow navbar borders, removed background color splotches, polished clinical tokens, and verified via Chrome DevTools MCP.
 - **2026-09-25 01:00:** Step-by-step MCP visual inspection completed across all pages (`/`, `/case/new`, `/dashboard`, `/doctor`, `/chat`). Fixed critical alert dark mode styling, table dark mode background, and added header controls to AI chat. Verified with 100% clean production build.
+- **2026-09-25 01:20:** Fixed jerky zig-zag animations on fanning card deck and floating stickers: eliminated horizontal jump to center (`translateX(0)`), removed conflicting parent hover expansion, changed transition curve to non-overshooting fluid ease-out (`cubic-bezier(0.16, 1, 0.3, 1)`), converted floating tags to smooth vertical drifting with static tilt, and optimized `InteractiveCursor` with `requestAnimationFrame` + `translate3d`. Verified live via Chrome DevTools MCP.
 
 

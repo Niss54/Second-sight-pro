@@ -2455,9 +2455,8 @@ html.dark .particle {
 }
 
 @keyframes floatWobble {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-5px) rotate(-6deg); }
-  75% { transform: translateY(-2px) rotate(6deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 /* 4. Hand-drawn SVG animated underlines & ovals */
@@ -2713,7 +2712,7 @@ html.dark .marquee-badge {
   margin-top: 20px;
 }
 
-/* Floating labels */
+/* Floating labels - smooth vertical floating with fixed tilt, no zig-zag twisting */
 .motion-floating-tag {
   position: absolute;
   padding: 6px 14px;
@@ -2727,48 +2726,53 @@ html.dark .marquee-badge {
   box-shadow: 3px 3px 0 #111111;
   color: #111111;
   z-index: 10;
-  animation: floatTag 5s ease-in-out infinite alternate;
+  pointer-events: none;
+  animation: floatTagSmooth 5s ease-in-out infinite alternate;
 }
 
 .motion-floating-tag--pink {
+  --base-rot: -4deg;
   background-color: var(--color-pink);
   top: 6%;
   left: 4%;
   animation-delay: 0s;
-  transform: rotate(-4deg);
+  transform: translateY(0px) rotate(-4deg);
 }
 
 .motion-floating-tag--orange {
+  --base-rot: 3deg;
   background-color: var(--color-orange);
   color: #ffffff;
   top: 4%;
   right: 5%;
-  animation-delay: 1.2s;
-  transform: rotate(3deg);
+  animation-delay: 1.5s;
+  transform: translateY(0px) rotate(3deg);
 }
 
 .motion-floating-tag--green {
+  --base-rot: 2deg;
   background-color: var(--color-lightgreen);
   bottom: 6%;
   left: 8%;
-  animation-delay: 2.4s;
-  transform: rotate(2deg);
+  animation-delay: 3s;
+  transform: translateY(0px) rotate(2deg);
 }
 
 .motion-floating-tag--blue {
+  --base-rot: -3deg;
   background-color: var(--color-lightblue);
   bottom: 4%;
   right: 6%;
-  animation-delay: 0.8s;
-  transform: rotate(-3deg);
+  animation-delay: 1s;
+  transform: translateY(0px) rotate(-3deg);
 }
 
-@keyframes floatTag {
-  0% { transform: translateY(0px) rotate(-3deg); }
-  100% { transform: translateY(-8px) rotate(2deg); }
+@keyframes floatTagSmooth {
+  0% { transform: translateY(0px) rotate(var(--base-rot, 0deg)); }
+  100% { transform: translateY(-7px) rotate(var(--base-rot, 0deg)); }
 }
 
-/* Cards Fan Layout */
+/* Cards Fan Layout - Smooth, stable, fluid interaction without zig-zagging */
 .motion-cards-fan {
   position: relative;
   width: 100%;
@@ -2784,70 +2788,77 @@ html.dark .marquee-badge {
   width: 310px;
   min-height: 380px;
   background: #ffffff;
-  border: 2.5px solid #111111;
+  border: 2px solid #111111;
   border-radius: 20px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 6px 6px 0 #111111;
+  box-shadow: 4px 6px 0 #111111;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  will-change: transform;
 }
 
 html.dark .fan-card {
   background: #172428;
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 4px 6px 0 rgba(0, 0, 0, 0.7);
 }
 
+/* Resting Fan Positions */
 .fan-card--1 {
-  transform: rotate(-8deg) translateX(-180px);
+  transform: translate3d(-170px, 0, 0) rotate(-6deg);
   z-index: 1;
 }
 
 .fan-card--2 {
-  transform: rotate(-2deg) translateX(-60px);
+  transform: translate3d(-55px, 0, 0) rotate(-2deg);
   z-index: 2;
 }
 
 .fan-card--3 {
-  transform: rotate(4deg) translateX(60px);
+  transform: translate3d(55px, 0, 0) rotate(2deg);
   z-index: 3;
 }
 
 .fan-card--4 {
-  transform: rotate(9deg) translateX(180px);
+  transform: translate3d(170px, 0, 0) rotate(6deg);
   z-index: 4;
 }
 
-/* Hover expansion */
-.motion-cards-fan:hover .fan-card--1 {
-  transform: rotate(-12deg) translateX(-240px);
+/* Smooth individual hover & focus without horizontal jumping or hover thrashing */
+.fan-card--1:hover,
+.fan-card--1.is-focused {
+  transform: translate3d(-175px, -18px, 0) rotate(-2deg) scale(1.03);
+  z-index: 20;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14), 4px 8px 0 #111111;
 }
 
-.motion-cards-fan:hover .fan-card--2 {
-  transform: rotate(-4deg) translateX(-80px);
+.fan-card--2:hover,
+.fan-card--2.is-focused {
+  transform: translate3d(-55px, -18px, 0) rotate(0deg) scale(1.03);
+  z-index: 20;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14), 4px 8px 0 #111111;
 }
 
-.motion-cards-fan:hover .fan-card--3 {
-  transform: rotate(4deg) translateX(80px);
+.fan-card--3:hover,
+.fan-card--3.is-focused {
+  transform: translate3d(55px, -18px, 0) rotate(0deg) scale(1.03);
+  z-index: 20;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14), 4px 8px 0 #111111;
 }
 
-.motion-cards-fan:hover .fan-card--4 {
-  transform: rotate(12deg) translateX(240px);
-}
-
-.fan-card:hover,
-.fan-card.is-focused {
-  transform: translateY(-24px) scale(1.06) rotate(0deg) !important;
-  z-index: 20 !important;
-  box-shadow: 12px 14px 0 #111111 !important;
+.fan-card--4:hover,
+.fan-card--4.is-focused {
+  transform: translate3d(175px, -18px, 0) rotate(2deg) scale(1.03);
+  z-index: 20;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14), 4px 8px 0 #111111;
 }
 
 html.dark .fan-card:hover,
 html.dark .fan-card.is-focused {
-  box-shadow: 12px 14px 0 rgba(0, 0, 0, 0.8) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6), 4px 8px 0 rgba(0, 0, 0, 0.85);
 }
 
 .fan-card-header {
