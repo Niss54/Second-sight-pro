@@ -1,25 +1,25 @@
 :root {
-  --bg-0: #f6fbfa;
-  --bg-1: #edf7f5;
-  --bg-2: #f8f8fb;
-  --card: rgba(255, 255, 255, 0.72);
-  --card-strong: rgba(255, 255, 255, 0.88);
-  --line: rgba(60, 96, 104, 0.14);
-  --line-strong: rgba(60, 96, 104, 0.22);
-  --ink-900: #10262d;
-  --ink-700: #31505a;
-  --ink-500: #5f7880;
-  --ink-300: #90a5ab;
-  --teal: #0d7c73;
-  --teal-deep: #0a5e58;
+  --bg-0: #f8fafc;
+  --bg-1: #ffffff;
+  --bg-2: #f1f5f9;
+  --card: #ffffff;
+  --card-strong: #ffffff;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --ink-900: #0f172a;
+  --ink-700: #334155;
+  --ink-500: #64748b;
+  --ink-300: #94a3b8;
+  --teal: #0d9488;
+  --teal-deep: #0f766e;
   --sky: #2563eb;
-  --sky-soft: #e7f0ff;
-  --mint: #dff5ef;
-  --amber: #c7781d;
-  --danger: #b54338;
-  --shadow-lg: 0 25px 70px rgba(13, 34, 40, 0.14);
-  --shadow-md: 0 14px 40px rgba(13, 34, 40, 0.1);
-  --shadow-sm: 0 10px 26px rgba(13, 34, 40, 0.08);
+  --sky-soft: #eff6ff;
+  --mint: #f0fdfa;
+  --amber: #d97706;
+  --danger: #dc2626;
+  --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.04);
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 16px;
@@ -27,24 +27,24 @@
 }
 
 html.dark {
-  --bg-0: #0a1114;
-  --bg-1: #0f1a1d;
-  --bg-2: #142226;
-  --card: rgba(18, 30, 34, 0.72);
-  --card-strong: rgba(24, 40, 46, 0.88);
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.18);
-  --ink-900: #f0f6f8;
-  --ink-700: #c1d2d8;
-  --ink-500: #93aeb8;
-  --ink-300: #597a85;
-  --teal: #1cb5a8;
-  --teal-deep: #2fe3d4;
-  --sky: #5e8cf2;
-  --sky-soft: #1d2a45;
-  --mint: #15332c;
-  --amber: #d9913c;
-  --danger: #d95e52;
+  --bg-0: #0b1117;
+  --bg-1: #0f1720;
+  --bg-2: #141f2a;
+  --card: #131d26;
+  --card-strong: #172430;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
+  --ink-900: #f8fafc;
+  --ink-700: #cbd5e1;
+  --ink-500: #94a3b8;
+  --ink-300: #64748b;
+  --teal: #2dd4bf;
+  --teal-deep: #14b8a6;
+  --sky: #60a5fa;
+  --sky-soft: #172554;
+  --mint: #132a26;
+  --amber: #fbbf24;
+  --danger: #f87171;
   --shadow-lg: 0 25px 70px rgba(0, 0, 0, 0.6);
   --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.4);
   --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.3);
@@ -62,10 +62,10 @@ body {
   margin: 0;
   color: var(--ink-900);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at 12% 10%, rgba(13, 124, 115, 0.12), transparent 32%),
-    radial-gradient(circle at 86% 8%, rgba(37, 99, 235, 0.12), transparent 28%),
-    linear-gradient(150deg, var(--bg-0) 0%, var(--bg-1) 52%, var(--bg-2) 100%);
+  background-color: var(--bg-0);
+  background-image: none;
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 button,
@@ -94,50 +94,59 @@ a {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(13, 124, 115, 0.16), transparent 24%),
-    radial-gradient(circle at 80% 12%, rgba(37, 99, 235, 0.12), transparent 20%),
-    radial-gradient(circle at 74% 82%, rgba(199, 120, 29, 0.11), transparent 26%);
-  filter: blur(20px);
-  opacity: 0.95;
+  background: radial-gradient(circle at 50% -10%, rgba(13, 148, 136, 0.04), transparent 60%);
   z-index: -1;
+  transition: background 0.3s ease;
 }
 
 html.dark .ambient-bg {
-  background:
-    radial-gradient(circle at 20% 0%, rgba(28, 181, 168, 0.15), transparent 40%),
-    radial-gradient(circle at 80% 10%, rgba(94, 140, 242, 0.12), transparent 30%),
-    radial-gradient(circle at 50% 100%, rgba(217, 145, 60, 0.08), transparent 40%);
+  background: radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.06), transparent 65%);
 }
 
 .nav-pill {
   width: fit-content;
   margin: 16px auto 32px;
   border-radius: 999px;
-  padding: 8px 16px;
-  background: var(--card);
-  backdrop-filter: blur(24px) saturate(150%);
+  padding: 7px 18px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
+  gap: 28px;
   position: sticky;
   top: 16px;
   z-index: 100;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--line);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  transition: all 0.25s ease;
 }
 
 html.dark .nav-pill {
-  background: rgba(10, 17, 20, 0.6);
-  border: 1px solid transparent;
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-image: 
-    linear-gradient(to right, rgba(10, 17, 20, 0.6), rgba(10, 17, 20, 0.6)),
-    linear-gradient(90deg, #1cb5a8, #5e8cf2, #d9913c, #1cb5a8);
-  box-shadow: 0 4px 30px rgba(28, 181, 168, 0.15);
+  background: rgba(13, 21, 28, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background-image: none;
+  background-clip: unset;
+  background-origin: unset;
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5);
+}
+
+.nav-voice-badge {
+  background: rgba(13, 148, 136, 0.12);
+  color: var(--teal);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  line-height: 1.2;
+}
+
+html.dark .nav-voice-badge {
+  background: rgba(45, 212, 191, 0.18);
+  color: var(--teal);
 }
 
 .nav-header {
@@ -2338,18 +2347,20 @@ html.dark {
 .particle {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.35;
+  opacity: 0.15;
   animation: pulseParticle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+html.dark .particle {
+  opacity: 0.38;
 }
 
 @keyframes pulseParticle {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.2;
   }
   50% {
     transform: scale(1.6);
-    opacity: 0.55;
   }
 }
 
@@ -2474,26 +2485,49 @@ html.dark {
 .button.primary.neo-cta {
   background: var(--teal);
   color: #ffffff;
-  border: 2px solid #111111 !important;
-  box-shadow: 4px 4px 0 #111111 !important;
+  border: 2px solid #0f172a !important;
+  box-shadow: 4px 4px 0 #0f172a !important;
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+html.dark .button.primary.neo-cta {
+  background: var(--teal);
+  color: #0b1117;
+  border: 2px solid #ffffff !important;
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.85) !important;
 }
 
 .button.primary.neo-cta:hover {
   transform: translate(-3px, -3px) !important;
-  box-shadow: 8px 8px 0 #111111 !important;
+  box-shadow: 7px 7px 0 #0f172a !important;
+}
+
+html.dark .button.primary.neo-cta:hover {
+  box-shadow: 7px 7px 0 rgba(255, 255, 255, 0.95) !important;
 }
 
 .button.ghost.neo-cta {
-  border: 2px solid #111111 !important;
-  box-shadow: 3px 3px 0 #111111 !important;
+  border: 2px solid #0f172a !important;
+  box-shadow: 3px 3px 0 #0f172a !important;
+  background: #ffffff;
+  color: var(--ink-900);
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+html.dark .button.ghost.neo-cta {
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3) !important;
+  background: #131d26;
+  color: var(--ink-900);
 }
 
 .button.ghost.neo-cta:hover {
   transform: translate(-2px, -2px) !important;
-  box-shadow: 6px 6px 0 #111111 !important;
-  background: rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 5px 5px 0 #0f172a !important;
+}
+
+html.dark .button.ghost.neo-cta:hover {
+  box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.45) !important;
 }
 
 /* 6. Dual Infinite Marquee Ticker */
@@ -2551,11 +2585,17 @@ html.dark {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 9999px;
-  border: 2px solid #111111;
-  box-shadow: 3px 3px 0 #111111;
+  border: 2px solid #0f172a;
+  box-shadow: 3px 3px 0 #0f172a;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #111111;
+  color: #0f172a;
+}
+
+html.dark .marquee-badge {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+  color: #f8fafc;
 }
 
 .marquee-badge--orange { background-color: #ffedd5; border-color: #ea580c; color: #9a3412; }

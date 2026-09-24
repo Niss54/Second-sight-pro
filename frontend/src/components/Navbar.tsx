@@ -24,14 +24,14 @@ export const Navbar: React.FC = () => {
       <div className="nav-header">
         <Link to="/" onClick={handleLinkClick} style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
-            background: "linear-gradient(135deg, var(--teal), var(--sky))",
+            background: "var(--teal)",
             color: "#ffffff",
             width: "34px",
             height: "34px",
             borderRadius: "10px",
             display: "grid",
             placeItems: "center",
-            boxShadow: "0 4px 12px rgba(13, 124, 115, 0.25)"
+            boxShadow: "0 2px 8px rgba(13, 124, 115, 0.28)"
           }}>
             <Stethoscope size={19} />
           </div>
@@ -77,15 +77,7 @@ export const Navbar: React.FC = () => {
         >
           <MessageSquare size={15} />
           <span>AI Chat</span>
-          <span style={{
-            background: "linear-gradient(135deg, #8b5cf6, #3b82f6)",
-            color: "#fff",
-            fontSize: "9px",
-            fontWeight: 700,
-            padding: "1px 5px",
-            borderRadius: "999px",
-            lineHeight: 1.2
-          }}>
+          <span className="nav-voice-badge">
             Voice
           </span>
         </Link>
@@ -117,7 +109,8 @@ export const Navbar: React.FC = () => {
           className="button ghost theme-toggle-btn"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
           aria-label="Toggle theme"
-          style={{ padding: "8px", borderRadius: "50%", minWidth: "36px", height: "36px", display: "grid", placeItems: "center" }}
+          data-cursor={theme === "light" ? "dark mode" : "light mode"}
+          style={{ padding: "8px", borderRadius: "50%", minWidth: "36px", height: "36px", display: "grid", placeItems: "center", border: "1px solid var(--line)", background: "transparent", color: "var(--ink-700)" }}
         >
           {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
         </button>
@@ -126,7 +119,7 @@ export const Navbar: React.FC = () => {
             onClick={() => { signOut(); handleLinkClick(); }}
             className="button ghost signout-btn"
             data-cursor="sign out"
-            style={{ padding: "6px 14px", fontSize: "0.85rem", height: "36px", display: "flex", alignItems: "center", gap: "6px", borderRadius: "999px" }}
+            style={{ padding: "6px 14px", fontSize: "0.85rem", height: "36px", display: "flex", alignItems: "center", gap: "6px", borderRadius: "999px", border: "1px solid var(--line)", color: "var(--ink-700)" }}
           >
             <LogOut size={14} />
             <span>Sign Out</span>
@@ -134,9 +127,24 @@ export const Navbar: React.FC = () => {
         ) : (
           <button
             onClick={() => { continueAsGuest(); handleLinkClick(); }}
-            className="button primary neo-cta"
+            className="nav-demo-btn"
             data-cursor="demo access"
-            style={{ padding: "6px 14px", fontSize: "0.85rem", height: "36px", display: "flex", alignItems: "center", gap: "6px", borderRadius: "999px" }}
+            style={{
+              padding: "6px 16px",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              height: "36px",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              borderRadius: "999px",
+              background: "var(--teal)",
+              color: "#ffffff",
+              cursor: "pointer",
+              border: "none",
+              boxShadow: "0 2px 8px rgba(13, 124, 115, 0.25)",
+              transition: "transform 0.15s ease"
+            }}
           >
             <span>Demo Access</span>
           </button>

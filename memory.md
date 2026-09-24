@@ -102,6 +102,16 @@ In India, patients consult multiple doctors for complex conditions and frequentl
   - [x] Added kinetic CSS rules to `App.css` (`@keyframes pulseParticle`, `spinSlow`, `floatWobble`, `drawUnderline`, `scrollLeft`, `scrollRight`, `floatTag`, `.neo-cta`, `.neo-badge`, `.fan-card`)
   - [x] Integrated into `HomePage.tsx`, and updated `App.tsx` and `Navbar.tsx` for seamless public landing page navigation and guest demo access
 
+- [x] **Phase 12: Light & Dark Mode Strict Separation & Navbar Cleanup**
+  - [x] Removed rotating rainbow multi-colored border (`#1cb5a8, #5e8cf2, #d9913c`) from `html.dark .nav-pill`
+  - [x] Removed purple-to-blue gradient on the navbar `Voice` badge; replaced with unified clinical teal tag
+  - [x] Replaced multi-gradient brand icon with clean solid clinical teal icon
+  - [x] Stripped out overlapping green, blue, and amber radial blobs from `body` and `.ambient-bg` that caused tie-dye discoloration in light mode
+  - [x] Set Light Mode to pristine, bright Slate-50 (`#f8fafc`) with pure white cards (`#ffffff`) and sharp high-contrast text (`#0f172a`)
+  - [x] Set Dark Mode to deep, sleek dark slate (`#0b1117`) with rich dark cards (`#131d26`) and soft glow borders
+  - [x] Balanced particle opacity (0.15 in light mode, 0.38 in dark mode)
+  - [x] Live visual verification completed via Chrome DevTools MCP with zero console errors
+
 ---
 
 ## 📝 4. Changelog & Activity Log
@@ -115,5 +125,6 @@ In India, patients consult multiple doctors for complex conditions and frequentl
 - **2026-09-24 22:52:** Hardened backend security with sliding-window rate limiting, production error sanitization, DNS fallback resolvers, and generated Supabase TypeScript types. Verified with live end-to-end clinical query.
 - **2026-09-24 23:40:** Removed redundant root markdown files and scratch scripts while preserving all documentation in `docs/`. Added full Docker containerization (`docker-compose.yml`, `docker-compose.dev.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`).
 - **2026-09-25 00:10:** Implemented `nissh.info` kinetic visual elements: interactive follower cursor bubble, ambient pulsing particles, neo-brutalist stickers, infinite dual-track marquee, and 4-card fanning motion deck. Verified with successful clean frontend build.
+- **2026-09-25 00:30:** Fixed Light Mode and Dark Mode strict separation: eliminated rainbow navbar borders, removed background color splotches, polished clinical tokens, and verified via Chrome DevTools MCP.
 
 
