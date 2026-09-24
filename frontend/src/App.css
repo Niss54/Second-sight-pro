@@ -3006,3 +3006,142 @@ html.dark .fan-card-footer {
   }
 }
 
+/* ─── STORY HERO SECTION (CINEMATIC SCROLL JOURNEY) ─── */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes questionFloat {
+  0%, 100% { transform: translateY(0px) rotate(-6deg); }
+  50% { transform: translateY(-10px) rotate(6deg); }
+}
+
+.story-hero-wrapper {
+  position: relative;
+  width: 100%;
+  height: 800vh;
+  margin: 0;
+  padding: 0;
+}
+
+.story-sticky-viewport {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+}
+
+.story-clinic-bg-light {
+  background: linear-gradient(180deg, #f8fffe 0%, #edf7f5 100%);
+}
+
+html.dark .story-clinic-bg-light {
+  background: linear-gradient(180deg, #0b141d 0%, #101c27 100%);
+}
+
+.story-home-bg-light {
+  background: linear-gradient(180deg, #fef9f0 0%, #fef3e2 100%);
+}
+
+html.dark .story-home-bg-light {
+  background: linear-gradient(180deg, #0e121a 0%, #151b26 100%);
+}
+
+.story-chat-bubble-doc {
+  background: #1a1a2e;
+  color: #ffffff;
+  border-radius: 18px 18px 18px 4px;
+  padding: 12px 16px;
+  max-width: 340px;
+  font-size: 0.92rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.story-chat-bubble-patient {
+  background: #ffffff;
+  color: var(--ink-900);
+  border: 1px solid var(--line);
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 16px;
+  max-width: 320px;
+  font-size: 0.92rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+html.dark .story-chat-bubble-patient {
+  background: #172430;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.story-thought-bubble {
+  background: #ffffff;
+  color: #1e293b;
+  border: 2px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  max-width: 320px;
+}
+
+.story-thought-bubble p {
+  color: #1e293b;
+}
+
+html.dark .story-thought-bubble {
+  background: #172430;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .story-thought-bubble p {
+  color: #f8fafc !important;
+}
+
+.story-phone-mockup {
+  width: 230px;
+  height: 380px;
+  background: #0f172a;
+  border-radius: 32px;
+  border: 3px solid #334155;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+html.dark .story-phone-mockup {
+  border-color: #475569;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 900px) {
+  .story-phone-mockup {
+    width: 220px;
+    height: 440px;
+    border-radius: 30px;
+  }
+}
+

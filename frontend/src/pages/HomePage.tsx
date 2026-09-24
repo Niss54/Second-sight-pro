@@ -18,6 +18,7 @@ import { AmbientParticles } from "../components/AmbientParticles";
 import { SpinningStar, WobblySmiley, HandDrawnUnderline, NeoPill } from "../components/InteractiveStickers";
 import { MarqueeTicker } from "../components/MarqueeTicker";
 import { MotionCardDeck } from "../components/MotionCardDeck";
+import { StoryHeroSection } from "../components/StoryHeroSection";
 
 export const HomePage: React.FC = () => {
   return (
@@ -271,6 +272,9 @@ export const HomePage: React.FC = () => {
 
         </div>
       </section>
+
+      {/* ─── STORY HERO: Patient Journey Cinematic ─── */}
+      <StoryHeroSection />
 
       {/* ─── KINETIC MARQUEE TICKER (Double track) ─── */}
       <section style={{ margin: "32px 0 20px" }}>
