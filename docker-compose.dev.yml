@@ -1,0 +1,42 @@
+services:
+  backend:
+    container_name: secondsight-backend-dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: builder
+    command: npm run dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/data:/app/data
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - FRONTEND_ORIGIN=*
+    networks:
+      - secondsight-dev-net
+
+  frontend:
+    container_name: secondsight-frontend-dev
+    image: node:20-alpine
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    networks:
+      - secondsight-dev-net
+
+networks:
+  secondsight-dev-net:
+    driver: bridge

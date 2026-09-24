@@ -120,7 +120,7 @@ cp .env.example .env
 # Fill in your API keys in .env (see below)
 ```
 
-### 3. Run
+### 3. Run Locally
 
 ```bash
 # Terminal 1 — Backend (port 8080)
@@ -132,6 +132,27 @@ cd frontend && npm run dev
 # One-time: Embed medical corpus into Supabase
 cd backend && npm run ingest
 ```
+
+### 🐳 Run with Docker (Recommended for Production / Evaluation)
+
+You can run the entire full-stack application (Backend API on `8080` + Nginx React Frontend on `5173`) with a single command:
+
+```bash
+# Build and run all services in detached mode
+docker compose up --build -d
+
+# Check service logs
+docker compose logs -f
+
+# Stop all containers
+docker compose down
+```
+
+For hot-reloading development with Docker:
+```bash
+docker compose -f docker-compose.dev.yml up
+```
+
 
 ### Key Environment Variables (`backend/.env`)
 

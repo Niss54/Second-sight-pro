@@ -83,6 +83,14 @@ In India, patients consult multiple doctors for complex conditions and frequentl
   - [x] Added sliding-window rate limiting middleware (`rateLimiter.ts`) protecting AI, voice, OCR, and general API routes
   - [x] Added DNS resilience resolver (`8.8.8.8`, `1.1.1.1`) to eliminate ISP DNS caching issues
   - [x] Sanitized production error responses in `errorHandler.ts` to prevent data leakage
+- [x] **Phase 10: Dockerization & Workspace Cleanup**
+  - [x] Created production `docker-compose.yml` linking Backend (port 8080) and Nginx-based React Frontend (port 5173) with healthchecks
+  - [x] Created development `docker-compose.dev.yml` supporting hot reload and live file sync
+  - [x] Modernized `backend/Dockerfile` with healthcheck, port 8080 exposure, non-root user, and OCR dependencies
+  - [x] Built multi-stage `frontend/Dockerfile` and `frontend/nginx.conf` with gzip, asset caching, security headers, and SPA routing
+  - [x] Added root and frontend `.dockerignore` files
+  - [x] Purged root duplicate/stale documentation files (`architecture.md`, `PRD.md`, `TODO.md`, `todo2.md`, etc.), preserving the entire `docs/` folder untouched
+  - [x] Added npm scripts (`docker:build`, `docker:up`, `docker:down`, `docker:dev`) to root `package.json`
 
 ---
 
@@ -95,4 +103,6 @@ In India, patients consult multiple doctors for complex conditions and frequentl
 - **2026-09-24 22:45:** Fixed all Supabase security advisories: revoked execute on `rls_auto_enable()`, moved `vector` extension to `extensions` schema, enabled RLS on all 7 tables and storage bucket, and optimized policies with `(select auth.uid())` (0 security warnings remain).
 - **2026-09-24 22:48:** Seeded 19 verified ICMR/WHO medical guideline evidence records into `medical_evidence` and deployed `search_medical_evidence` RPC.
 - **2026-09-24 22:52:** Hardened backend security with sliding-window rate limiting, production error sanitization, DNS fallback resolvers, and generated Supabase TypeScript types. Verified with live end-to-end clinical query.
+- **2026-09-24 23:40:** Removed redundant root markdown files and scratch scripts while preserving all documentation in `docs/`. Added full Docker containerization (`docker-compose.yml`, `docker-compose.dev.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf`).
+
 

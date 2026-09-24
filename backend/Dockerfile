@@ -3,47 +3,48 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install dependencies needed for sharp or canvas if required
+# Install build dependencies
 RUN apk add --no-cache libc6-compat
 
-# Copy package files
+# Copy package files and install all dependencies
 COPY package*.json ./
-
-# Install all dependencies (including devDependencies)
 RUN npm ci
 
-# Copy source code
+# Copy source code and build
 COPY . .
-
-# Build the TypeScript code
 RUN npm run build
 
-# Stage 2: Production
+# Stage 2: Production Runner
 FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Install native dependencies required in production
+# Install native runtime dependencies for PDF parsing and OCR
 RUN apk add --no-cache libc6-compat poppler-utils ghostscript tesseract-ocr
 
 ENV NODE_ENV=production
+ENV PORT=8080
 
-# Copy only production dependencies and built code
+# Copy package files and install production-only dependencies
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
-# Copy built code from builder
+# Copy compiled code and static data from builder
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/data ./data
 
-# Create necessary directories
+# Create necessary runtime directories
 RUN mkdir -p data/corpus
 
-# Ensure non-root user for security
+# Run as non-root user for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 RUN chown -R appuser:appgroup /app
 USER appuser
 
-EXPOSE 3000
+EXPOSE 8080
 
-# Start the application
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1
+
 CMD ["node", "dist/server.js"]

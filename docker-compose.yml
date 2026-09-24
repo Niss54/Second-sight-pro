@@ -1,0 +1,51 @@
+services:
+  backend:
+    container_name: secondsight-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - FRONTEND_ORIGIN=*
+    restart: unless-stopped
+    networks:
+      - secondsight-net
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    container_name: secondsight-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_SUPABASE_URL=${VITE_SUPABASE_URL:-https://jizvgurnppvbrqhbhjqj.supabase.co}
+        - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppenZndXJucHB2YnJxaGJoanFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNjgzNDIsImV4cCI6MjEwMzg0NDM0Mn0.MO9TEle4uyYBO2gIqq6k8swz2EHdD3-0AtNLL-jVw-c}
+        - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:8080/api}
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - secondsight-net
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+networks:
+  secondsight-net:
+    driver: bridge

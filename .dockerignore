@@ -1,0 +1,15 @@
+.git
+.github
+node_modules
+**/node_modules
+dist
+**/dist
+.env
+.env.*
+!.env.example
+*.log
+coverage
+docs
+scratch
+.DS_Store
+Thumbs.db

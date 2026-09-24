@@ -1,17 +1,24 @@
 {
-  "name": "medical-guideline-rag",
+  "name": "secondsight-pro",
   "version": "1.0.0",
   "private": true,
-  "description": "Guideline retrieval API with evidence-backed medical citations",
+  "description": "AI-Powered Medical Second Opinion Reconciliation Platform",
   "workspaces": [
-    "backend"
+    "backend",
+    "frontend"
   ],
   "scripts": {
     "dev": "npm run dev -w backend",
-    "dev:api": "npm run dev -w backend",
-    "build": "npm run build -w backend",
-    "build:api": "npm run build -w backend",
+    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "build:backend": "npm run build -w backend",
+    "build:frontend": "npm run build -w frontend",
     "start": "npm run start -w backend",
-    "lint": "npm run check -w backend"
+    "lint": "npm run check -w backend",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up"
   }
 }
