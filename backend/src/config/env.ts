@@ -15,6 +15,7 @@ const envSchema = z.object({
   GROQ_API_KEY: z.string().optional(),
   GROQ_MODEL: z.string().default("openai/gpt-oss-20b"),
   SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_ANON_KEY: z.string().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
   MEDICAL_EVIDENCE_TABLE: z.string().default("medical_evidence"),
   MEDICAL_EVIDENCE_MATCH_FUNCTION: z.string().default("search_medical_evidence"),

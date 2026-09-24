@@ -16,3 +16,6 @@ coverage/
 # Ignore nested repositories
 Healthcare-Assistant/
 medical-guideline-rag/
+scratch/
+seed_evidence.sql
+

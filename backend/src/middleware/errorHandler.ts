@@ -1,4 +1,5 @@
-﻿import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { env } from "../config/env";
 
 export function notFoundHandler(_req: Request, res: Response): void {
   res.status(404).json({
@@ -21,13 +22,21 @@ export function errorHandler(
       ? (error as { statusCode: number }).statusCode
       : 500;
 
-  const message =
+  const rawMessage =
     typeof error === "object" && error !== null && "message" in error
       ? String((error as { message?: string }).message)
       : "Internal server error";
 
+  // Prevent leaking internal errors, database strings, or stack traces in production
+  const safeMessage =
+    statusCode >= 500 && env.NODE_ENV === "production"
+      ? "An internal server error occurred. Please try again later."
+      : rawMessage;
+
+  console.error(`[Error Handler] ${statusCode}:`, error);
+
   res.status(statusCode).json({
     error: statusCode >= 500 ? "Server Error" : "Request Error",
-    message
+    message: safeMessage
   });
 }

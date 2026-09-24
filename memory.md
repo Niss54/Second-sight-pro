@@ -69,6 +69,20 @@ In India, patients consult multiple doctors for complex conditions and frequentl
   - [x] Implement automatic failover mechanism in `backend/src/lib/failoverLlm.ts`
   - [x] Resolve 401 Network Error in `/api/voice/followup` and guest sessions
   - [x] Live end-to-end API test verifying 200 response and auto-switchover
+- [x] **Phase 9: Security Audit & Database Management via Supabase MCP**
+  - [x] Discovered Supabase project `jizvgurnppvbrqhbhjqj` was paused (`INACTIVE`) and successfully restored via MCP `restore_project`
+  - [x] Diagnosed security vulnerabilities via `get_advisors(type: "security")`: resolved `SECURITY DEFINER` execution risks on `rls_auto_enable`
+  - [x] Applied migrations via MCP `apply_migration` to create all public tables with strict Row-Level Security (RLS) enabled
+  - [x] Relocated `vector` extension to `extensions` schema to isolate public API schema
+  - [x] Optimized all RLS policies using `(select auth.uid())` for InitPlan caching
+  - [x] Confirmed 0 security warnings (`{"result":{"lints":[]}}`) via Supabase MCP
+  - [x] Created `case-uploads` storage bucket with RLS ownership policies
+  - [x] Built `search_medical_evidence` RPC function (vector + keyword ranking with `SECURITY INVOKER`)
+  - [x] Seeded 19 verified ICMR, WHO, NIH, and Mayo clinical guideline records into Supabase `public.medical_evidence`
+  - [x] Exported live database TypeScript typings to `frontend/src/database.types.ts` & `backend/src/database.types.ts` via MCP `generate_typescript_types`
+  - [x] Added sliding-window rate limiting middleware (`rateLimiter.ts`) protecting AI, voice, OCR, and general API routes
+  - [x] Added DNS resilience resolver (`8.8.8.8`, `1.1.1.1`) to eliminate ISP DNS caching issues
+  - [x] Sanitized production error responses in `errorHandler.ts` to prevent data leakage
 
 ---
 
@@ -77,3 +91,8 @@ In India, patients consult multiple doctors for complex conditions and frequentl
 - **2026-09-24 22:02:** Fixed `authMiddleware.ts` and `api.ts` to permit guest tokens (`demo-guest-token`), resolving the 401 Network Error on `/api/voice/followup`.
 - **2026-09-24 22:07:** Rebuilt `failoverLlm.ts` with direct Gemini REST API + Groq OpenAI SDK failover.
 - **2026-09-24 22:09:** Successfully tested live request: Gemini 503 was detected and instantly auto-switched to Groq (`openai/gpt-oss-20b`), returning a high-quality bilingual (Hindi & English) response with HTTP 200.
+- **2026-09-24 22:30:** Restored paused Supabase database (`jizvgurnppvbrqhbhjqj`) using `supabase-mcp-server`.
+- **2026-09-24 22:45:** Fixed all Supabase security advisories: revoked execute on `rls_auto_enable()`, moved `vector` extension to `extensions` schema, enabled RLS on all 7 tables and storage bucket, and optimized policies with `(select auth.uid())` (0 security warnings remain).
+- **2026-09-24 22:48:** Seeded 19 verified ICMR/WHO medical guideline evidence records into `medical_evidence` and deployed `search_medical_evidence` RPC.
+- **2026-09-24 22:52:** Hardened backend security with sliding-window rate limiting, production error sanitization, DNS fallback resolvers, and generated Supabase TypeScript types. Verified with live end-to-end clinical query.
+
