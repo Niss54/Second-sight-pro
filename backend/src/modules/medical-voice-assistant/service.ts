@@ -57,12 +57,22 @@ function safeFollowUpFallback(context: VoiceAssistantContext, citations: Evidenc
 }
 
 async function fetchRelevantCitations(query: string): Promise<EvidenceCitation[]> {
-  const bundle = await evidenceEngine.getCitations({
-    query,
-    limit: 4
-  });
+  try {
+    const bundle = await Promise.race([
+      evidenceEngine.getCitations({
+        query,
+        limit: 4
+      }),
+      new Promise<EvidenceCitation[]>((_, reject) =>
+        setTimeout(() => reject(new Error("Citation timeout")), 3000)
+      )
+    ]);
 
-  return bundle;
+    return bundle || [];
+  } catch (err: any) {
+    console.warn(`[VoiceAssistant] Citation retrieval notice: ${err.message}. Continuing...`);
+    return [];
+  }
 }
 
 async function generateVoiceText(prompt: string, fallback: string): Promise<string> {
