@@ -76,10 +76,10 @@ export const HomePage: React.FC = () => {
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "7px 18px", borderRadius: "999px", background: "rgba(13, 124, 115, 0.09)", border: "1.5px solid rgba(13, 124, 115, 0.25)", color: "var(--teal)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "24px" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: "9px", padding: "7px 18px", borderRadius: "999px", background: "rgba(13, 124, 115, 0.09)", border: "1.5px solid rgba(13, 124, 115, 0.25)", color: "var(--teal)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "24px" }}
             data-cursor="guidelines"
           >
-            <ShieldCheck size={16} />
+            <img src="/secondsight-icon.png" alt="SecondSight Pro" style={{ width: "20px", height: "20px", objectFit: "contain" }} />
             <span>Grounded in ICMR 2022 & WHO Guidelines · Ayushman Bharat ABDM Ready</span>
           </motion.div>
 

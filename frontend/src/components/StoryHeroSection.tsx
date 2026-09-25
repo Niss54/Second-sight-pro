@@ -219,6 +219,11 @@ export const StoryHeroSection: React.FC = () => {
             gap: "8px"
           }}
         >
+          <img
+            src="/secondsight-icon.png"
+            alt="SecondSight Emblem"
+            style={{ width: "16px", height: "16px", objectFit: "contain" }}
+          />
           <span
             style={{
               width: "7px",
@@ -228,7 +233,7 @@ export const StoryHeroSection: React.FC = () => {
               boxShadow: "0 0 10px #4ade80"
             }}
           />
-          <span>Anime Clinical Showcase</span>
+          <span>SecondSight Anime Clinical Journey</span>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════

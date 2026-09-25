@@ -245,9 +245,14 @@ export const ChatPage: React.FC = () => {
       {/* ── Sidebar ── */}
       <aside className="chat-sidebar">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
-          <Link to="/" style={{ textDecoration: "none", color: "var(--ink-900)" }}>
-            <h1 style={{ fontSize: "1.2rem", margin: 0, fontFamily: "ui-serif, Georgia, serif" }}>
-              <span style={{ color: "var(--teal)" }}>Second</span>Sight
+          <Link to="/" style={{ textDecoration: "none", color: "var(--ink-900)", display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src="/secondsight-icon.png"
+              alt="SecondSight Pro"
+              style={{ width: "28px", height: "28px", objectFit: "contain" }}
+            />
+            <h1 style={{ fontSize: "1.2rem", margin: 0, fontWeight: 800 }}>
+              <span style={{ color: "var(--teal)" }}>Second</span>Sight <span style={{ fontSize: "0.7rem", background: "rgba(13, 124, 115, 0.12)", color: "var(--teal)", padding: "1px 6px", borderRadius: "4px", fontWeight: 800 }}>PRO</span>
             </h1>
           </Link>
           <button className="button ghost" style={{ padding: "6px" }} onClick={startNewChat}>
@@ -317,8 +322,8 @@ export const ChatPage: React.FC = () => {
         </div>
 
         <div style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: "12px", padding: "12px", borderRadius: "12px", background: "rgba(13, 124, 115, 0.05)" }}>
-          <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "var(--teal)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", fontSize: "0.8rem" }}>
-            AI
+          <div style={{ width: "34px", height: "34px", borderRadius: "50%", background: "rgba(13, 124, 115, 0.12)", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(13, 124, 115, 0.2)" }}>
+            <img src="/secondsight-icon.png" alt="Voice Copilot" style={{ width: "24px", height: "24px", objectFit: "contain" }} />
           </div>
           <div>
             <div style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--ink-900)" }}>Voice Assistant</div>

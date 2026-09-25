@@ -1,18 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Stethoscope } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
     <footer className="footer-container">
       <div className="footer-grid">
         <div className="footer-col" style={{ paddingRight: "24px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-            <div style={{ background: "var(--teal)", color: "white", padding: "6px", borderRadius: "8px" }}>
-              <Stethoscope size={24} />
-            </div>
-            <h1 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "ui-serif, Georgia, serif" }}>
-              SecondSight Pro
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
+            <img
+              src="/secondsight-icon.png"
+              alt="SecondSight Pro Emblem"
+              style={{
+                width: "36px",
+                height: "36px",
+                objectFit: "contain",
+                filter: "drop-shadow(0 2px 8px rgba(13, 124, 115, 0.3))"
+              }}
+            />
+            <h1 style={{ margin: 0, fontSize: "1.3rem", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--ink-900)" }}>
+              <span style={{ color: "var(--teal)" }}>Second</span>Sight <span style={{ fontSize: "0.75rem", background: "rgba(13, 124, 115, 0.15)", color: "var(--teal)", padding: "2px 8px", borderRadius: "6px", fontWeight: 800, verticalAlign: "middle" }}>PRO</span>
             </h1>
           </div>
           <p style={{ color: "var(--ink-500)", lineHeight: "1.6", fontSize: "0.95rem" }}>
