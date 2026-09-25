@@ -1,15 +1,21 @@
 <div align="center">
 
 ```
-  ____                             _ ____  _       _     _     ____            
- / ___|  ___  ___ ___  _ __   __| / ___|(_) __ _| |__ | |_  |  _ \ _ __ ___  
- \___ \ / _ \/ __/ _ \| '_ \ / _` \___ \| |/ _` | '_ \| __| | |_) | '__/ _ \ 
-  ___) |  __/ (_| (_) | | | | (_| |___) | | (_| | | | | |_  |  __/| | | (_) |
- |____/ \___|\___\___/|_| |_|\__,_|____/|_|\__, |_| |_|\__| |_|   |_|  \___/ 
-                                           |___/                             
+  ____                             _         ____  _       _     _          ____            
+ / ___|  ___  ___ ___  _ __   __| |       / ___|(_) __ _| |__ | |_        |  _ \ _ __ ___  
+ \___ \ / _ \/ __/ _ \| '_ \ / _` |       \___ \| |/ _` | '_ \| __|       | |_) | '__/ _ \ 
+  ___) |  __/ (_| (_) | | | | (_| |        ___) | | (_| | | | | |_        |  __/| | | (_) |
+ |____/ \___|\___\___/|_| |_|\__,_|       |____/|_|\__, |_| |_|\__|       |_|   |_|  \___/ 
+                                                   |___/                                   
 ```
 
-# 🩺 SecondSight Pro
+<br/>
+
+<a href="https://github.com/Niss54/Second-sight-pro">
+  <img src="./public/part%203.png" alt="SecondSight Pro" width="520" />
+</a>
+
+<br/><br/>
 
 > **AI-Powered Medical Second Opinion Reconciliation Platform Backed by ICMR & WHO Clinical Guidelines.**
 
@@ -41,7 +47,7 @@ In India, over 70% of patients diagnosed with acute or chronic ailments consult 
 
 | 📊 Conflict Scoring & Multi-Doctor Comparison | 🛡️ Evidence-Backed Clinical Resolution & EHR |
 |:---------------------------------------------:|:---------------------------------------------:|
-| <img src="./public/part 1.png" width="100%" alt="SecondSight Pro Conflict Scoring UI" /> | <img src="./public/part 3.png" width="100%" alt="SecondSight Pro Clinical Resolution UI" /> |
+| <img src="./frontend/public/hero-final.png" width="100%" alt="SecondSight Pro Conflict Scoring UI" /> | <img src="./frontend/public/hero-illustration.png" width="100%" alt="SecondSight Pro Clinical Resolution UI" /> |
 
 | 🩺 Dr. Mehta (Initial Consult) | 👨‍⚕️ Dr. Sharma (Second Opinion) | 🤕 Rajan (Patient Clarity) |
 |:-----------------------------:|:------------------------------:|:--------------------------:|
