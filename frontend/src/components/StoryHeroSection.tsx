@@ -11,7 +11,9 @@ import {
   Search,
   Sparkles,
   ShieldCheck,
-  Building2
+  Building2,
+  Activity,
+  Flame
 } from "lucide-react";
 
 export const StoryHeroSection: React.FC = () => {
@@ -57,13 +59,13 @@ export const StoryHeroSection: React.FC = () => {
   const rxCard1X = useTransform(scrollYProgress, [0.45, 0.49], [-30, 20]);
 
   // ─────────────────────────────────────────────────────────────
-  // TRANSITION 1: "3 दिन बाद" Paint Brush Wipe (0.52 → 0.60)
+  // TRANSITION 1: "3 दिन बाद" Dark Emerald & Lime Neon Paint Brush Wipe (0.52 → 0.60)
   // ─────────────────────────────────────────────────────────────
   const trans1BgOpacity = useTransform(scrollYProgress, [0.52, 0.54, 0.585, 0.60], [0, 1, 1, 0]);
   const brushTopLeftX = useTransform(scrollYProgress, [0.52, 0.555, 0.585, 0.60], ["-100%", "0%", "0%", "-100%"]);
   const brushBottomRightX = useTransform(scrollYProgress, [0.52, 0.555, 0.585, 0.60], ["100%", "0%", "0%", "100%"]);
-  const trans1TextOpacity = useTransform(scrollYProgress, [0.55, 0.565, 0.585, 0.598], [0, 1, 1, 0]);
-  const trans1TextScale = useTransform(scrollYProgress, [0.55, 0.57], [0.88, 1]);
+  const trans1TextOpacity = useTransform(scrollYProgress, [0.545, 0.56, 0.585, 0.598], [0, 1, 1, 0]);
+  const trans1TextScale = useTransform(scrollYProgress, [0.545, 0.565], [0.88, 1]);
 
   // ─────────────────────────────────────────────────────────────
   // SCENE 2: Dr. Sharma's Clinic (0.60 → 0.82)
@@ -75,7 +77,7 @@ export const StoryHeroSection: React.FC = () => {
   const conflictWarningOpacity = useTransform(scrollYProgress, [0.77, 0.80, 0.81, 0.825], [0, 1, 1, 0]);
 
   // ─────────────────────────────────────────────────────────────
-  // TRANSITION 2: 4-Corner Black Wipe (0.82 → 0.87)
+  // TRANSITION 2: 4-Corner Matte Black & Crimson Wipe (0.82 → 0.87)
   // ─────────────────────────────────────────────────────────────
   const cornerWipeScale = useTransform(scrollYProgress, [0.82, 0.845, 0.87], [0, 1.05, 0]);
   const cornerTextOpacity = useTransform(scrollYProgress, [0.835, 0.845, 0.855], [0, 1, 0]);
@@ -86,7 +88,6 @@ export const StoryHeroSection: React.FC = () => {
   const scene3Opacity = useTransform(scrollYProgress, [0.865, 0.885, 1.00], [0, 1, 1]);
   const thought1Opacity = useTransform(scrollYProgress, [0.88, 0.90], [0, 1]);
   const thought2Opacity = useTransform(scrollYProgress, [0.90, 0.92], [0, 1]);
-  const qMarksOpacity = useTransform(scrollYProgress, [0.88, 0.91], [0, 1]);
 
   // Phone Mockup Stages
   const phoneStageAOpacity = useTransform(scrollYProgress, [0.87, 0.885, 0.915, 0.925], [0, 1, 1, 0]);
@@ -101,7 +102,7 @@ export const StoryHeroSection: React.FC = () => {
 
   return (
     <div className="story-hero-wrapper" ref={containerRef} id="story-journey">
-      {/* ─── SECTION HEADER (VISIBLE BEFORE SCROLL LOCK) ─── */}
+      {/* ─── SECTION HEADER (VISIBLE BEFORE SCROLL LOCK - DARK CINEMA THEME) ─── */}
       <div
         style={{
           textAlign: "center",
@@ -116,40 +117,47 @@ export const StoryHeroSection: React.FC = () => {
           style={{
             fontSize: "0.85rem",
             fontWeight: 800,
-            color: "var(--teal)",
+            color: "#2dd4bf",
             textTransform: "uppercase",
-            letterSpacing: "0.12em",
+            letterSpacing: "0.14em",
             display: "inline-flex",
             alignItems: "center",
-            gap: "6px"
+            gap: "8px",
+            padding: "6px 16px",
+            borderRadius: "999px",
+            background: "rgba(20, 184, 166, 0.12)",
+            border: "1px solid rgba(20, 184, 166, 0.3)"
           }}
         >
           <Sparkles size={16} />
-          The Clinical Dilemma We Solve
+          The Clinical Dilemma We Solve · Anime Case Study
         </span>
         <h2
           style={{
             fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
-            fontWeight: 800,
-            margin: "12px 0 14px",
-            color: "var(--ink-900)",
+            fontWeight: 900,
+            margin: "14px 0 14px",
+            color: "#ffffff",
             letterSpacing: "-0.025em",
             lineHeight: 1.15
           }}
         >
-          Rajan's Journey: Two Renowned Doctors. <br />
-          <span style={{ color: "#b54338" }}>Two Clashing Prescriptions.</span> Zero Clarity.
+          Rajan's Dilemma: Two Super-Specialists. <br />
+          <span style={{ color: "#f87171", textShadow: "0 0 25px rgba(248,113,113,0.5)" }}>
+            Two Clashing Prescriptions.
+          </span>{" "}
+          Zero Clarity.
         </h2>
         <p
           style={{
-            color: "var(--ink-700)",
+            color: "#94a3b8",
             fontSize: "1.05rem",
             maxWidth: "640px",
             margin: "0 auto 20px",
             lineHeight: 1.55
           }}
         >
-          Follow the real-life experience millions of Indian patients face every day when conflicting medical advice puts health at risk.
+          Experience the real-life medical labyrinth millions of Indian patients navigate when conflicting opinions put vital health at risk.
         </p>
 
         <div
@@ -157,18 +165,19 @@ export const StoryHeroSection: React.FC = () => {
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            padding: "8px 18px",
+            padding: "8px 20px",
             borderRadius: "999px",
-            background: "var(--bg-2)",
-            border: "1px solid var(--line)",
-            color: "var(--ink-700)",
+            background: "rgba(15, 23, 42, 0.8)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            color: "#cbd5e1",
             fontSize: "0.85rem",
-            fontWeight: 600
+            fontWeight: 600,
+            boxShadow: "0 0 20px rgba(0,0,0,0.5)"
           }}
         >
-          <ChevronDown size={16} style={{ animation: "bounce 1.5s ease infinite", color: "var(--teal)" }} />
-          <span>Scroll down to experience the story</span>
-          <ChevronDown size={16} style={{ animation: "bounce 1.5s ease infinite 0.2s", color: "var(--teal)" }} />
+          <ChevronDown size={16} style={{ animation: "bounce 1.5s ease infinite", color: "#2dd4bf" }} />
+          <span>Scroll down to enter the anime journey</span>
+          <ChevronDown size={16} style={{ animation: "bounce 1.5s ease infinite 0.2s", color: "#2dd4bf" }} />
         </div>
       </div>
 
@@ -182,10 +191,11 @@ export const StoryHeroSection: React.FC = () => {
             left: 0,
             right: 0,
             height: "4px",
-            background: "linear-gradient(90deg, #0d9488, #2563eb, #fbbf24)",
+            background: "linear-gradient(90deg, #14b8a6, #3b82f6, #f59e0b)",
             scaleX: progressBarScale,
             transformOrigin: "left",
-            zIndex: 100
+            zIndex: 100,
+            boxShadow: "0 0 12px #14b8a6"
           }}
         />
 
@@ -198,15 +208,15 @@ export const StoryHeroSection: React.FC = () => {
             zIndex: 45,
             padding: "6px 14px",
             borderRadius: "999px",
-            background: "rgba(15, 23, 42, 0.75)",
-            backdropFilter: "blur(8px)",
+            background: "rgba(11, 15, 25, 0.85)",
+            backdropFilter: "blur(10px)",
             color: "#ffffff",
             fontSize: "0.78rem",
             fontWeight: 600,
             border: "1px solid rgba(255, 255, 255, 0.15)",
             display: "flex",
             alignItems: "center",
-            gap: "6px"
+            gap: "8px"
           }}
         >
           <span
@@ -215,17 +225,17 @@ export const StoryHeroSection: React.FC = () => {
               height: "7px",
               borderRadius: "50%",
               background: "#4ade80",
-              boxShadow: "0 0 8px #4ade80"
+              boxShadow: "0 0 10px #4ade80"
             }}
           />
-          <span>Interactive Patient Case Study</span>
+          <span>Anime Clinical Showcase</span>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            SCENE 1: DR. MEHTA'S CLINIC (DOCTOR IN WHEELCHAIR)
+            SCENE 1: DR. MEHTA'S CLINIC (ANIME DR IN WHEELCHAIR)
             ═══════════════════════════════════════════════════════════ */}
         <motion.div
-          className="story-clinic-bg-light"
+          className="story-scene-dark"
           style={{
             position: "absolute",
             inset: 0,
@@ -247,8 +257,7 @@ export const StoryHeroSection: React.FC = () => {
               alignItems: "center",
               width: "100%",
               maxWidth: "1140px",
-              margin: "0 auto",
-              paddingTop: "10px"
+              margin: "0 auto"
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -257,20 +266,21 @@ export const StoryHeroSection: React.FC = () => {
                   width: "36px",
                   height: "36px",
                   borderRadius: "10px",
-                  background: "var(--teal)",
+                  background: "#0d9488",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#ffffff"
+                  color: "#ffffff",
+                  boxShadow: "0 0 15px rgba(13, 148, 136, 0.5)"
                 }}
               >
                 <Building2 size={20} />
               </div>
               <div>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--teal)", textTransform: "uppercase" }}>
-                  Scene 1 · Day 1 Consultation
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#2dd4bf", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  Scene 1 · Day 01 Consultation
                 </span>
-                <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "var(--ink-900)" }}>
+                <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#ffffff" }}>
                   Mehta Polyclinic & Care Centre
                 </h4>
               </div>
@@ -281,34 +291,34 @@ export const StoryHeroSection: React.FC = () => {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                padding: "6px 12px",
-                borderRadius: "8px",
-                background: "rgba(13, 148, 136, 0.08)",
-                border: "1px solid rgba(13, 148, 136, 0.2)",
+                padding: "6px 14px",
+                borderRadius: "999px",
+                background: "rgba(20, 184, 166, 0.12)",
+                border: "1px solid rgba(20, 184, 166, 0.3)",
                 fontSize: "0.82rem",
-                color: "var(--teal-deep)",
-                fontWeight: 600
+                color: "#2dd4bf",
+                fontWeight: 700
               }}
             >
-              <span>Dr. R. Mehta (MBBS, MD)</span>
-              <span style={{ opacity: 0.6 }}>• Room 204</span>
+              <Activity size={15} />
+              <span>Dr. R. Mehta (MBBS, MD) · Senior Physician</span>
             </div>
           </div>
 
-          {/* Interactive Stage: Doctor Mehta in Wheelchair + Patient + Chat Flow */}
+          {/* Interactive Stage: Anime Dr. Mehta in Wheelchair + Chat Flow */}
           <div
             style={{
               width: "100%",
               maxWidth: "1140px",
               margin: "0 auto",
               display: "grid",
-              gridTemplateColumns: "1.1fr 1fr",
-              gap: "24px",
+              gridTemplateColumns: "1.05fr 1fr",
+              gap: "28px",
               alignItems: "center",
               flex: 1
             }}
           >
-            {/* Left: SVG Character Art (Dr. Mehta in Wheelchair at Wooden Desk + Patient) */}
+            {/* Left: High-Definition Anime Character Showcase (Dr. Mehta in Wheelchair) */}
             <div
               style={{
                 position: "relative",
@@ -319,173 +329,69 @@ export const StoryHeroSection: React.FC = () => {
                 justifyContent: "center"
               }}
             >
-              <svg
-                viewBox="0 0 520 340"
-                style={{ width: "100%", height: "100%", overflow: "visible" }}
+              {/* Anime Character Showcase Card */}
+              <div
+                className="story-anime-card"
+                style={{
+                  width: "360px",
+                  height: "260px",
+                  border: "2px solid rgba(20, 184, 166, 0.45)",
+                  boxShadow: "0 10px 40px rgba(13, 148, 136, 0.35)",
+                  position: "relative"
+                }}
               >
-                <defs>
-                  <linearGradient id="clinicWindow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#e0f2fe" />
-                    <stop offset="100%" stopColor="#bae6fd" />
-                  </linearGradient>
-                  <linearGradient id="woodDesk" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#8B5E3C" />
-                    <stop offset="100%" stopColor="#78350F" />
-                  </linearGradient>
-                  <linearGradient id="goldPlate" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#f59e0b" />
-                    <stop offset="100%" stopColor="#d97706" />
-                  </linearGradient>
-                  <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.12" />
-                  </filter>
-                </defs>
+                <img
+                  src="/images/story/dr_mehta.jpg"
+                  alt="Dr. Mehta Anime Character in Wheelchair"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
 
-                {/* Background Wall Window */}
-                <rect x="30" y="30" width="130" height="120" rx="8" fill="url(#clinicWindow)" stroke="#cbd5e1" strokeWidth="3" />
-                <line x1="95" y1="30" x2="95" y2="150" stroke="#94a3b8" strokeWidth="2.5" />
-                <line x1="30" y1="90" x2="160" y2="90" stroke="#94a3b8" strokeWidth="2.5" />
-
-                {/* Wall Certificate / Diploma */}
-                <rect x="210" y="40" width="70" height="50" rx="4" fill="#ffffff" stroke="#94a3b8" strokeWidth="2" />
-                <rect x="216" y="46" width="58" height="38" fill="none" stroke="#d97706" strokeWidth="1" strokeDasharray="2,2" />
-                <circle cx="245" cy="65" r="7" fill="#f59e0b" />
-
-                {/* Wall Clock */}
-                <circle cx="340" cy="55" r="22" fill="#ffffff" stroke="#64748b" strokeWidth="3" />
-                <line x1="340" y1="55" x2="340" y2="42" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
-                <line x1="340" y1="55" x2="350" y2="55" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" />
-                <circle cx="340" cy="55" r="2.5" fill="#1e293b" />
-
-                {/* Floor Line */}
-                <line x1="10" y1="285" x2="510" y2="285" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6,4" opacity="0.6" />
-
-                {/* ── DR. MEHTA'S WHEELCHAIR ── */}
-                <g id="wheelchair" filter="url(#softShadow)">
-                  {/* Wheelchair Backrest */}
-                  <rect x="68" y="130" width="12" height="75" rx="4" fill="#1e293b" />
-                  {/* Push Handle */}
-                  <path d="M 70 135 C 55 130 50 140 45 135" stroke="#475569" strokeWidth="4" strokeLinecap="round" fill="none" />
-                  {/* Wheelchair Seat */}
-                  <rect x="72" y="195" width="74" height="14" rx="4" fill="#0f172a" />
-                  {/* Wheelchair Frame Tubes */}
-                  <path d="M 85 200 L 110 240 L 155 240 M 155 240 L 155 270" stroke="#475569" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  <path d="M 75 195 L 110 240" stroke="#64748b" strokeWidth="3" fill="none" />
-                  {/* Footrest Plate */}
-                  <line x1="145" y1="268" x2="175" y2="268" stroke="#334155" strokeWidth="5" strokeLinecap="round" />
-
-                  {/* Rear Wheel (Large Outer Wheel with Spokes) */}
-                  <g>
-                    <circle cx="100" cy="228" r="50" stroke="#334155" strokeWidth="7" fill="none" />
-                    <circle cx="100" cy="228" r="42" stroke="#64748b" strokeWidth="3" fill="none" />
-                    {/* Spokes */}
-                    <line x1="100" y1="178" x2="100" y2="278" stroke="#94a3b8" strokeWidth="1.8" />
-                    <line x1="50" y1="228" x2="150" y2="228" stroke="#94a3b8" strokeWidth="1.8" />
-                    <line x1="65" y1="193" x2="135" y2="263" stroke="#94a3b8" strokeWidth="1.8" />
-                    <line x1="65" y1="263" x2="135" y2="193" stroke="#94a3b8" strokeWidth="1.8" />
-                    {/* Wheel Hub */}
-                    <circle cx="100" cy="228" r="9" fill="#1e293b" />
-                    <circle cx="100" cy="228" r="4" fill="#cbd5e1" />
-                  </g>
-
-                  {/* Front Caster Wheel */}
-                  <circle cx="160" cy="274" r="11" stroke="#334155" strokeWidth="4" fill="#0f172a" />
-                  <circle cx="160" cy="274" r="3" fill="#94a3b8" />
-                </g>
-
-                {/* ── DR. MEHTA (FIGURE) ── */}
-                <g id="dr-mehta">
-                  {/* Doctor Torso & White Coat */}
-                  <path d="M 98 140 Q 125 130 148 140 L 152 205 L 94 205 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2" />
-                  {/* Inner Shirt & Tie */}
-                  <path d="M 120 135 L 126 135 L 126 160 L 123 166 L 120 160 Z" fill="#0d9488" />
-                  {/* Stethoscope */}
-                  <path d="M 114 138 C 114 165 132 165 132 138" stroke="#0f766e" strokeWidth="3" fill="none" strokeLinecap="round" />
-                  <circle cx="123" cy="168" r="5" fill="#64748b" stroke="#ffffff" strokeWidth="1.5" />
-
-                  {/* Doctor Head & Features */}
-                  <circle cx="124" cy="108" r="22" fill="#C68642" />
-                  {/* Hair */}
-                  <path d="M 104 104 C 104 88 144 88 144 104 C 144 94 130 84 116 88 Z" fill="#1e293b" />
-                  {/* Glasses */}
-                  <rect x="114" y="103" width="10" height="7" rx="2" stroke="#334155" strokeWidth="1.5" fill="rgba(255,255,255,0.4)" />
-                  <rect x="127" y="103" width="10" height="7" rx="2" stroke="#334155" strokeWidth="1.5" fill="rgba(255,255,255,0.4)" />
-                  <line x1="124" y1="106" x2="127" y2="106" stroke="#334155" strokeWidth="1.5" />
-                  {/* Kind Smile */}
-                  <path d="M 120 119 Q 124 123 128 119" stroke="#78350f" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                </g>
-
-                {/* ── CLINIC DESK & ACCESSORIES ── */}
-                <g id="desk" filter="url(#softShadow)">
-                  {/* Desk Leg Front */}
-                  <rect x="160" y="210" width="12" height="75" fill="#58311a" rx="2" />
-                  <rect x="300" y="210" width="12" height="75" fill="#58311a" rx="2" />
-                  {/* Desk Modesty Panel */}
-                  <rect x="168" y="218" width="136" height="50" fill="#6d4427" opacity="0.9" />
-                  {/* Desk Surface */}
-                  <rect x="145" y="196" width="180" height="15" rx="3" fill="url(#woodDesk)" />
-
-                  {/* Brass Nameplate: "Dr. R. Mehta" */}
-                  <g>
-                    <polygon points="175,200 250,200 246,183 179,183" fill="url(#goldPlate)" stroke="#b45309" strokeWidth="1" />
-                    <text x="212" y="194" fontSize="7.5" fill="#ffffff" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">
+                {/* Cyberpunk HUD Badge Overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "10px",
+                    left: "12px",
+                    right: "12px",
+                    padding: "8px 12px",
+                    borderRadius: "10px",
+                    background: "rgba(11, 19, 34, 0.85)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(20, 184, 166, 0.4)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: "0.8rem", fontWeight: 800, color: "#ffffff" }}>
                       Dr. R. Mehta, MD
-                    </text>
-                  </g>
-
-                  {/* Pen Stand with Pens */}
-                  <rect x="272" y="178" width="14" height="20" rx="3" fill="#334155" />
-                  <line x1="275" y1="178" x2="273" y2="168" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
-                  <line x1="279" y1="178" x2="279" y2="166" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" />
-                  <line x1="283" y1="178" x2="284" y2="169" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
-
-                  {/* Medical File Stack */}
-                  <rect x="152" y="190" width="22" height="7" rx="1" fill="#f8fafc" stroke="#cbd5e1" />
-                  <rect x="151" y="186" width="24" height="6" rx="1" fill="#0d9488" opacity="0.8" />
-                </g>
-
-                {/* ── PATIENT RAJAN (SEATED OPPOSITE) ── */}
-                <g id="patient-rajan" filter="url(#softShadow)">
-                  {/* Wooden Chair */}
-                  <path d="M 370 198 L 415 198 L 415 285 M 372 285 L 372 198 M 415 198 L 415 130" stroke="#78350F" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  <line x1="375" y1="235" x2="415" y2="235" stroke="#8B5E3C" strokeWidth="3" />
-
-                  {/* Patient Torso & Light Blue Kurta */}
-                  <path d="M 370 145 Q 392 135 412 145 L 410 210 L 366 210 Z" fill="#a8d5e2" stroke="#7dd3fc" strokeWidth="1.5" />
-                  {/* Kurta Neckline */}
-                  <line x1="392" y1="140" x2="392" y2="165" stroke="#38bdf8" strokeWidth="2" />
-                  <circle cx="392" cy="150" r="1.5" fill="#0284c7" />
-                  <circle cx="392" cy="158" r="1.5" fill="#0284c7" />
-
-                  {/* Patient Pants & Shoes */}
-                  <rect x="368" y="210" width="40" height="50" rx="3" fill="#334155" />
-                  <ellipse cx="380" cy="275" rx="12" ry="6" fill="#1e293b" />
-                  <ellipse cx="405" cy="275" rx="12" ry="6" fill="#1e293b" />
-
-                  {/* Patient Head & Worried Expression */}
-                  <circle cx="390" cy="112" r="21" fill="#C68642" />
-                  {/* Hair */}
-                  <path d="M 372 110 C 372 92 410 92 410 110 C 410 98 398 88 384 90 Z" fill="#1e1e24" />
-                  {/* Slanted Worried Eyebrows */}
-                  <line x1="379" y1="105" x2="387" y2="108" stroke="#1e1e24" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="393" y1="108" x2="401" y2="105" stroke="#1e1e24" strokeWidth="2" strokeLinecap="round" />
-                  {/* Sad Eyes */}
-                  <circle cx="383" cy="112" r="2" fill="#1e1e24" />
-                  <circle cx="397" cy="112" r="2" fill="#1e1e24" />
-                  {/* Drooping Mouth */}
-                  <path d="M 385 125 Q 390 121 395 125" stroke="#78350f" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                  {/* Rosy Fever Cheeks */}
-                  <circle cx="379" cy="118" r="3.5" fill="#f87171" opacity="0.6" />
-                  <circle cx="401" cy="118" r="3.5" fill="#f87171" opacity="0.6" />
-                </g>
-              </svg>
+                    </div>
+                    <div style={{ fontSize: "0.68rem", color: "#2dd4bf", fontWeight: 600 }}>
+                      ♿ Advanced Wheelchair Care Unit
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      padding: "4px 8px",
+                      borderRadius: "6px",
+                      background: "rgba(20, 184, 166, 0.2)",
+                      fontSize: "0.65rem",
+                      fontWeight: 700,
+                      color: "#5eead4"
+                    }}
+                  >
+                    Vitals Normal
+                  </div>
+                </div>
+              </div>
 
               {/* Animated Floating Prescription Card from Dr. Mehta */}
               <motion.div
                 style={{
                   position: "absolute",
-                  bottom: "90px",
-                  left: "40%",
+                  bottom: "30px",
+                  right: "-20px",
                   opacity: rxCard1Opacity,
                   x: rxCard1X,
                   y: rxCard1Y,
@@ -494,21 +400,21 @@ export const StoryHeroSection: React.FC = () => {
               >
                 <div
                   style={{
-                    background: "#ffffff",
-                    border: "2px solid #0d9488",
-                    borderRadius: "10px",
-                    padding: "10px 14px",
-                    width: "230px",
-                    boxShadow: "0 10px 25px rgba(13, 148, 136, 0.25)",
+                    background: "#0f172a",
+                    border: "2px solid #14b8a6",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                    width: "250px",
+                    boxShadow: "0 10px 30px rgba(20, 184, 166, 0.4)",
                     transform: "rotate(-3deg)"
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px dashed #cbd5e1", paddingBottom: "4px" }}>
-                    <span style={{ fontSize: "1rem", fontWeight: 900, color: "#0d9488", fontFamily: "serif" }}>Rx</span>
-                    <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#64748b" }}>Dr. Mehta · Rx #1</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px dashed rgba(255,255,255,0.2)", paddingBottom: "6px" }}>
+                    <span style={{ fontSize: "1.1rem", fontWeight: 900, color: "#2dd4bf", fontFamily: "serif" }}>Rx</span>
+                    <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#94a3b8" }}>Dr. Mehta · Rx #1</span>
                   </div>
-                  <div style={{ marginTop: "6px", fontSize: "0.74rem", color: "#1e293b", lineHeight: 1.4 }}>
-                    <strong>1. Azithromycin 250mg</strong> (1-0-0)<br />
+                  <div style={{ marginTop: "8px", fontSize: "0.76rem", color: "#f8fafc", lineHeight: 1.45 }}>
+                    <strong style={{ color: "#2dd4bf" }}>1. Azithromycin 250mg</strong> (1-0-0 x 5d)<br />
                     <strong>2. Paracetamol 500mg</strong> (SOS fever)<br />
                     <strong>3. ORS Electrolyte</strong> (Ad libitum)
                   </div>
@@ -523,7 +429,7 @@ export const StoryHeroSection: React.FC = () => {
                 flexDirection: "column",
                 gap: "14px",
                 position: "relative",
-                minHeight: "340px",
+                minHeight: "310px",
                 justifyContent: "center"
               }}
             >
@@ -537,22 +443,22 @@ export const StoryHeroSection: React.FC = () => {
               >
                 <div
                   style={{
-                    width: "30px",
-                    height: "30px",
+                    width: "32px",
+                    height: "32px",
                     borderRadius: "50%",
                     background: "#0d9488",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    fontSize: "0.78rem",
                     flexShrink: 0
                   }}
                 >
                   Dr
                 </div>
                 <div>
-                  <div style={{ fontSize: "0.72rem", color: "#94a3b8", fontWeight: 600, marginBottom: "2px" }}>
+                  <div style={{ fontSize: "0.72rem", color: "#2dd4bf", fontWeight: 700, marginBottom: "2px" }}>
                     Dr. Mehta (MD)
                   </div>
                   <span>Aiye Rajan ji, bataiye kya takleef hai aapko? 🩺</span>
@@ -569,23 +475,23 @@ export const StoryHeroSection: React.FC = () => {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--ink-500)", fontWeight: 600, marginBottom: "2px", textAlign: "right" }}>
+                  <div style={{ fontSize: "0.72rem", color: "#fbbf24", fontWeight: 700, marginBottom: "2px", textAlign: "right" }}>
                     Rajan (Patient)
                   </div>
                   <span>Doctor sahab, 4 din se tez bukhaar hai aur sar mein bohot dard hai. Neend bhi nahi aa rahi 😓</span>
                 </div>
                 <div
                   style={{
-                    width: "30px",
-                    height: "30px",
+                    width: "32px",
+                    height: "32px",
                     borderRadius: "50%",
-                    background: "#f59e0b",
+                    background: "#d97706",
                     color: "#ffffff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    fontSize: "0.78rem",
                     flexShrink: 0
                   }}
                 >
@@ -603,14 +509,14 @@ export const StoryHeroSection: React.FC = () => {
                   scale: emojiPillScale
                 }}
               >
-                <span style={{ background: "var(--card)", border: "1px solid var(--line)", padding: "3px 8px", borderRadius: "999px", fontSize: "0.85rem" }}>
-                  🤒 High Fever
+                <span style={{ background: "rgba(15, 23, 42, 0.8)", border: "1px solid rgba(251, 191, 36, 0.4)", color: "#fef3c7", padding: "4px 10px", borderRadius: "999px", fontSize: "0.82rem", fontWeight: 600 }}>
+                  🤒 High Fever (101.4°F)
                 </span>
-                <span style={{ background: "var(--card)", border: "1px solid var(--line)", padding: "3px 8px", borderRadius: "999px", fontSize: "0.85rem" }}>
-                  🌡️ 101°F Temp
+                <span style={{ background: "rgba(15, 23, 42, 0.8)", border: "1px solid rgba(239, 68, 68, 0.4)", color: "#fee2e2", padding: "4px 10px", borderRadius: "999px", fontSize: "0.82rem", fontWeight: 600 }}>
+                  ⚡ Frontal Headache
                 </span>
-                <span style={{ background: "var(--card)", border: "1px solid var(--line)", padding: "3px 8px", borderRadius: "999px", fontSize: "0.85rem" }}>
-                  🤕 Severe Headache
+                <span style={{ background: "rgba(15, 23, 42, 0.8)", border: "1px solid rgba(59, 130, 246, 0.4)", color: "#dbeafe", padding: "4px 10px", borderRadius: "999px", fontSize: "0.82rem", fontWeight: 600 }}>
+                  💊 No Prior Meds
                 </span>
               </motion.div>
 
@@ -619,7 +525,7 @@ export const StoryHeroSection: React.FC = () => {
                 {/* Voice Question 1 */}
                 <motion.div
                   className="story-chat-bubble-doc"
-                  style={{ opacity: docQ1Opacity, padding: "8px 14px", maxWidth: "310px" }}
+                  style={{ opacity: docQ1Opacity, padding: "8px 14px", maxWidth: "330px" }}
                 >
                   <svg width="60" height="18" viewBox="0 0 60 18" style={{ flexShrink: 0, marginTop: "2px" }}>
                     {[4, 8, 14, 18, 12, 6, 14, 18, 10, 6, 16, 8].map((h, i) => (
@@ -632,7 +538,7 @@ export const StoryHeroSection: React.FC = () => {
                 {/* Voice Question 2 */}
                 <motion.div
                   className="story-chat-bubble-doc"
-                  style={{ opacity: docQ2Opacity, padding: "8px 14px", maxWidth: "310px" }}
+                  style={{ opacity: docQ2Opacity, padding: "8px 14px", maxWidth: "330px" }}
                 >
                   <svg width="60" height="18" viewBox="0 0 60 18" style={{ flexShrink: 0, marginTop: "2px" }}>
                     {[8, 14, 18, 10, 6, 16, 12, 8, 18, 14, 6, 10].map((h, i) => (
@@ -645,7 +551,7 @@ export const StoryHeroSection: React.FC = () => {
                 {/* Voice Question 3 */}
                 <motion.div
                   className="story-chat-bubble-doc"
-                  style={{ opacity: docQ3Opacity, padding: "8px 14px", maxWidth: "310px" }}
+                  style={{ opacity: docQ3Opacity, padding: "8px 14px", maxWidth: "330px" }}
                 >
                   <svg width="60" height="18" viewBox="0 0 60 18" style={{ flexShrink: 0, marginTop: "2px" }}>
                     {[6, 10, 16, 14, 18, 8, 12, 16, 10, 8, 14, 6].map((h, i) => (
@@ -662,7 +568,7 @@ export const StoryHeroSection: React.FC = () => {
                 style={{
                   alignSelf: "flex-end",
                   opacity: patReplyAllOpacity,
-                  maxWidth: "340px",
+                  maxWidth: "350px",
                   fontSize: "0.84rem"
                 }}
               >
@@ -675,8 +581,8 @@ export const StoryHeroSection: React.FC = () => {
         </motion.div>
 
         {/* ═══════════════════════════════════════════════════════════
-            TRANSITION 1: "3 दिन बाद" PAINT BRUSH WIPE (0.52 → 0.60)
-            Matching nissh.info organic wavy sweep (media_1790281970668.png)
+            TRANSITION 1: "3 दिन बाद" DARK EMERALD & NEON LIME BRUSH WIPE (0.52 → 0.60)
+            Matching nissh.info curved dark sweep with lime edge
             ═══════════════════════════════════════════════════════════ */}
         <motion.div
           style={{
@@ -687,7 +593,7 @@ export const StoryHeroSection: React.FC = () => {
             opacity: trans1BgOpacity
           }}
         >
-          {/* Top-Left Diagonal Organic Curved Brush Sweep */}
+          {/* Top-Left Diagonal Dark Organic Brush Sweep */}
           <motion.div
             style={{
               position: "absolute",
@@ -704,9 +610,18 @@ export const StoryHeroSection: React.FC = () => {
               preserveAspectRatio="none"
               style={{ width: "100%", height: "100%" }}
             >
+              <defs>
+                <linearGradient id="emeraldDarkBrush" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#064e3b" />
+                  <stop offset="60%" stopColor="#022c22" />
+                  <stop offset="100%" stopColor="#05080e" />
+                </linearGradient>
+              </defs>
               <path
                 d="M 0,0 L 1000,0 L 1000,280 C 820,380 720,240 560,420 C 400,600 240,490 0,680 Z"
-                fill="#FFF3DC"
+                fill="url(#emeraldDarkBrush)"
+                stroke="#4ade80"
+                strokeWidth="4"
               />
             </svg>
           </motion.div>
@@ -730,17 +645,19 @@ export const StoryHeroSection: React.FC = () => {
             >
               <path
                 d="M 1000,800 L 0,800 L 0,520 C 180,420 280,560 440,380 C 600,200 760,310 1000,120 Z"
-                fill="#FFF3DC"
+                fill="url(#emeraldDarkBrush)"
+                stroke="#a3e635"
+                strokeWidth="4"
               />
             </svg>
           </motion.div>
 
-          {/* Full Screen Saffron-Cream Fill with Bold Typography */}
+          {/* Center Dark Fill with Bold Cyberpunk Typography */}
           <motion.div
             style={{
               position: "absolute",
               inset: 0,
-              background: "#FFF3DC",
+              background: "#05080e",
               zIndex: 53,
               display: "flex",
               flexDirection: "column",
@@ -754,65 +671,71 @@ export const StoryHeroSection: React.FC = () => {
           >
             <span
               style={{
-                fontSize: "0.9rem",
+                fontSize: "0.95rem",
                 fontWeight: 800,
-                color: "#d97706",
+                color: "#4ade80",
                 textTransform: "uppercase",
-                letterSpacing: "0.15em",
-                marginBottom: "8px"
+                letterSpacing: "0.18em",
+                marginBottom: "12px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px"
               }}
             >
-              Phase 2: Escalation
+              <Flame size={18} color="#f59e0b" />
+              Phase 02 · Clinical Escalation
             </span>
             <h1
               style={{
-                fontSize: "clamp(3rem, 8vw, 5.5rem)",
+                fontSize: "clamp(3.5rem, 8vw, 6rem)",
                 fontWeight: 900,
-                color: "#1a1a2e",
+                color: "#ffffff",
                 margin: 0,
                 letterSpacing: "-0.03em",
-                fontFamily: "Inter, serif"
+                fontFamily: "Inter, serif",
+                textShadow: "0 0 35px rgba(74, 222, 128, 0.4)"
               }}
             >
               3 दिन बाद
             </h1>
             <p
               style={{
-                fontSize: "clamp(1.1rem, 2.5vw, 1.6rem)",
+                fontSize: "clamp(1.15rem, 2.5vw, 1.6rem)",
                 fontWeight: 600,
-                color: "#475569",
-                marginTop: "10px",
+                color: "#cbd5e1",
+                marginTop: "12px",
                 fontStyle: "italic"
               }}
             >
-              (3 Days Later · No Relief · Fever Persisting)
+              (3 Days Later · Zero Relief · Fever Climbs to 102°F)
             </p>
             <div
               style={{
-                marginTop: "20px",
+                marginTop: "24px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "8px",
-                padding: "8px 20px",
+                gap: "10px",
+                padding: "10px 24px",
                 borderRadius: "999px",
-                background: "rgba(220, 38, 38, 0.1)",
-                border: "1px solid rgba(220, 38, 38, 0.25)",
-                color: "#dc2626",
+                background: "rgba(239, 68, 68, 0.15)",
+                border: "1.5px solid rgba(239, 68, 68, 0.4)",
+                color: "#f87171",
                 fontWeight: 700,
-                fontSize: "0.9rem"
+                fontSize: "0.95rem",
+                boxShadow: "0 0 25px rgba(239, 68, 68, 0.3)"
               }}
             >
-              <AlertTriangle size={16} />
-              <span>Rajan visits a second specialist for a second opinion...</span>
+              <AlertTriangle size={18} />
+              <span>Rajan rushes to a Super-Speciality Hospital for a second opinion...</span>
             </div>
           </motion.div>
         </motion.div>
 
         {/* ═══════════════════════════════════════════════════════════
-            SCENE 2: DR. SHARMA'S CLINIC (SECOND OPINION CONFLICT)
+            SCENE 2: DR. SHARMA'S CLINIC (ANIME SECOND OPINION CONFLICT)
             ═══════════════════════════════════════════════════════════ */}
         <motion.div
-          className="story-clinic-bg-light"
+          className="story-scene-dark"
           style={{
             position: "absolute",
             inset: 0,
@@ -833,8 +756,7 @@ export const StoryHeroSection: React.FC = () => {
               alignItems: "center",
               width: "100%",
               maxWidth: "1140px",
-              margin: "0 auto",
-              paddingTop: "10px"
+              margin: "0 auto"
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -847,16 +769,17 @@ export const StoryHeroSection: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#ffffff"
+                  color: "#ffffff",
+                  boxShadow: "0 0 15px rgba(37, 99, 235, 0.5)"
                 }}
               >
                 <Building2 size={20} />
               </div>
               <div>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#2563eb", textTransform: "uppercase" }}>
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#60a5fa", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                   Scene 2 · Second Opinion Consultation
                 </span>
-                <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "var(--ink-900)" }}>
+                <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#ffffff" }}>
                   Sharma Super-Speciality Hospital
                 </h4>
               </div>
@@ -867,17 +790,17 @@ export const StoryHeroSection: React.FC = () => {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                padding: "6px 12px",
-                borderRadius: "8px",
-                background: "rgba(37, 99, 235, 0.08)",
-                border: "1px solid rgba(37, 99, 235, 0.2)",
+                padding: "6px 14px",
+                borderRadius: "999px",
+                background: "rgba(37, 99, 235, 0.15)",
+                border: "1px solid rgba(59, 130, 246, 0.4)",
                 fontSize: "0.82rem",
-                color: "#2563eb",
-                fontWeight: 600
+                color: "#93c5fd",
+                fontWeight: 700
               }}
             >
-              <span>Dr. P. Sharma (MD, Internal Med)</span>
-              <span style={{ opacity: 0.6 }}>• OPD-B</span>
+              <Activity size={15} />
+              <span>Dr. P. Sharma (MD, Internal Med) · OPD-B</span>
             </div>
           </div>
 
@@ -888,13 +811,13 @@ export const StoryHeroSection: React.FC = () => {
               maxWidth: "1140px",
               margin: "0 auto",
               display: "grid",
-              gridTemplateColumns: "1.1fr 1fr",
-              gap: "24px",
+              gridTemplateColumns: "1.05fr 1fr",
+              gap: "28px",
               alignItems: "center",
               flex: 1
             }}
           >
-            {/* Left: SVG Character Art (Dr. Sharma at Modern Desk with Office Chair + Rajan) */}
+            {/* Left: High-Definition Anime Character Showcase (Dr. Sharma with Holographic Scans) */}
             <div
               style={{
                 position: "relative",
@@ -905,128 +828,92 @@ export const StoryHeroSection: React.FC = () => {
                 justifyContent: "center"
               }}
             >
-              <svg
-                viewBox="0 0 520 340"
-                style={{ width: "100%", height: "100%", overflow: "visible" }}
+              {/* Anime Character Showcase Card */}
+              <div
+                className="story-anime-card"
+                style={{
+                  width: "360px",
+                  height: "260px",
+                  border: "2px solid rgba(59, 130, 246, 0.5)",
+                  boxShadow: "0 10px 40px rgba(37, 99, 235, 0.35)",
+                  position: "relative"
+                }}
               >
-                <defs>
-                  <linearGradient id="modernWindow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#eff6ff" />
-                    <stop offset="100%" stopColor="#dbeafe" />
-                  </linearGradient>
-                  <linearGradient id="officeDesk" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#475569" />
-                    <stop offset="100%" stopColor="#334155" />
-                  </linearGradient>
-                  <linearGradient id="bluePlate" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#2563eb" />
-                    <stop offset="100%" stopColor="#1d4ed8" />
-                  </linearGradient>
-                </defs>
+                <img
+                  src="/images/story/dr_sharma.jpg"
+                  alt="Dr. Sharma Anime Specialist Doctor"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
 
-                {/* Window */}
-                <rect x="40" y="30" width="120" height="110" rx="6" fill="url(#modernWindow)" stroke="#93c5fd" strokeWidth="2.5" />
-                <line x1="100" y1="30" x2="100" y2="140" stroke="#93c5fd" strokeWidth="2" />
-                <line x1="40" y1="85" x2="160" y2="85" stroke="#93c5fd" strokeWidth="2" />
-
-                {/* Floor Line */}
-                <line x1="10" y1="285" x2="510" y2="285" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6,4" opacity="0.6" />
-
-                {/* ── DR. SHARMA'S MODERN OFFICE CHAIR ── */}
-                <g id="office-chair">
-                  <rect x="75" y="115" width="16" height="85" rx="5" fill="#1e293b" />
-                  <rect x="70" y="196" width="70" height="12" rx="3" fill="#0f172a" />
-                  {/* Chrome Star Base */}
-                  <line x1="105" y1="208" x2="105" y2="248" stroke="#94a3b8" strokeWidth="6" />
-                  <line x1="105" y1="248" x2="70" y2="278" stroke="#64748b" strokeWidth="4.5" strokeLinecap="round" />
-                  <line x1="105" y1="248" x2="140" y2="278" stroke="#64748b" strokeWidth="4.5" strokeLinecap="round" />
-                </g>
-
-                {/* ── DR. SHARMA (FIGURE) ── */}
-                <g id="dr-sharma">
-                  {/* Doctor Torso & Lab Coat */}
-                  <path d="M 98 135 Q 124 126 148 135 L 150 205 L 94 205 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2" />
-                  <path d="M 120 132 L 126 132 L 126 160 L 120 160 Z" fill="#2563eb" />
-                  {/* Stethoscope */}
-                  <path d="M 112 135 C 112 165 130 165 130 135" stroke="#2563eb" strokeWidth="3" fill="none" strokeLinecap="round" />
-                  <circle cx="121" cy="165" r="5" fill="#64748b" stroke="#ffffff" strokeWidth="1.5" />
-
-                  {/* Lighter Complexion Skin (#E8C99A) */}
-                  <circle cx="124" cy="104" r="22" fill="#E8C99A" />
-                  {/* Hair */}
-                  <path d="M 104 100 C 104 84 144 84 144 100 C 144 90 128 80 114 84 Z" fill="#0f172a" />
-                  {/* Spectacles */}
-                  <rect x="114" y="99" width="10" height="7" rx="2" stroke="#2563eb" strokeWidth="1.5" fill="rgba(255,255,255,0.4)" />
-                  <rect x="127" y="99" width="10" height="7" rx="2" stroke="#2563eb" strokeWidth="1.5" fill="rgba(255,255,255,0.4)" />
-                  <line x1="124" y1="102" x2="127" y2="102" stroke="#2563eb" strokeWidth="1.5" />
-                  {/* Neutral Stern Expression */}
-                  <line x1="120" y1="116" x2="128" y2="116" stroke="#5c3818" strokeWidth="2" strokeLinecap="round" />
-                </g>
-
-                {/* ── MODERN CLINIC DESK & LAPTOP ── */}
-                <g id="desk-sharma">
-                  <rect x="160" y="210" width="12" height="75" fill="#334155" rx="2" />
-                  <rect x="300" y="210" width="12" height="75" fill="#334155" rx="2" />
-                  <rect x="168" y="220" width="136" height="48" fill="#1e293b" opacity="0.8" />
-                  <rect x="145" y="196" width="180" height="15" rx="3" fill="url(#officeDesk)" />
-
-                  {/* Modern Laptop */}
-                  <polygon points="230,196 265,196 260,178 235,178" fill="#94a3b8" />
-                  <rect x="236" y="180" width="22" height="14" fill="#0f172a" />
-
-                  {/* Nameplate: "Dr. P. Sharma" */}
-                  <polygon points="175,200 250,200 246,183 179,183" fill="url(#bluePlate)" stroke="#1d4ed8" strokeWidth="1" />
-                  <text x="212" y="194" fontSize="7.5" fill="#ffffff" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">
-                    Dr. P. Sharma, MD
-                  </text>
-                </g>
-
-                {/* ── PATIENT RAJAN (TIRED & WEARY) ── */}
-                <g id="patient-rajan-2">
-                  <path d="M 370 198 L 415 198 L 415 285 M 372 285 L 372 198 M 415 198 L 415 130" stroke="#78350F" strokeWidth="5" strokeLinecap="round" fill="none" />
-                  <path d="M 368 145 Q 390 135 412 145 L 410 210 L 366 210 Z" fill="#a8d5e2" stroke="#7dd3fc" strokeWidth="1.5" />
-                  <rect x="368" y="210" width="40" height="50" rx="3" fill="#334155" />
-                  <ellipse cx="380" cy="275" rx="12" ry="6" fill="#1e293b" />
-                  <ellipse cx="405" cy="275" rx="12" ry="6" fill="#1e293b" />
-
-                  <circle cx="390" cy="112" r="21" fill="#C68642" />
-                  <path d="M 372 110 C 372 92 410 92 410 110 C 410 98 398 88 384 90 Z" fill="#1e1e24" />
-                  {/* Very Tired Drooping Eyes */}
-                  <line x1="380" y1="113" x2="386" y2="114" stroke="#1e1e24" strokeWidth="2.5" />
-                  <line x1="394" y1="114" x2="400" y2="113" stroke="#1e1e24" strokeWidth="2.5" />
-                  <path d="M 386 126 Q 390 122 394 126" stroke="#78350f" strokeWidth="2" fill="none" />
-                </g>
-              </svg>
+                {/* Cyberpunk HUD Badge Overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "10px",
+                    left: "12px",
+                    right: "12px",
+                    padding: "8px 12px",
+                    borderRadius: "10px",
+                    background: "rgba(11, 19, 34, 0.85)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(59, 130, 246, 0.4)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: "0.8rem", fontWeight: 800, color: "#ffffff" }}>
+                      Dr. P. Sharma, MD
+                    </div>
+                    <div style={{ fontSize: "0.68rem", color: "#60a5fa", fontWeight: 600 }}>
+                      ⚡ Super-Specialist Diagnostics
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      padding: "4px 8px",
+                      borderRadius: "6px",
+                      background: "rgba(59, 130, 246, 0.2)",
+                      fontSize: "0.65rem",
+                      fontWeight: 700,
+                      color: "#93c5fd"
+                    }}
+                  >
+                    Room 04
+                  </div>
+                </div>
+              </div>
 
               {/* Prescription 2 Card Sliding Up */}
               <motion.div
                 style={{
                   position: "absolute",
-                  bottom: "90px",
-                  left: "40%",
+                  bottom: "30px",
+                  right: "-20px",
                   opacity: rxCard2Opacity,
                   zIndex: 25
                 }}
               >
                 <div
                   style={{
-                    background: "#ffffff",
+                    background: "#0f172a",
                     border: "2px solid #2563eb",
-                    borderRadius: "10px",
-                    padding: "10px 14px",
-                    width: "230px",
-                    boxShadow: "0 10px 25px rgba(37, 99, 235, 0.25)",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                    width: "250px",
+                    boxShadow: "0 10px 30px rgba(37, 99, 235, 0.4)",
                     transform: "rotate(3deg)"
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px dashed #cbd5e1", paddingBottom: "4px" }}>
-                    <span style={{ fontSize: "1rem", fontWeight: 900, color: "#2563eb", fontFamily: "serif" }}>Rx</span>
-                    <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#64748b" }}>Dr. Sharma · Rx #2</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px dashed rgba(255,255,255,0.2)", paddingBottom: "6px" }}>
+                    <span style={{ fontSize: "1.1rem", fontWeight: 900, color: "#60a5fa", fontFamily: "serif" }}>Rx</span>
+                    <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#94a3b8" }}>Dr. Sharma · Rx #2</span>
                   </div>
-                  <div style={{ marginTop: "6px", fontSize: "0.74rem", color: "#1e293b", lineHeight: 1.4 }}>
-                    <strong style={{ color: "#dc2626" }}>1. Cefixime 200mg (Antibiotic)</strong><br />
-                    <strong>2. Widal Test + CBC Blood Panel</strong><br />
-                    <strong>3. ORS + Vitamin Zinc</strong>
+                  <div style={{ marginTop: "8px", fontSize: "0.76rem", color: "#f8fafc", lineHeight: 1.45 }}>
+                    <strong style={{ color: "#f87171" }}>1. Cefixime 200mg (Antibiotic)</strong><br />
+                    <strong>2. Widal Panel + Complete Hemogram</strong><br />
+                    <strong>3. ORS + Zinc Electrolytes</strong>
                   </div>
                 </div>
               </motion.div>
@@ -1039,7 +926,7 @@ export const StoryHeroSection: React.FC = () => {
                 flexDirection: "column",
                 gap: "14px",
                 position: "relative",
-                minHeight: "340px",
+                minHeight: "310px",
                 justifyContent: "center"
               }}
             >
@@ -1049,27 +936,27 @@ export const StoryHeroSection: React.FC = () => {
                 style={{
                   alignSelf: "flex-end",
                   opacity: patBubble2Opacity,
-                  maxWidth: "340px"
+                  maxWidth: "350px"
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--ink-500)", fontWeight: 600, marginBottom: "2px", textAlign: "right" }}>
+                  <div style={{ fontSize: "0.72rem", color: "#fbbf24", fontWeight: 700, marginBottom: "2px", textAlign: "right" }}>
                     Rajan (Patient)
                   </div>
                   <span>Doctor sahab, 3 din pehle Dr. Mehta se mila tha. Unki dawa se koi aaram nahi mila. Tabiyat aur bigad rahi hai 😔</span>
                 </div>
                 <div
                   style={{
-                    width: "30px",
-                    height: "30px",
+                    width: "32px",
+                    height: "32px",
                     borderRadius: "50%",
-                    background: "#f59e0b",
+                    background: "#d97706",
                     color: "#ffffff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    fontSize: "0.78rem",
                     flexShrink: 0
                   }}
                 >
@@ -1082,28 +969,28 @@ export const StoryHeroSection: React.FC = () => {
                 className="story-chat-bubble-doc"
                 style={{
                   opacity: docBubble2Opacity,
-                  maxWidth: "360px",
-                  background: "#0f172a"
+                  maxWidth: "370px",
+                  borderColor: "rgba(59, 130, 246, 0.4)"
                 }}
               >
                 <div
                   style={{
-                    width: "30px",
-                    height: "30px",
+                    width: "32px",
+                    height: "32px",
                     borderRadius: "50%",
                     background: "#2563eb",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    fontSize: "0.78rem",
                     flexShrink: 0
                   }}
                 >
                   Dr
                 </div>
                 <div>
-                  <div style={{ fontSize: "0.72rem", color: "#93c5fd", fontWeight: 600, marginBottom: "2px" }}>
+                  <div style={{ fontSize: "0.72rem", color: "#93c5fd", fontWeight: 700, marginBottom: "2px" }}>
                     Dr. Sharma (Internal Medicine)
                   </div>
                   <span>
@@ -1112,41 +999,42 @@ export const StoryHeroSection: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* High Risk Conflict Notification Badge */}
+              {/* High Risk Conflict Notification Badge with Red Neon Pulse */}
               <motion.div
                 style={{
                   opacity: conflictWarningOpacity,
-                  background: "rgba(220, 38, 38, 0.08)",
-                  border: "1.5px solid #dc2626",
+                  background: "rgba(220, 38, 38, 0.12)",
+                  border: "1.5px solid #ef4444",
                   borderRadius: "14px",
-                  padding: "12px 16px",
+                  padding: "12px 18px",
                   display: "flex",
                   alignItems: "center",
-                  gap: "12px",
-                  boxShadow: "0 6px 20px rgba(220, 38, 38, 0.15)"
+                  gap: "14px",
+                  animation: "redAlertPulse 2s infinite"
                 }}
               >
                 <div
                   style={{
-                    width: "34px",
-                    height: "34px",
+                    width: "36px",
+                    height: "36px",
                     borderRadius: "50%",
                     background: "#dc2626",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     color: "#ffffff",
-                    flexShrink: 0
+                    flexShrink: 0,
+                    boxShadow: "0 0 15px rgba(220, 38, 38, 0.6)"
                   }}
                 >
-                  <AlertTriangle size={18} />
+                  <AlertTriangle size={20} />
                 </div>
                 <div>
-                  <h5 style={{ margin: 0, fontSize: "0.88rem", fontWeight: 800, color: "#dc2626" }}>
-                    Prescription Conflict Created!
+                  <h5 style={{ margin: 0, fontSize: "0.92rem", fontWeight: 800, color: "#f87171" }}>
+                    Prescription Conflict Detected!
                   </h5>
-                  <p style={{ margin: "2px 0 0", fontSize: "0.78rem", color: "var(--ink-700)" }}>
-                    Azithromycin (Macrolide) vs Cefixime (Cephalosporin) without drug cessation protocol or clinical culture correlation.
+                  <p style={{ margin: "3px 0 0", fontSize: "0.8rem", color: "#cbd5e1", lineHeight: 1.4 }}>
+                    Azithromycin (Macrolide) vs Cefixime (Cephalosporin) without antibiotic cessation protocol or culture verification.
                   </p>
                 </div>
               </motion.div>
@@ -1155,7 +1043,7 @@ export const StoryHeroSection: React.FC = () => {
         </motion.div>
 
         {/* ═══════════════════════════════════════════════════════════
-            TRANSITION 2: 4-CORNER BLACK WIPE (0.82 → 0.87)
+            TRANSITION 2: 4-CORNER MATTE BLACK & CRIMSON WIPE (0.82 → 0.87)
             ═══════════════════════════════════════════════════════════ */}
         <div style={{ position: "absolute", inset: 0, zIndex: 60, pointerEvents: "none" }}>
           {/* Top-Left Wedge */}
@@ -1166,10 +1054,11 @@ export const StoryHeroSection: React.FC = () => {
               left: 0,
               width: "60vw",
               height: "60vh",
-              background: "#0a0a0a",
+              background: "#05080e",
               clipPath: "polygon(0 0, 100% 0, 0 100%)",
               scale: cornerWipeScale,
-              transformOrigin: "top left"
+              transformOrigin: "top left",
+              boxShadow: "0 0 40px rgba(239, 68, 68, 0.4)"
             }}
           />
           {/* Top-Right Wedge */}
@@ -1180,10 +1069,11 @@ export const StoryHeroSection: React.FC = () => {
               right: 0,
               width: "60vw",
               height: "60vh",
-              background: "#0a0a0a",
+              background: "#05080e",
               clipPath: "polygon(100% 0, 100% 100%, 0 0)",
               scale: cornerWipeScale,
-              transformOrigin: "top right"
+              transformOrigin: "top right",
+              boxShadow: "0 0 40px rgba(239, 68, 68, 0.4)"
             }}
           />
           {/* Bottom-Left Wedge */}
@@ -1194,10 +1084,11 @@ export const StoryHeroSection: React.FC = () => {
               left: 0,
               width: "60vw",
               height: "60vh",
-              background: "#0a0a0a",
+              background: "#05080e",
               clipPath: "polygon(0 0, 0 100%, 100% 100%)",
               scale: cornerWipeScale,
-              transformOrigin: "bottom left"
+              transformOrigin: "bottom left",
+              boxShadow: "0 0 40px rgba(239, 68, 68, 0.4)"
             }}
           />
           {/* Bottom-Right Wedge */}
@@ -1208,10 +1099,11 @@ export const StoryHeroSection: React.FC = () => {
               right: 0,
               width: "60vw",
               height: "60vh",
-              background: "#0a0a0a",
+              background: "#05080e",
               clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
               scale: cornerWipeScale,
-              transformOrigin: "bottom right"
+              transformOrigin: "bottom right",
+              boxShadow: "0 0 40px rgba(239, 68, 68, 0.4)"
             }}
           />
 
@@ -1232,27 +1124,28 @@ export const StoryHeroSection: React.FC = () => {
           >
             <h2
               style={{
-                fontSize: "clamp(2rem, 5vw, 3.6rem)",
+                fontSize: "clamp(2rem, 5vw, 3.8rem)",
                 fontWeight: 900,
                 color: "#ffffff",
                 letterSpacing: "-0.02em",
-                margin: 0
+                margin: 0,
+                textShadow: "0 0 30px rgba(239, 68, 68, 0.6)"
               }}
             >
-              Clashing Diagnoses. Zero Consensus.
+              Two Clashing Prescriptions. Zero Consensus.
             </h2>
-            <p style={{ color: "#94a3b8", fontSize: "1.1rem", marginTop: "10px", maxWidth: "540px" }}>
-              Who is right? Who should Rajan trust? Taking both could be dangerous.
+            <p style={{ color: "#94a3b8", fontSize: "1.15rem", marginTop: "12px", maxWidth: "560px" }}>
+              Who is right? Who should Rajan trust? Taking both could trigger antimicrobial resistance or drug toxicity.
             </p>
           </motion.div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
             SCENE 3: PATIENT HOME + SECOND SIGHT SOLUTION (0.87 → 1.00)
-            Matching media_1790280284357.png (head scratch + question marks)
+            Matching media_1790280284357.png (Anime character scratching head)
             ═══════════════════════════════════════════════════════════ */}
         <motion.div
-          className="story-home-bg-light"
+          className="story-scene-dark"
           style={{
             position: "absolute",
             inset: 0,
@@ -1281,20 +1174,21 @@ export const StoryHeroSection: React.FC = () => {
                   width: "36px",
                   height: "36px",
                   borderRadius: "10px",
-                  background: "var(--teal)",
+                  background: "#0d9488",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#ffffff"
+                  color: "#ffffff",
+                  boxShadow: "0 0 15px rgba(13, 148, 136, 0.5)"
                 }}
               >
                 <Sparkles size={20} />
               </div>
               <div>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--teal)", textTransform: "uppercase" }}>
-                  Scene 3 · AI Resolution
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#2dd4bf", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  Scene 3 · AI Clinical Resolution
                 </span>
-                <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "var(--ink-900)" }}>
+                <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#ffffff" }}>
                   Rajan's Living Room → SecondSight Pro
                 </h4>
               </div>
@@ -1305,20 +1199,21 @@ export const StoryHeroSection: React.FC = () => {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                padding: "6px 12px",
+                padding: "6px 14px",
                 borderRadius: "999px",
-                background: "rgba(13, 148, 136, 0.1)",
-                color: "var(--teal)",
-                fontSize: "0.8rem",
+                background: "rgba(20, 184, 166, 0.15)",
+                border: "1px solid rgba(20, 184, 166, 0.35)",
+                color: "#2dd4bf",
+                fontSize: "0.82rem",
                 fontWeight: 700
               }}
             >
               <ShieldCheck size={16} />
-              <span>Evidence-Based Reconciliation</span>
+              <span>Evidence-Based AI Reconciliation</span>
             </div>
           </div>
 
-          {/* Main Stage: Left 55% Patient on Sofa scratching head, Right 45% Smartphone Mockup */}
+          {/* Main Stage: Left 55% Anime Patient on Sofa scratching head, Right 45% Smartphone Mockup */}
           <div
             style={{
               width: "100%",
@@ -1331,108 +1226,55 @@ export const StoryHeroSection: React.FC = () => {
               flex: 1
             }}
           >
-            {/* Left: Patient on Sofa Scratching Head (matching media_1790280284357.png) + Thought Bubbles */}
-            <div style={{ position: "relative", width: "100%", height: "265px", display: "flex", alignItems: "center" }}>
-              {/* SVG Character on Sofa */}
-              <svg
-                viewBox="0 0 460 330"
-                style={{ width: "100%", height: "100%", overflow: "visible" }}
+            {/* Left: Anime Patient on Sofa Scratching Head + Thought Bubbles */}
+            <div style={{ position: "relative", width: "100%", height: "265px", display: "flex", alignItems: "center", gap: "20px" }}>
+              {/* Anime Character Showcase Card */}
+              <div
+                className="story-anime-card"
+                style={{
+                  width: "250px",
+                  height: "250px",
+                  border: "2px solid rgba(251, 191, 36, 0.4)",
+                  boxShadow: "0 10px 40px rgba(251, 191, 36, 0.25)",
+                  position: "relative",
+                  flexShrink: 0
+                }}
               >
-                <defs>
-                  <linearGradient id="sofaFabric" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#0f766e" />
-                    <stop offset="100%" stopColor="#115e59" />
-                  </linearGradient>
-                  <linearGradient id="cushionGrad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#14b8a6" />
-                    <stop offset="100%" stopColor="#0d9488" />
-                  </linearGradient>
-                </defs>
+                <img
+                  src="/images/story/rajan_patient.jpg"
+                  alt="Anime Patient Rajan Scratching Head"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
 
-                {/* Living Room Window & Curtain */}
-                <rect x="20" y="25" width="100" height="90" rx="4" fill="#fef08a" opacity="0.4" stroke="#e2e8f0" strokeWidth="2" />
-                <path d="M 15 20 Q 25 70 15 120" stroke="#f59e0b" strokeWidth="6" fill="none" strokeLinecap="round" />
-                <path d="M 125 20 Q 115 70 125 120" stroke="#f59e0b" strokeWidth="6" fill="none" strokeLinecap="round" />
+                {/* Badge Overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "8px",
+                    left: "10px",
+                    right: "10px",
+                    padding: "6px 10px",
+                    borderRadius: "8px",
+                    background: "rgba(11, 19, 34, 0.85)",
+                    backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(251, 191, 36, 0.4)",
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    color: "#fef08a",
+                    textAlign: "center"
+                  }}
+                >
+                  Rajan · Confused & In Pain 😕
+                </div>
+              </div>
 
-                {/* Floor */}
-                <line x1="10" y1="275" x2="450" y2="275" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="6,4" />
-
-                {/* ── COZY LIVING ROOM SOFA ── */}
-                <g id="sofa">
-                  {/* Sofa Backrest */}
-                  <rect x="50" y="145" width="220" height="70" rx="14" fill="url(#sofaFabric)" />
-                  {/* Left Armrest */}
-                  <rect x="35" y="175" width="30" height="60" rx="12" fill="#134e4a" />
-                  {/* Right Armrest */}
-                  <rect x="245" y="175" width="30" height="60" rx="12" fill="#134e4a" />
-                  {/* Plush Seat Cushions */}
-                  <rect x="62" y="198" width="94" height="35" rx="10" fill="url(#cushionGrad)" />
-                  <rect x="156" y="198" width="94" height="35" rx="10" fill="url(#cushionGrad)" />
-                  {/* Sofa Legs */}
-                  <line x1="55" y1="235" x2="45" y2="272" stroke="#78350f" strokeWidth="6" strokeLinecap="round" />
-                  <line x1="255" y1="235" x2="265" y2="272" stroke="#78350f" strokeWidth="6" strokeLinecap="round" />
-                </g>
-
-                {/* ── RAJAN SCRATCHING HEAD (EXACT REFERENCE: media_1790280284357.png) ── */}
-                <g id="rajan-confused">
-                  {/* Torso with Blue Patterned Kurta/Sweater */}
-                  <path d="M 122 155 Q 150 142 178 155 L 175 225 L 118 225 Z" fill="#0284c7" stroke="#0369a1" strokeWidth="2" />
-                  {/* Kurta Collar detail */}
-                  <path d="M 135 155 Q 150 168 165 155" fill="none" stroke="#bae6fd" strokeWidth="3" />
-
-                  {/* Right Arm Holding Phone in Lap */}
-                  <path d="M 124 165 L 105 210 L 128 215" stroke="#0284c7" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  {/* Mini Smartphone in hand */}
-                  <rect x="122" y="202" width="16" height="26" rx="3" fill="#1e293b" stroke="#38bdf8" strokeWidth="1.5" />
-
-                  {/* Left Arm Bent UPWARDS to scratch head (matching reference image!) */}
-                  <path d="M 175 165 L 205 130 L 174 102" stroke="#0284c7" strokeWidth="13" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  {/* Hand on Head */}
-                  <circle cx="174" cy="102" r="8" fill="#C68642" />
-
-                  {/* Patient Head */}
-                  <circle cx="150" cy="115" r="24" fill="#C68642" />
-                  {/* Hair */}
-                  <path d="M 128 112 C 128 88 172 88 172 112 C 172 98 158 86 142 88 Z" fill="#1e1e24" />
-
-                  {/* Confused Facial Expression (Open mouth "O", asymmetric eyebrows) */}
-                  <line x1="138" y1="106" x2="147" y2="111" stroke="#1e1e24" strokeWidth="2.5" strokeLinecap="round" />
-                  <line x1="153" y1="109" x2="162" y2="105" stroke="#1e1e24" strokeWidth="2.5" strokeLinecap="round" />
-                  <circle cx="143" cy="116" r="2.5" fill="#1e1e24" />
-                  <circle cx="157" cy="116" r="2.5" fill="#1e1e24" />
-                  {/* Round "O" mouth */}
-                  <ellipse cx="150" cy="126" rx="3.5" ry="4.5" fill="#78350f" />
-                  {/* Red Confused Blush */}
-                  <circle cx="138" cy="122" r="3.5" fill="#f87171" opacity="0.7" />
-                  <circle cx="162" cy="122" r="3.5" fill="#f87171" opacity="0.7" />
-                </g>
-
-                {/* ── FLOATING YELLOW QUESTION MARKS (media_1790280284357.png) ── */}
-                <motion.g id="yellow-question-marks" style={{ opacity: qMarksOpacity }}>
-                  {/* Question Mark 1 (Left) */}
-                  <g style={{ animation: "questionFloat 2.2s ease-in-out infinite" }}>
-                    <text x="80" y="80" fontSize="36" fontWeight="900" fill="#eab308" fontFamily="sans-serif">?</text>
-                  </g>
-                  {/* Question Mark 2 (Top Center) */}
-                  <g style={{ animation: "questionFloat 2.6s ease-in-out infinite 0.4s" }}>
-                    <text x="140" y="55" fontSize="42" fontWeight="900" fill="#facc15" fontFamily="sans-serif">?</text>
-                  </g>
-                  {/* Question Mark 3 (Right) */}
-                  <g style={{ animation: "questionFloat 2.4s ease-in-out infinite 0.8s" }}>
-                    <text x="215" y="75" fontSize="38" fontWeight="900" fill="#eab308" fontFamily="sans-serif">?</text>
-                  </g>
-                </motion.g>
-              </svg>
-
-              {/* Thought Bubbles Overlaying Patient Head */}
+              {/* Manga Thought Bubbles Floating Beside Head */}
               <div
                 style={{
-                  position: "absolute",
-                  top: "10px",
-                  left: "210px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "10px",
+                  gap: "12px",
+                  flex: 1,
                   zIndex: 20
                 }}
               >
@@ -1441,8 +1283,8 @@ export const StoryHeroSection: React.FC = () => {
                   className="story-thought-bubble"
                   style={{ opacity: thought1Opacity }}
                 >
-                  <p style={{ margin: 0, fontWeight: 600, lineHeight: 1.4 }}>
-                    "Dr. Mehta ne Azithromycin di... Dr. Sharma ne Cefixime 😕 Dono alag bol rahe hain... Kaun sahi hai?"
+                  <p style={{ margin: 0, fontWeight: 600, lineHeight: 1.45, fontSize: "0.85rem" }}>
+                    "Dr. Mehta ne Azithromycin di... Dr. Sharma ne Cefixime 😕 Dono alag bata rahe hain... Kaun sahi hai?"
                   </p>
                 </motion.div>
 
@@ -1451,8 +1293,8 @@ export const StoryHeroSection: React.FC = () => {
                   className="story-thought-bubble"
                   style={{ opacity: thought2Opacity }}
                 >
-                  <p style={{ margin: 0, fontWeight: 600, lineHeight: 1.4 }}>
-                    "Dono antibiotics ek saath lun ya band kar dun? 🤔 Koi cross-check karne ka tareeqa hai kya?"
+                  <p style={{ margin: 0, fontWeight: 600, lineHeight: 1.45, fontSize: "0.85rem" }}>
+                    "Dono antibiotics ek saath lun ya band kar dun? 🤔 Kahi side effect na ho jaae... AI se verify karta hu!"
                   </p>
                 </motion.div>
               </div>
@@ -1465,14 +1307,14 @@ export const StoryHeroSection: React.FC = () => {
                 <div
                   style={{
                     height: "28px",
-                    background: "#090d16",
+                    background: "#030712",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                     padding: "0 18px",
                     fontSize: "0.68rem",
                     color: "#94a3b8",
-                    borderBottom: "1px solid rgba(255,255,255,0.06)",
+                    borderBottom: "1px solid rgba(255,255,255,0.08)",
                     flexShrink: 0
                   }}
                 >
@@ -1488,13 +1330,13 @@ export const StoryHeroSection: React.FC = () => {
                   <span>5G • 98%</span>
                 </div>
 
-                {/* Phone Screen Display Area */}
+                {/* Phone Screen Display Area (Cyber AMOLED Dark Display) */}
                 <div
                   style={{
                     position: "relative",
                     flex: 1,
                     overflow: "hidden",
-                    background: "#ffffff"
+                    background: "#0b1320"
                   }}
                 >
                   {/* ── STAGE A: GOOGLE SEARCH (0.87 → 0.92) ── */}
@@ -1507,7 +1349,7 @@ export const StoryHeroSection: React.FC = () => {
                       display: "flex",
                       flexDirection: "column",
                       gap: "10px",
-                      background: "#ffffff"
+                      background: "#090d16"
                     }}
                   >
                     {/* Google Logo & Search Box */}
@@ -1529,14 +1371,14 @@ export const StoryHeroSection: React.FC = () => {
                         gap: "6px",
                         padding: "8px 10px",
                         borderRadius: "999px",
-                        border: "1px solid #dfe1e5",
-                        background: "#ffffff",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                        border: "1px solid rgba(255,255,255,0.15)",
+                        background: "#131d2e",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                         fontSize: "0.72rem",
-                        color: "#1e293b"
+                        color: "#f8fafc"
                       }}
                     >
-                      <Search size={14} color="#94a3b8" />
+                      <Search size={14} color="#38bdf8" />
                       <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         conflicting doctor prescription india...
                       </span>
@@ -1549,24 +1391,25 @@ export const StoryHeroSection: React.FC = () => {
                         style={{
                           padding: "10px",
                           borderRadius: "10px",
-                          border: "1.5px solid #0d9488",
-                          background: "rgba(13, 148, 136, 0.05)"
+                          border: "1.5px solid #14b8a6",
+                          background: "rgba(20, 184, 166, 0.12)",
+                          boxShadow: "0 0 15px rgba(20, 184, 166, 0.2)"
                         }}
                       >
-                        <span style={{ fontSize: "0.62rem", color: "#0d9488", fontWeight: 700 }}>secondsight.pro</span>
-                        <h6 style={{ margin: "2px 0 3px", fontSize: "0.78rem", color: "#1d4ed8", fontWeight: 700 }}>
+                        <span style={{ fontSize: "0.62rem", color: "#2dd4bf", fontWeight: 700 }}>secondsight.pro</span>
+                        <h6 style={{ margin: "2px 0 3px", fontSize: "0.78rem", color: "#60a5fa", fontWeight: 700 }}>
                           SecondSight Pro — Reconcile Conflicting Prescriptions
                         </h6>
-                        <p style={{ margin: 0, fontSize: "0.66rem", color: "#475569", lineHeight: 1.3 }}>
+                        <p style={{ margin: 0, fontSize: "0.66rem", color: "#cbd5e1", lineHeight: 1.3 }}>
                           India's 1st AI Clinical Reconciliation engine. Reconcile two doctor opinions against ICMR protocols.
                         </p>
                       </div>
 
                       {/* Generic Fake Results */}
-                      <div style={{ padding: "8px 10px", borderRadius: "8px", border: "1px solid #f1f5f9" }}>
+                      <div style={{ padding: "8px 10px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.06)" }}>
                         <span style={{ fontSize: "0.58rem", color: "#64748b" }}>healthforum.in</span>
-                        <div style={{ height: "8px", width: "80%", background: "#cbd5e1", borderRadius: "4px", margin: "4px 0" }} />
-                        <div style={{ height: "6px", width: "95%", background: "#e2e8f0", borderRadius: "4px" }} />
+                        <div style={{ height: "8px", width: "80%", background: "#334155", borderRadius: "4px", margin: "4px 0" }} />
+                        <div style={{ height: "6px", width: "95%", background: "#1e293b", borderRadius: "4px" }} />
                       </div>
                     </div>
                   </motion.div>
@@ -1579,7 +1422,7 @@ export const StoryHeroSection: React.FC = () => {
                       opacity: phoneStageBOpacity,
                       display: "flex",
                       flexDirection: "column",
-                      background: "#f8fafc"
+                      background: "#090d16"
                     }}
                   >
                     {/* App Header */}
@@ -1590,7 +1433,8 @@ export const StoryHeroSection: React.FC = () => {
                         color: "#ffffff",
                         display: "flex",
                         alignItems: "center",
-                        gap: "6px"
+                        gap: "6px",
+                        boxShadow: "0 0 15px rgba(13, 148, 136, 0.4)"
                       }}
                     >
                       <Stethoscope size={16} />
@@ -1598,38 +1442,38 @@ export const StoryHeroSection: React.FC = () => {
                     </div>
 
                     <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
-                      <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0f172a" }}>
+                      <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#f8fafc" }}>
                         Upload 2 Prescriptions to Compare:
                       </span>
 
                       {/* Dropzone 1 */}
                       <div
                         style={{
-                          border: "1.5px dashed #0d9488",
+                          border: "1.5px dashed #14b8a6",
                           borderRadius: "10px",
                           padding: "12px",
                           textAlign: "center",
-                          background: "#ffffff"
+                          background: "#0f172a"
                         }}
                       >
-                        <FileText size={18} color="#0d9488" style={{ margin: "0 auto 4px" }} />
-                        <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#334155" }}>Doctor #1 Prescription</span>
-                        <div style={{ fontSize: "0.58rem", color: "#94a3b8" }}>Ready for upload</div>
+                        <FileText size={18} color="#2dd4bf" style={{ margin: "0 auto 4px" }} />
+                        <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#cbd5e1" }}>Dr. Mehta · Rx #1</span>
+                        <div style={{ fontSize: "0.58rem", color: "#64748b" }}>Ready for upload</div>
                       </div>
 
                       {/* Dropzone 2 */}
                       <div
                         style={{
-                          border: "1.5px dashed #2563eb",
+                          border: "1.5px dashed #3b82f6",
                           borderRadius: "10px",
                           padding: "12px",
                           textAlign: "center",
-                          background: "#ffffff"
+                          background: "#0f172a"
                         }}
                       >
-                        <FileText size={18} color="#2563eb" style={{ margin: "0 auto 4px" }} />
-                        <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#334155" }}>Doctor #2 Prescription</span>
-                        <div style={{ fontSize: "0.58rem", color: "#94a3b8" }}>Ready for upload</div>
+                        <FileText size={18} color="#60a5fa" style={{ margin: "0 auto 4px" }} />
+                        <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#cbd5e1" }}>Dr. Sharma · Rx #2</span>
+                        <div style={{ fontSize: "0.58rem", color: "#64748b" }}>Ready for upload</div>
                       </div>
                     </div>
                   </motion.div>
@@ -1642,7 +1486,7 @@ export const StoryHeroSection: React.FC = () => {
                       opacity: phoneStageCOpacity,
                       display: "flex",
                       flexDirection: "column",
-                      background: "#f8fafc"
+                      background: "#090d16"
                     }}
                   >
                     <div
@@ -1665,14 +1509,14 @@ export const StoryHeroSection: React.FC = () => {
                         style={{
                           padding: "8px 10px",
                           borderRadius: "8px",
-                          background: "#ffffff",
+                          background: "#0f172a",
                           border: "1px solid #10b981",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "space-between"
                         }}
                       >
-                        <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0f172a" }}>Dr. Mehta · Rx #1</div>
+                        <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#f8fafc" }}>Dr. Mehta · Rx #1</div>
                         <CheckCircle2 size={14} color="#10b981" />
                       </div>
 
@@ -1681,29 +1525,29 @@ export const StoryHeroSection: React.FC = () => {
                         style={{
                           padding: "8px 10px",
                           borderRadius: "8px",
-                          background: "#ffffff",
+                          background: "#0f172a",
                           border: "1px solid #10b981",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "space-between"
                         }}
                       >
-                        <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0f172a" }}>Dr. Sharma · Rx #2</div>
+                        <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#f8fafc" }}>Dr. Sharma · Rx #2</div>
                         <CheckCircle2 size={14} color="#10b981" />
                       </div>
 
                       {/* Progress Bar */}
                       <div style={{ marginTop: "14px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem", fontWeight: 700, color: "#0d9488", marginBottom: "4px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem", fontWeight: 700, color: "#2dd4bf", marginBottom: "4px" }}>
                           <span>ICMR Cross-Verification</span>
                           <span>AI Engine Active</span>
                         </div>
-                        <div style={{ height: "6px", width: "100%", background: "#e2e8f0", borderRadius: "999px", overflow: "hidden" }}>
+                        <div style={{ height: "6px", width: "100%", background: "#1e293b", borderRadius: "999px", overflow: "hidden" }}>
                           <motion.div
                             style={{
                               height: "100%",
                               width: uploadProgressWidth,
-                              background: "linear-gradient(90deg, #0d9488, #2563eb)"
+                              background: "linear-gradient(90deg, #14b8a6, #3b82f6)"
                             }}
                           />
                         </div>
@@ -1719,18 +1563,18 @@ export const StoryHeroSection: React.FC = () => {
                       opacity: phoneStageDOpacity,
                       display: "flex",
                       flexDirection: "column",
-                      background: "#f8fafc",
+                      background: "#090d16",
                       padding: "10px"
                     }}
                   >
                     {/* Verdict Card */}
                     <div
                       style={{
-                        background: "#ffffff",
+                        background: "#0f172a",
                         borderRadius: "12px",
-                        border: "1px solid #e2e8f0",
+                        border: "1px solid rgba(239, 68, 68, 0.4)",
                         padding: "12px",
-                        boxShadow: "0 4px 14px rgba(0,0,0,0.06)",
+                        boxShadow: "0 0 20px rgba(239, 68, 68, 0.2)",
                         display: "flex",
                         flexDirection: "column",
                         gap: "8px"
@@ -1744,17 +1588,17 @@ export const StoryHeroSection: React.FC = () => {
                           justifyContent: "space-between",
                           padding: "6px 10px",
                           borderRadius: "8px",
-                          background: "rgba(220, 38, 38, 0.08)",
-                          border: "1px solid rgba(220, 38, 38, 0.2)"
+                          background: "rgba(220, 38, 38, 0.2)",
+                          border: "1px solid rgba(220, 38, 38, 0.4)"
                         }}
                       >
-                        <span style={{ fontSize: "0.72rem", fontWeight: 800, color: "#dc2626" }}>Conflict Risk: 84/100</span>
-                        <AlertTriangle size={14} color="#dc2626" />
+                        <span style={{ fontSize: "0.72rem", fontWeight: 800, color: "#f87171" }}>Conflict Risk: 84/100</span>
+                        <AlertTriangle size={14} color="#f87171" />
                       </div>
 
                       {/* Clinical Finding */}
-                      <div style={{ fontSize: "0.68rem", color: "#1e293b", lineHeight: 1.35 }}>
-                        <strong>⚠️ Redundant Antibiotics:</strong><br />
+                      <div style={{ fontSize: "0.68rem", color: "#f8fafc", lineHeight: 1.35 }}>
+                        <strong style={{ color: "#fbbf24" }}>⚠️ Redundant Antibiotics:</strong><br />
                         Azithromycin + Cefixime dual administration has no clinical indication without positive culture.
                       </div>
 
@@ -1763,10 +1607,10 @@ export const StoryHeroSection: React.FC = () => {
                         style={{
                           padding: "6px 8px",
                           borderRadius: "6px",
-                          background: "#eff6ff",
-                          border: "1px solid #bfdbfe",
+                          background: "rgba(37, 99, 235, 0.15)",
+                          border: "1px solid rgba(59, 130, 246, 0.35)",
                           fontSize: "0.62rem",
-                          color: "#1d4ed8"
+                          color: "#93c5fd"
                         }}
                       >
                         <strong>ICMR Fever Protocol 2023:</strong><br />
@@ -1778,9 +1622,9 @@ export const StoryHeroSection: React.FC = () => {
                         style={{
                           padding: "6px 8px",
                           borderRadius: "6px",
-                          background: "#ecfdf5",
-                          border: "1px solid #a7f3d0",
-                          color: "#059669",
+                          background: "rgba(16, 185, 129, 0.15)",
+                          border: "1px solid rgba(16, 185, 129, 0.4)",
+                          color: "#4ade80",
                           fontSize: "0.65rem",
                           fontWeight: 700,
                           display: "flex",
@@ -1805,14 +1649,14 @@ export const StoryHeroSection: React.FC = () => {
               y: scene3CtaY,
               textAlign: "center",
               paddingTop: "8px",
-              borderTop: "1px solid var(--line)"
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)"
             }}
           >
             <h3
               style={{
                 fontSize: "clamp(1.15rem, 2.2vw, 1.5rem)",
                 fontWeight: 800,
-                color: "var(--ink-900)",
+                color: "#ffffff",
                 margin: "0 0 4px"
               }}
             >
@@ -1820,7 +1664,7 @@ export const StoryHeroSection: React.FC = () => {
             </h3>
             <p
               style={{
-                color: "var(--ink-700)",
+                color: "#94a3b8",
                 fontSize: "0.88rem",
                 margin: "0 auto 10px",
                 maxWidth: "580px"
@@ -1840,9 +1684,9 @@ export const StoryHeroSection: React.FC = () => {
                 alignItems: "center",
                 gap: "8px",
                 textDecoration: "none",
-                background: "var(--teal)",
+                background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
                 color: "#ffffff",
-                boxShadow: "0 8px 24px rgba(13, 148, 136, 0.3)"
+                boxShadow: "0 0 25px rgba(20, 184, 166, 0.5)"
               }}
             >
               <span>Analyze My Prescriptions Now</span>
